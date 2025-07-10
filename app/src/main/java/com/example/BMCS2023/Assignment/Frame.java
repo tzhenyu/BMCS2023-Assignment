@@ -30,6 +30,9 @@ public class Frame extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Yay");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setFont(new java.awt.Font("Comic Neue", 0, 10)); // NOI18N
 
         jLabel1.setText("nigga");
 
@@ -49,7 +52,7 @@ public class Frame extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(187, Short.MAX_VALUE)
+                .addContainerGap(618, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(129, 129, 129))
         );
@@ -60,7 +63,7 @@ public class Frame extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addGap(42, 42, 42)
                 .addComponent(jLabel1)
-                .addContainerGap(156, Short.MAX_VALUE))
+                .addContainerGap(284, Short.MAX_VALUE))
         );
 
         pack();
