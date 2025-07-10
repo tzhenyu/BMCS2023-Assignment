@@ -63,7 +63,7 @@ public class Frame extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addGap(42, 42, 42)
                 .addComponent(jLabel1)
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addContainerGap(200, Short.MAX_VALUE))
         );
 
         pack();
