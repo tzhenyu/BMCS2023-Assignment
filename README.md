@@ -90,3 +90,118 @@ A Java-based Car Rental Application with a graphical user interface (GUI), cloud
 - JavaMail handles email services like invoice and account verification.
 - Supabase handles user data, car info, rental history and payment records.
 
+## Class Diagram
+```mermaid
+---
+config:
+  look: classic
+  layout: elk
+  theme: mc
+---
+classDiagram
+class Person {
+  -id: String
+  -name: String
+  -email: String
+  -phone: String
+}
+class User {
+  -passwordHash: String
+  -emergencyContact: String
+  -pendingVerificationPin: String
+  +verifyPin(inputPin: String): boolean
+  +login(): boolean
+  +register(): void
+  +updateProfile(): void
+}   
+User ..> EmailService : uses
+User ..> AuthService : uses
+class Admin {
+  +addCar(): void
+  +removeCar(): void
+  +viewRevenue(carId: String): double
+  +viewUserList(): void
+  +viewUserDetails(userId: String): User
+  +updateCarStatus(carId: String, newStatus: String): void
+}
+class Vehicle {
+  -id: String
+  -brand: String
+  -model: String
+  -pricePerDay: double
+  -status: String  %% "available", "rented", "returned", "maintenance"
+  -type: String    %% "SUV", "Sedan", etc.
+  -location: String
+  -addOns: String[] %% ["child_seat", "wifi", etc.]
+  -fuelType: String
+  -colour: String
+  +isAvailable(): boolean
+  +addAddOn(addon: String): boolean
+  +removeAddOn(addon: String): boolean
+  +setStatus(newStatus: String): void
+}
+class Rental {
+  -id: String
+  -userId: String
+  -vehicleId: String
+  -startTime: DateTime
+  -endTime: DateTime
+  -pickupLocation: String
+  -returnLocation: String
+  -status: String %% "pending", "confirmed", "returned"
+  -fuelStatusOnReturn: boolean
+  -isTestDriveBooked: boolean
+  -selectedAddOns: String[]
+  +checkFuelStatus(): boolean
+  +confirmRental(): void
+  +returnCar(): void
+}
+class Payment {
+  -id: String
+  -rentalId: String
+  -amount: double
+  -method: String %% "card", "ewallet", "cod"
+  +process(): boolean
+}
+class Invoice {
+  -id: String
+  -rentalId: String
+  -date: DateTime
+  -filePath: String
+  +generate(): void
+  +sendToEmail(): void
+}
+class Feedback {
+  -id: String
+  -userId: String
+  -vehicleId: String
+  -rating: int
+  -comment: String
+  +submit(): void
+}
+class Survey {
+  -id: String
+  -rentalId: String
+  -checklist: String[]
+  +submit(): void
+}
+class EmailService {
+  +sendVerificationPin(email: String): void
+  +sendToEmail(emailService: EmailService, email: String): void
+}
+class AuthService {
+  +verifyCredentials(email: String, pass: String): boolean
+  +hashPassword(pass: String): String
+}
+User "1" -- "*" Feedback
+Vehicle "1" -- "*" Feedback
+Rental "1" -- "1" Survey
+Rental "1" -- "1" Payment
+Rental "1" -- "1" Invoice
+User "1" -- "*" Rental
+Vehicle "1" -- "*" Rental
+Invoice ..> EmailService : uses
+Person <|-- User
+Person <|-- Admin
+```
+
