@@ -1,7 +1,7 @@
 # BMCS2023 OOP Assignment
 A Java-based Car Rental Application with a graphical user interface (GUI), cloud database integration, and email communication features. This system supports both Admin and User roles, offering full vehicle rental management and user interaction functionalities.
 
-## 📌 Technologies Used
+## Technologies Used
 
 - **Language**: Java
 - **Build Tool**: Gradle
@@ -10,9 +10,9 @@ A Java-based Car Rental Application with a graphical user interface (GUI), cloud
 - **Email Service**: JavaMail (SMTP integration)
 - **Version Control**: Git + GitHub
 
-## 📚 Features Overview
+## Features Overview
 
-### 👤 User
+### User
 
 - **Browse Vehicles**: View car price, type, and status without login.
 - **Authentication**: Login or register with email verification (PIN code).
@@ -31,7 +31,7 @@ A Java-based Car Rental Application with a graphical user interface (GUI), cloud
   - Refuel confirmation prompt
   - Submit rating and feedback
 
-### 🛠️ Admin
+### Admin
 
 - **Admin Dashboard**:
   - Login with credentials
@@ -49,7 +49,7 @@ A Java-based Car Rental Application with a graphical user interface (GUI), cloud
   - Assist during critical or emergency cases
 
 
-## 🧭 Program Flow
+## Program Flow
 
 ### 1. Splash Screen → Main Menu
 - Users can view available cars.
@@ -83,7 +83,7 @@ A Java-based Car Rental Application with a graphical user interface (GUI), cloud
 - Each leads to detailed management interfaces
 
 
-## 📝 Notes
+## Notes
 
 - All vehicle add-ons and statuses are hardcoded into the program.
 - GUI designed using FlatLaf for modern and polished look.
