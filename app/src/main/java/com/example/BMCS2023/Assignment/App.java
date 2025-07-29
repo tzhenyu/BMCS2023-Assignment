@@ -8,7 +8,7 @@ import com.formdev.flatlaf.FlatLightLaf;
 public class App {
     
     public static void doSomethingCool() {
-        System.out.println("App function called!");
+        System.out.println("App function!");
     }
     
     public static void main(String[] args) {
