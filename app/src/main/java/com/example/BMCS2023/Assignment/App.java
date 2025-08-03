@@ -7,9 +7,12 @@ import com.formdev.flatlaf.FlatLightLaf;
 
 public class App {
     
+<<<<<<< Updated upstream
     public static void doSomethingCool() {
         System.out.println("App function called!");
     }
+=======
+>>>>>>> Stashed changes
     
     public static void main(String[] args) {
         try {
@@ -21,7 +24,9 @@ public class App {
 
         // Launch the GUI
         SwingUtilities.invokeLater(() -> {
-            new Frame().setVisible(true);  // <-- Launch your designed frame
+            CarMenu frame = new CarMenu();       // instantiate it
+            frame.setResizable(false);
+            frame.setVisible(true);              // now show it
         });
     }
 }
