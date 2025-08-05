@@ -7,13 +7,6 @@ import com.formdev.flatlaf.FlatLightLaf;
 
 public class App {
     
-<<<<<<< Updated upstream
-    public static void doSomethingCool() {
-        System.out.println("App function called!");
-    }
-=======
->>>>>>> Stashed changes
-    
     public static void main(String[] args) {
         try {
             // Set FlatLaf theme
