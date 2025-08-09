@@ -7,10 +7,6 @@ import com.formdev.flatlaf.FlatLightLaf;
 
 public class App {
     
-    public static void doSomethingCool() {
-        System.out.println("App function!");
-    }
-    
     public static void main(String[] args) {
         try {
             // Set FlatLaf theme
@@ -22,6 +18,7 @@ public class App {
         // Launch the GUI
         SwingUtilities.invokeLater(() -> {
             new Frame().setVisible(true);  // <-- Launch your designed frame
+            
         });
     }
 }
