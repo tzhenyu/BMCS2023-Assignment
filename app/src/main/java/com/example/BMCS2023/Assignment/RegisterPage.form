@@ -52,15 +52,15 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jusername2" alignment="1" max="32767" attributes="0"/>
-                          <Component id="jpassword1" alignment="1" max="32767" attributes="0"/>
-                          <Component id="jusername1" alignment="1" max="32767" attributes="0"/>
-                          <Component id="jusername" alignment="1" max="32767" attributes="0"/>
-                          <Component id="jTextField1" max="32767" attributes="0"/>
-                          <Component id="jpassword2" min="-2" pref="170" max="-2" attributes="0"/>
+                          <Component id="signupContactNum" alignment="1" max="32767" attributes="0"/>
+                          <Component id="signupConfirmPassword" alignment="1" max="32767" attributes="0"/>
+                          <Component id="signupEmergencyContactNum" alignment="1" max="32767" attributes="0"/>
+                          <Component id="signupUsername" alignment="1" max="32767" attributes="0"/>
+                          <Component id="signupEmail" max="32767" attributes="0"/>
+                          <Component id="signupPassword" min="-2" pref="170" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <Component id="blogin1" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="signupConfirmButton" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
           </Group>
@@ -74,35 +74,35 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jusername" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="signupUsername" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="signupEmail" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jpassword2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="signupPassword" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jpassword1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="signupConfirmPassword" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jusername2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="signupContactNum" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jusername1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="signupEmergencyContactNum" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="13" max="32767" attributes="0"/>
-              <Component id="blogin1" min="-2" max="-2" attributes="0"/>
+              <Component id="signupConfirmButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -117,7 +117,7 @@
         <Property name="text" type="java.lang.String" value="SIGN UP"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jusername">
+    <Component class="javax.swing.JTextField" name="signupUsername">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
@@ -135,17 +135,17 @@
         <Property name="text" type="java.lang.String" value="Email"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jusername1">
+    <Component class="javax.swing.JTextField" name="signupEmergencyContactNum">
       <Properties>
         <Property name="text" type="java.lang.String" value="+60"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jusername1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="signupEmergencyContactNumActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JPasswordField" name="jpassword1">
+    <Component class="javax.swing.JPasswordField" name="signupConfirmPassword">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jpassword1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="signupConfirmPasswordActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
@@ -172,14 +172,14 @@
         <Property name="text" type="java.lang.String" value="Contact Number"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jusername2">
+    <Component class="javax.swing.JTextField" name="signupContactNum">
       <Properties>
         <Property name="text" type="java.lang.String" value="+60"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JPasswordField" name="jpassword2">
+    <Component class="javax.swing.JPasswordField" name="signupPassword">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jpassword2ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="signupPasswordActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
@@ -190,17 +190,17 @@
         <Property name="text" type="java.lang.String" value="Emergency Contact Number"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="blogin1">
+    <Component class="javax.swing.JButton" name="signupConfirmButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Confirm"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="blogin1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="signupConfirmButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField1">
+    <Component class="javax.swing.JTextField" name="signupEmail">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="signupEmailActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

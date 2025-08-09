@@ -26,10 +26,10 @@ public class AdminLoginPage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jusername = new javax.swing.JTextField();
+        adminUsername = new javax.swing.JTextField();
         jCheckBox1 = new javax.swing.JCheckBox();
-        blogin = new javax.swing.JButton();
-        jpassword = new javax.swing.JPasswordField();
+        adminLogin = new javax.swing.JButton();
+        adminPassword = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -38,11 +38,11 @@ public class AdminLoginPage extends javax.swing.JFrame {
 
         jCheckBox1.setText("Show password");
 
-        blogin.setText("LOGIN");
+        adminLogin.setText("LOGIN");
 
-        jpassword.addActionListener(new java.awt.event.ActionListener() {
+        adminPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jpasswordActionPerformed(evt);
+                adminPasswordActionPerformed(evt);
             }
         });
 
@@ -67,7 +67,7 @@ public class AdminLoginPage extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(blogin))
+                        .addComponent(adminLogin))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(126, 126, 126)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -78,8 +78,8 @@ public class AdminLoginPage extends javax.swing.JFrame {
                                     .addComponent(jLabel3))
                                 .addGap(42, 42, 42)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jusername, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-                                    .addComponent(jpassword))))))
+                                    .addComponent(adminUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                                    .addComponent(adminPassword))))))
                 .addGap(118, 118, 118))
         );
         layout.setVerticalGroup(
@@ -90,24 +90,24 @@ public class AdminLoginPage extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jusername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(adminUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jpassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(adminPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jCheckBox1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(blogin)
+                .addComponent(adminLogin)
                 .addContainerGap(72, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jpasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jpasswordActionPerformed
+    private void adminPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminPasswordActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jpasswordActionPerformed
+    }//GEN-LAST:event_adminPasswordActionPerformed
 
     /**
      * @param args the command line arguments
@@ -145,12 +145,12 @@ public class AdminLoginPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton blogin;
+    private javax.swing.JButton adminLogin;
+    private javax.swing.JPasswordField adminPassword;
+    private javax.swing.JTextField adminUsername;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPasswordField jpassword;
-    private javax.swing.JTextField jusername;
     // End of variables declaration//GEN-END:variables
 }
