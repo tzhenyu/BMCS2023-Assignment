@@ -4,6 +4,8 @@
  */
 package com.example.BMCS2023.Assignment;
 
+import java.awt.Point;
+
 /**
  *
  * @author Joel
@@ -89,13 +91,21 @@ public class OilAlert extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void yesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yesButtonActionPerformed
-        new ReturnVehicle().setVisible(true);
-        this.dispose();
+        Point pos = this.getLocation();
+        ReturnVehicle frame = new ReturnVehicle();    //create an instance
+        frame.setResizable(false);          //lock resizing
+        frame.setLocation(pos); 
+        frame.setVisible(true);             //show the frame
+        this.dispose();                     //close current frame
     }//GEN-LAST:event_yesButtonActionPerformed
 
     private void noButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noButtonActionPerformed
-        new ReminderFillOil().setVisible(true);
-        this.dispose();
+        Point pos = this.getLocation();
+        ReminderFillOil frame = new ReminderFillOil();    //create an instance
+        frame.setResizable(false);          //lock resizing
+        frame.setLocation(pos); 
+        frame.setVisible(true);             //show the frame
+        this.dispose();                     //close current frame
     }//GEN-LAST:event_noButtonActionPerformed
 
     /**

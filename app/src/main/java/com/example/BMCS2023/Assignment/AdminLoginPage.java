@@ -39,6 +39,11 @@ public class AdminLoginPage extends javax.swing.JFrame {
         jCheckBox1.setText("Show password");
 
         adminLogin.setText("LOGIN");
+        adminLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminLoginActionPerformed(evt);
+            }
+        });
 
         adminPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,6 +113,10 @@ public class AdminLoginPage extends javax.swing.JFrame {
     private void adminPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminPasswordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_adminPasswordActionPerformed
+
+    private void adminLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminLoginActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_adminLoginActionPerformed
 
     /**
      * @param args the command line arguments

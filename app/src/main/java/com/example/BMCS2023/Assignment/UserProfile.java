@@ -224,7 +224,12 @@ public class UserProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
-        this.dispose();
+        Point pos = this.getLocation();
+        UserLoginPage frame = new UserLoginPage();    //create an instance
+        frame.setResizable(false);          //lock resizing
+        frame.setLocation(pos); 
+        frame.setVisible(true);             //show the frame
+        this.dispose();                     //close current frame
     }//GEN-LAST:event_logoutButtonActionPerformed
 
     private void testConditionChecklistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testConditionChecklistActionPerformed
