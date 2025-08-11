@@ -30,12 +30,12 @@ public class UserLoginPage extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jusername = new javax.swing.JTextField();
+        loginUsername = new javax.swing.JTextField();
         jCheckBox1 = new javax.swing.JCheckBox();
-        blogin = new javax.swing.JButton();
-        bsignup = new javax.swing.JButton();
-        jpassword = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        loginButton = new javax.swing.JButton();
+        loginSignUpButton = new javax.swing.JButton();
+        loginPassword = new javax.swing.JPasswordField();
+        adminLoginButton = new javax.swing.JButton();
 
         jButton2.setText("jButton2");
 
@@ -52,26 +52,36 @@ public class UserLoginPage extends javax.swing.JFrame {
 
         jCheckBox1.setText("Show password");
 
-        blogin.setText("LOGIN");
-        blogin.addActionListener(new java.awt.event.ActionListener() {
+        loginButton.setText("LOGIN");
+        loginButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bloginActionPerformed(evt);
+                loginButtonActionPerformed(evt);
             }
         });
 
-        bsignup.setText("SIGN UP");
-
-        jpassword.addActionListener(new java.awt.event.ActionListener() {
+        loginSignUpButton.setText("SIGN UP");
+        loginSignUpButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                loginSignUpButtonMouseClicked(evt);
+            }
+        });
+        loginSignUpButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jpasswordActionPerformed(evt);
+                loginSignUpButtonActionPerformed(evt);
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Cambria", 2, 18)); // NOI18N
-        jButton1.setText("Admin");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        loginPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                loginPasswordActionPerformed(evt);
+            }
+        });
+
+        adminLoginButton.setFont(new java.awt.Font("Cambria", 2, 18)); // NOI18N
+        adminLoginButton.setText("Admin");
+        adminLoginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminLoginButtonActionPerformed(evt);
             }
         });
 
@@ -89,16 +99,16 @@ public class UserLoginPage extends javax.swing.JFrame {
                             .addComponent(jLabel3))
                         .addGap(42, 42, 42)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jusername)
-                            .addComponent(jpassword)
+                            .addComponent(loginUsername)
+                            .addComponent(loginPassword)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(blogin)
+                                .addComponent(loginButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                                .addComponent(bsignup)))))
+                                .addComponent(loginSignUpButton)))))
                 .addGap(113, 113, 113))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(adminLoginButton)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -113,19 +123,19 @@ public class UserLoginPage extends javax.swing.JFrame {
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jusername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(loginUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jpassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(loginPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jCheckBox1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(blogin)
-                    .addComponent(bsignup))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(loginButton)
+                    .addComponent(loginSignUpButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(adminLoginButton)
                 .addContainerGap())
         );
 
@@ -133,17 +143,27 @@ public class UserLoginPage extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void adminLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminLoginButtonActionPerformed
+        new AdminLoginPage().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_adminLoginButtonActionPerformed
 
-    private void jpasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jpasswordActionPerformed
+    private void loginPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginPasswordActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jpasswordActionPerformed
+    }//GEN-LAST:event_loginPasswordActionPerformed
 
-    private void bloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bloginActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bloginActionPerformed
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+        new UserProfile().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_loginButtonActionPerformed
+
+    private void loginSignUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupButtonActionPerformed
+        new RegisterPage().setVisible(true);
+    }//GEN-LAST:event_signupButtonActionPerformed
+
+    private void loginSignUpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginSignUpButtonMouseClicked
+        new RegisterPage().setVisible(true);
+    }//GEN-LAST:event_loginSignUpButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -181,15 +201,15 @@ public class UserLoginPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton blogin;
-    private javax.swing.JButton bsignup;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton adminLoginButton;
     private javax.swing.JButton jButton2;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPasswordField jpassword;
-    private javax.swing.JTextField jusername;
+    private javax.swing.JButton loginButton;
+    private javax.swing.JPasswordField loginPassword;
+    private javax.swing.JButton loginSignUpButton;
+    private javax.swing.JTextField loginUsername;
     // End of variables declaration//GEN-END:variables
 }
