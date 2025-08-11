@@ -143,7 +143,8 @@ public class UserLoginPage extends javax.swing.JFrame {
     }//GEN-LAST:event_loginPasswordActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        // TODO add your handling code here:
+        new UserProfile().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_loginButtonActionPerformed
 
     /**

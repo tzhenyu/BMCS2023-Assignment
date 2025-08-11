@@ -186,7 +186,8 @@ public class RegisterPage extends javax.swing.JFrame {
     }//GEN-LAST:event_bloginActionPerformed
 
     private void signupConfirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupConfirmButtonActionPerformed
-        // TODO add your handling code here:
+        new VerifyPage().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_signupConfirmButtonActionPerformed
 
     private void signupEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupEmailActionPerformed
