@@ -209,7 +209,7 @@ public class UserProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_editInfoButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        new Frame().setVisible(true);
+        new UserLoginPage().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_backButtonActionPerformed
 

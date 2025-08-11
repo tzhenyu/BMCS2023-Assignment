@@ -46,7 +46,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="loginButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace pref="20" max="32767" attributes="0"/>
-                              <Component id="signupButton" min="-2" max="-2" attributes="0"/>
+                              <Component id="loginSignUpButton" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -85,7 +85,7 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="loginButton" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="signupButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="loginSignUpButton" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="38" max="32767" attributes="0"/>
               <Component id="adminLoginButton" min="-2" max="-2" attributes="0"/>
@@ -134,10 +134,14 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="loginButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="signupButton">
+    <Component class="javax.swing.JButton" name="loginSignUpButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="SIGN UP"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="loginSignUpButtonMouseClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="loginSignUpButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JPasswordField" name="loginPassword">
       <Events>

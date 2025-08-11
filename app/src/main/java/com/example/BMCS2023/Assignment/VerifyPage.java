@@ -155,11 +155,11 @@ public class VerifyPage extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_verifyText4ActionPerformed
 
-    private void verifyText6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifyText6ActionPerformed
+    private void verifyText5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifyText6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_verifyText6ActionPerformed
 
-    private void verifyText5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifyText5ActionPerformed
+    private void verifyText6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifyText5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_verifyText5ActionPerformed
 

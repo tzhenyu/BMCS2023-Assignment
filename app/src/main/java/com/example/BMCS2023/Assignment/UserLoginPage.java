@@ -33,7 +33,7 @@ public class UserLoginPage extends javax.swing.JFrame {
         loginUsername = new javax.swing.JTextField();
         jCheckBox1 = new javax.swing.JCheckBox();
         loginButton = new javax.swing.JButton();
-        signupButton = new javax.swing.JButton();
+        loginSignUpButton = new javax.swing.JButton();
         loginPassword = new javax.swing.JPasswordField();
         adminLoginButton = new javax.swing.JButton();
 
@@ -59,7 +59,17 @@ public class UserLoginPage extends javax.swing.JFrame {
             }
         });
 
-        signupButton.setText("SIGN UP");
+        loginSignUpButton.setText("SIGN UP");
+        loginSignUpButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                loginSignUpButtonMouseClicked(evt);
+            }
+        });
+        loginSignUpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginSignUpButtonActionPerformed(evt);
+            }
+        });
 
         loginPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -94,7 +104,7 @@ public class UserLoginPage extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(loginButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                                .addComponent(signupButton)))))
+                                .addComponent(loginSignUpButton)))))
                 .addGap(113, 113, 113))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -123,7 +133,7 @@ public class UserLoginPage extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(loginButton)
-                    .addComponent(signupButton))
+                    .addComponent(loginSignUpButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(adminLoginButton)
                 .addContainerGap())
@@ -146,6 +156,14 @@ public class UserLoginPage extends javax.swing.JFrame {
         new UserProfile().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_loginButtonActionPerformed
+
+    private void loginSignUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupButtonActionPerformed
+        new RegisterPage().setVisible(true);
+    }//GEN-LAST:event_signupButtonActionPerformed
+
+    private void loginSignUpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginSignUpButtonMouseClicked
+        new RegisterPage().setVisible(true);
+    }//GEN-LAST:event_loginSignUpButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -191,7 +209,7 @@ public class UserLoginPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JButton loginButton;
     private javax.swing.JPasswordField loginPassword;
+    private javax.swing.JButton loginSignUpButton;
     private javax.swing.JTextField loginUsername;
-    private javax.swing.JButton signupButton;
     // End of variables declaration//GEN-END:variables
 }

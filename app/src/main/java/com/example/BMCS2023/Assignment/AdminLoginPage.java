@@ -109,6 +109,8 @@ public class AdminLoginPage extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_adminPasswordActionPerformed
 
+    
+
     /**
      * @param args the command line arguments
      */
