@@ -17,7 +17,7 @@ public class App {
 
         // Launch the GUI
         SwingUtilities.invokeLater(() -> {
-            new Frame().setVisible(true);  // <-- Launch your designed frame
+            new UserLoginPage().setVisible(true);  // <-- Launch your designed frame
             
         });
     }
