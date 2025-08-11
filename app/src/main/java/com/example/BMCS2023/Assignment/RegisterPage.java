@@ -60,7 +60,6 @@ public class RegisterPage extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Email");
 
-        jusername1.setText("+60");
         jusername1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jusername1ActionPerformed(evt);
