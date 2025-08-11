@@ -52,6 +52,11 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="signupCancelButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="signupConfirmButton" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <Component id="signupContactNum" alignment="1" max="32767" attributes="0"/>
                           <Component id="signupConfirmPassword" alignment="1" max="32767" attributes="0"/>
                           <Component id="signupEmergencyContactNum" alignment="1" max="32767" attributes="0"/>
@@ -60,7 +65,6 @@
                           <Component id="signupPassword" min="-2" pref="170" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <Component id="signupConfirmButton" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
           </Group>
@@ -102,7 +106,10 @@
                   <Component id="signupEmergencyContactNum" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="13" max="32767" attributes="0"/>
-              <Component id="signupConfirmButton" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="signupConfirmButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="signupCancelButton" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -201,6 +208,14 @@
     <Component class="javax.swing.JTextField" name="signupEmail">
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="signupEmailActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="signupCancelButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cancel"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="signupCancelButtonActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

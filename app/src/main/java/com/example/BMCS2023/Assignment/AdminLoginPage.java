@@ -4,6 +4,8 @@
  */
 package com.example.BMCS2023.Assignment;
 
+import java.awt.Point;
+
 /**
  *
  * @author H 4 Z A R D
@@ -28,20 +30,21 @@ public class AdminLoginPage extends javax.swing.JFrame {
 
         adminUsername = new javax.swing.JTextField();
         jCheckBox1 = new javax.swing.JCheckBox();
-        adminLogin = new javax.swing.JButton();
+        adminLoginButton = new javax.swing.JButton();
         adminPassword = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        adminCancelButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jCheckBox1.setText("Show password");
 
-        adminLogin.setText("LOGIN");
-        adminLogin.addActionListener(new java.awt.event.ActionListener() {
+        adminLoginButton.setText("LOGIN");
+        adminLoginButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                adminLoginActionPerformed(evt);
+                adminLoginButtonActionPerformed(evt);
             }
         });
 
@@ -60,6 +63,13 @@ public class AdminLoginPage extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("PASSWORD");
 
+        adminCancelButton.setText("BACK");
+        adminCancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminCancelButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -69,22 +79,21 @@ public class AdminLoginPage extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(145, 145, 145))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(126, 126, 126)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(adminLogin))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(126, 126, 126)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jCheckBox1)
+                    .addComponent(jCheckBox1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGap(42, 42, 42)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3))
-                                .addGap(42, 42, 42)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(adminUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
-                                    .addComponent(adminPassword))))))
+                                .addComponent(adminCancelButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(adminLoginButton))
+                            .addComponent(adminUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                            .addComponent(adminPassword))))
                 .addGap(118, 118, 118))
         );
         layout.setVerticalGroup(
@@ -103,7 +112,9 @@ public class AdminLoginPage extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jCheckBox1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(adminLogin)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(adminLoginButton)
+                    .addComponent(adminCancelButton))
                 .addContainerGap(72, Short.MAX_VALUE))
         );
 
@@ -114,9 +125,18 @@ public class AdminLoginPage extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_adminPasswordActionPerformed
 
-    private void adminLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminLoginActionPerformed
+    private void adminLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminLoginButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_adminLoginActionPerformed
+    }//GEN-LAST:event_adminLoginButtonActionPerformed
+
+    private void adminCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminCancelButtonActionPerformed
+        Point pos = this.getLocation();
+        UserLoginPage frame = new UserLoginPage();
+        frame.setResizable(false);
+        frame.setLocation(pos);
+        frame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_adminCancelButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -154,7 +174,8 @@ public class AdminLoginPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton adminLogin;
+    private javax.swing.JButton adminCancelButton;
+    private javax.swing.JButton adminLoginButton;
     private javax.swing.JPasswordField adminPassword;
     private javax.swing.JTextField adminUsername;
     private javax.swing.JCheckBox jCheckBox1;

@@ -43,6 +43,7 @@ public class RegisterPage extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         signupConfirmButton = new javax.swing.JButton();
         signupEmail = new javax.swing.JTextField();
+        signupCancelButton = new javax.swing.JButton();
 
         blogin.setText("LOGIN");
         blogin.addActionListener(new java.awt.event.ActionListener() {
@@ -108,6 +109,13 @@ public class RegisterPage extends javax.swing.JFrame {
             }
         });
 
+        signupCancelButton.setText("Cancel");
+        signupCancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signupCancelButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -129,13 +137,16 @@ public class RegisterPage extends javax.swing.JFrame {
                             .addComponent(jLabel3))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(signupCancelButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(signupConfirmButton))
                             .addComponent(signupContactNum, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(signupConfirmPassword, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(signupEmergencyContactNum, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(signupUsername, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(signupEmail)
-                            .addComponent(signupPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(signupConfirmButton, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(signupPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(77, 77, 77))
         );
         layout.setVerticalGroup(
@@ -168,7 +179,9 @@ public class RegisterPage extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(signupEmergencyContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                .addComponent(signupConfirmButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(signupConfirmButton)
+                    .addComponent(signupCancelButton))
                 .addContainerGap())
         );
 
@@ -203,6 +216,15 @@ public class RegisterPage extends javax.swing.JFrame {
     private void signupEmergencyContactNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupEmergencyContactNumActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_signupEmergencyContactNumActionPerformed
+
+    private void signupCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupCancelButtonActionPerformed
+        Point pos = this.getLocation();
+        UserLoginPage frame = new UserLoginPage();
+        frame.setResizable(false);
+        frame.setLocation(pos);
+        frame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_signupCancelButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -248,6 +270,7 @@ public class RegisterPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JButton signupCancelButton;
     private javax.swing.JButton signupConfirmButton;
     private javax.swing.JPasswordField signupConfirmPassword;
     private javax.swing.JTextField signupContactNum;

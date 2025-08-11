@@ -29,26 +29,23 @@
               <EmptySpace min="-2" pref="145" max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
+              <EmptySpace min="-2" pref="126" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="adminLogin" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="126" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jCheckBox1" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="adminUsername" alignment="0" pref="166" max="32767" attributes="0"/>
-                                  <Component id="adminPassword" alignment="0" max="32767" attributes="0"/>
-                              </Group>
+                  <Component id="jCheckBox1" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="adminCancelButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="adminLoginButton" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="adminUsername" alignment="0" pref="166" max="32767" attributes="0"/>
+                          <Component id="adminPassword" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -74,7 +71,10 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="adminLogin" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="adminLoginButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="adminCancelButton" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace pref="72" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -88,12 +88,12 @@
         <Property name="text" type="java.lang.String" value="Show password"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="adminLogin">
+    <Component class="javax.swing.JButton" name="adminLoginButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="LOGIN"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="adminLoginActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="adminLoginButtonActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JPasswordField" name="adminPassword">
@@ -124,6 +124,14 @@
         </Property>
         <Property name="text" type="java.lang.String" value="PASSWORD"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="adminCancelButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="BACK"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="adminCancelButtonActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
