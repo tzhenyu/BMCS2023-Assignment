@@ -4,6 +4,8 @@
  */
 package com.example.BMCS2023.Assignment;
 
+import java.awt.Point;
+
 /**
  *
  * @author Joel
@@ -60,6 +62,11 @@ public class EditInfo extends javax.swing.JFrame {
         });
 
         confirmButton.setText("Confirm");
+        confirmButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -130,9 +137,22 @@ public class EditInfo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        new UserProfile().setVisible(true);
-        this.dispose();
+        Point pos = this.getLocation();
+        UserProfile frame = new UserProfile();    //create an instance
+        frame.setResizable(false);          //lock resizing
+        frame.setLocation(pos); 
+        frame.setVisible(true);             //show the frame
+        this.dispose();                     //close current frame
     }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
+        Point pos = this.getLocation();
+        UserProfile frame = new UserProfile();    //create an instance
+        frame.setResizable(false);          //lock resizing
+        frame.setLocation(pos); 
+        frame.setVisible(true);             //show the frame
+        this.dispose();                     //close current frame
+    }//GEN-LAST:event_confirmButtonActionPerformed
 
     /**
      * @param args the command line arguments

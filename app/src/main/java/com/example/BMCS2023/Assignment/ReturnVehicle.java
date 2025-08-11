@@ -4,6 +4,8 @@
  */
 package com.example.BMCS2023.Assignment;
 
+import java.awt.Point;
+
 /**
  *
  * @author Joel
@@ -131,8 +133,12 @@ public class ReturnVehicle extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        new Frame().setVisible(true);
-        this.dispose();
+        Point pos = this.getLocation();
+        CarMenu frame = new CarMenu();    //create an instance
+        frame.setResizable(false);          //lock resizing
+        frame.setLocation(pos); 
+        frame.setVisible(true);             //show the frame
+        this.dispose();                     //close current frame
     }//GEN-LAST:event_backButtonActionPerformed
 
     /**

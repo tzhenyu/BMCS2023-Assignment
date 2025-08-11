@@ -4,6 +4,8 @@
  */
 package com.example.BMCS2023.Assignment;
 
+import java.awt.Point;
+
 /**
  *
  * @author Joel
@@ -41,7 +43,7 @@ public class UserProfile extends javax.swing.JFrame {
         ordersPanel = new javax.swing.JScrollPane();
         jLabel1 = new javax.swing.JLabel();
         logoutButton = new javax.swing.JButton();
-        button1 = new java.awt.Button();
+        testConditionChecklist = new java.awt.Button();
         oilAlert = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -93,10 +95,10 @@ public class UserProfile extends javax.swing.JFrame {
             }
         });
 
-        button1.setLabel("test for Condition checklist");
-        button1.addActionListener(new java.awt.event.ActionListener() {
+        testConditionChecklist.setLabel("test for Condition checklist");
+        testConditionChecklist.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button1ActionPerformed(evt);
+                testConditionChecklistActionPerformed(evt);
             }
         });
 
@@ -150,7 +152,7 @@ public class UserProfile extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(oilAlert)
-                    .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(testConditionChecklist, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21))
         );
         layout.setVerticalGroup(
@@ -196,7 +198,7 @@ public class UserProfile extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(oilAlert)
                         .addGap(9, 9, 9)
-                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(testConditionChecklist, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
@@ -204,27 +206,43 @@ public class UserProfile extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void editInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editInfoButtonActionPerformed
-        new EditInfo().setVisible(true);
-        this.dispose();
+        Point pos = this.getLocation();
+        EditInfo frame = new EditInfo();    //create an instance
+        frame.setResizable(false);          //lock resizing
+        frame.setLocation(pos); 
+        frame.setVisible(true);             //show the frame
+        this.dispose();                     //close current frame
     }//GEN-LAST:event_editInfoButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        new Frame().setVisible(true);
-        this.dispose();
+        Point pos = this.getLocation();
+        UserLoginPage frame = new UserLoginPage();    //create an instance
+        frame.setResizable(false);          //lock resizing
+        frame.setLocation(pos); 
+        frame.setVisible(true);             //show the frame
+        this.dispose();                     //close current frame
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_logoutButtonActionPerformed
 
-    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
-        new ConditionChecklist().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_button1ActionPerformed
+    private void testConditionChecklistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testConditionChecklistActionPerformed
+        Point pos = this.getLocation();
+        ConditionChecklist frame = new ConditionChecklist();    //create an instance
+        frame.setResizable(false);          //lock resizing
+        frame.setLocation(pos); 
+        frame.setVisible(true);             //show the frame
+        this.dispose();                     //close current frame
+    }//GEN-LAST:event_testConditionChecklistActionPerformed
 
     private void oilAlertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oilAlertActionPerformed
-        new OilAlert().setVisible(true);
-        this.dispose();
+        Point pos = this.getLocation();
+        OilAlert frame = new OilAlert();    //create an instance
+        frame.setResizable(false);          //lock resizing
+        frame.setLocation(pos); 
+        frame.setVisible(true);             //show the frame
+        this.dispose();                     //close current frame
     }//GEN-LAST:event_oilAlertActionPerformed
 
     private void usernameText(){
@@ -269,7 +287,6 @@ public class UserProfile extends javax.swing.JFrame {
     private java.awt.Label ID;
     private java.awt.Label IDdisplayText;
     private javax.swing.JButton backButton;
-    private java.awt.Button button1;
     private java.awt.Label contactNum;
     private java.awt.Label contactNumDIsplayText;
     private javax.swing.JButton editInfoButton;
@@ -281,6 +298,7 @@ public class UserProfile extends javax.swing.JFrame {
     private javax.swing.JButton logoutButton;
     private javax.swing.JButton oilAlert;
     private javax.swing.JScrollPane ordersPanel;
+    private java.awt.Button testConditionChecklist;
     private java.awt.Label username;
     private java.awt.Label usernameDisplayText;
     // End of variables declaration//GEN-END:variables
