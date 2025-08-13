@@ -8,6 +8,10 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
+import java.util.List;
 /**
  *
  * @author zhenyu
@@ -29,6 +33,12 @@ public class DatabaseClient {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         return response.body();
     }
-    
+
+    public static <T> List<T> getRecords(String tableName, Class<T> clazz) throws Exception {
+        String readResult = readRecords(tableName);
+        Type listType = TypeToken.getParameterized(List.class, clazz).getType();
+        return new Gson().fromJson(readResult, listType);
+    }
+   
 }
 
