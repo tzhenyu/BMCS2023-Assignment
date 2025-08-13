@@ -4,6 +4,8 @@
  */
 package com.example.BMCS2023.Assignment;
 
+import java.awt.Point;
+
 /**
  *
  * @author H 4 Z A R D
@@ -164,8 +166,12 @@ public class VerifyPage extends javax.swing.JFrame {
     }//GEN-LAST:event_verifyText5ActionPerformed
 
     private void verifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifyButtonActionPerformed
-        new UserLoginPage().setVisible(true);
-        this.dispose(); // Close the current window
+        Point pos = this.getLocation();
+        UserLoginPage frame = new UserLoginPage();
+        frame.setResizable(false);
+        frame.setLocation(pos);
+        frame.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_verifyButtonActionPerformed
 
     /**

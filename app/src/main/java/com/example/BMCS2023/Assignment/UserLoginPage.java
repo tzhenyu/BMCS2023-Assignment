@@ -4,6 +4,8 @@
  */
 package com.example.BMCS2023.Assignment;
 
+import java.awt.Point;
+
 /**
  *
  * @author H 4 Z A R D
@@ -144,25 +146,38 @@ public class UserLoginPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void adminLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminLoginButtonActionPerformed
-        new AdminLoginPage().setVisible(true);
+        Point pos = this.getLocation();
+        AdminLoginPage frame = new AdminLoginPage();
+        frame.setResizable(false);
+        frame.setLocation(pos);
+        frame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_adminLoginButtonActionPerformed
 
     private void loginPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginPasswordActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_loginPasswordActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        new UserProfile().setVisible(true);
+        Point pos = this.getLocation();
+        UserProfile frame = new UserProfile();
+        frame.setResizable(false);
+        frame.setLocation(pos);
+        frame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void loginSignUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupButtonActionPerformed
-        new RegisterPage().setVisible(true);
+        Point pos = this.getLocation();
+        RegisterPage frame = new RegisterPage();
+        frame.setResizable(false);
+        frame.setLocation(pos);
+        frame.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_signupButtonActionPerformed
 
     private void loginSignUpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginSignUpButtonMouseClicked
-        new RegisterPage().setVisible(true);
+       // new RegisterPage().setVisible(true);
     }//GEN-LAST:event_loginSignUpButtonMouseClicked
 
     /**

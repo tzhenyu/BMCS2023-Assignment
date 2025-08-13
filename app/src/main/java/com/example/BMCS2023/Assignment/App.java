@@ -18,8 +18,7 @@ public class App {
 
         // Launch the GUI
         SwingUtilities.invokeLater(() -> {
-            new UserLoginPage().setVisible(true);  // <-- Launch your designed frame
-            
+            new CarMenu().setVisible(true);
         });
     }
 }

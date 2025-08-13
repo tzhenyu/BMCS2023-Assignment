@@ -4,6 +4,8 @@
  */
 package com.example.BMCS2023.Assignment;
 
+import java.awt.Point;
+
 /**
  *
  * @author Joel
@@ -204,12 +206,20 @@ public class UserProfile extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void editInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editInfoButtonActionPerformed
-        new EditInfo().setVisible(true);
+        Point pos = this.getLocation();
+        EditInfo frame = new EditInfo();
+        frame.setResizable(false);
+        frame.setLocation(pos);
+        frame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_editInfoButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        new UserLoginPage().setVisible(true);
+        Point pos = this.getLocation();
+        UserLoginPage frame = new UserLoginPage();
+        frame.setResizable(false);
+        frame.setLocation(pos);
+        frame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_backButtonActionPerformed
 
@@ -218,12 +228,20 @@ public class UserProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutButtonActionPerformed
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
-        new ConditionChecklist().setVisible(true);
+        Point pos = this.getLocation();
+        ConditionChecklist frame = new ConditionChecklist();
+        frame.setResizable(false);
+        frame.setLocation(pos);
+        frame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_button1ActionPerformed
 
     private void oilAlertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oilAlertActionPerformed
-        new OilAlert().setVisible(true);
+        Point pos = this.getLocation();
+        OilAlert frame = new OilAlert();
+        frame.setResizable(false);
+        frame.setLocation(pos);
+        frame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_oilAlertActionPerformed
 
