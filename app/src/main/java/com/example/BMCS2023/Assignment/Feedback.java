@@ -9,5 +9,9 @@ package com.example.BMCS2023.Assignment;
  * @author zhenyu
  */
 public class Feedback {
-    
+    private String id; 
+    private String userId; 
+    private String vehicleId;
+    private int rating; 
+    private String comment;
 }

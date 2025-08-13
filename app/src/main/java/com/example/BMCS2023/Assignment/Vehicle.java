@@ -29,7 +29,8 @@ public class Vehicle {
     public enum FuelType {
         PETROL,
         DIESEL,
-        ELECTRIC
+        ELECTRIC,
+        PICKUP
     }  
     private String id;
     private String brand;

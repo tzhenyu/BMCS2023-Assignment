@@ -9,5 +9,13 @@ package com.example.BMCS2023.Assignment;
  * @author zhenyu
  */
 public class Payment {
-    
+    private enum PaymentMethod {
+        CARD,
+        EWALLET,
+        COD
+    }
+    private String id; 
+    private Rental rental;
+    private double amount;
+    private PaymentMethod method;
 }

@@ -24,6 +24,7 @@ dependencies {
     // This dependency is used by the application.
     implementation libs.guava
     implementation 'com.formdev:flatlaf:3.4'
+    implementation 'com.google.code.gson:gson:2.11.0'
 
 }
 
