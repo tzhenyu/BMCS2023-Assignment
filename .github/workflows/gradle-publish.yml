@@ -24,7 +24,7 @@ jobs:
         uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
 
       - name: Build JAR with Gradle
-        run: ./gradlew build
+        run: ./gradlew fatJar
 
       - name: Get current date
         id: date
@@ -52,6 +52,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: app/build/libs/app-1.0.0.jar
-          asset_name: bmcs2023-assignment-1.0.0.jar
+          asset_path: app/build/libs/app-1.0.0-all.jar
+          asset_name: bmcs2023-assignment-1.0.0-all.jar
           asset_content_type: application/java-archive

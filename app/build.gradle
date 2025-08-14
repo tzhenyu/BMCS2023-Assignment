@@ -38,6 +38,28 @@ java {
     }
 }
 
+jar {
+    manifest {
+        attributes(
+            'Main-Class': 'com.example.BMCS2023.Assignment.App'
+        )
+    }
+}
+
+task fatJar(type: Jar) {
+    archiveClassifier = 'all'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes(
+            'Main-Class': 'com.example.BMCS2023.Assignment.App'
+        )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    with jar
+}
+
 application {
     // Define the main class for the application.
     mainClass = 'com.example.BMCS2023.Assignment.App'
