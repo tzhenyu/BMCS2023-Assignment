@@ -19,11 +19,11 @@ publishing {
     }
     repositories {
         maven {
-            name = "myRepo"
+            name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/tanzhenyu/BMCS2023-Assignment")
             credentials {
-                username = project.findProperty("repoUser") ?: System.getenv("REPO_USER")
-                password = project.findProperty("repoPassword") ?: System.getenv("REPO_PASSWORD")
+                username = System.getenv("GITHUB_ACTOR") ?: project.findProperty("gpr.user")
+                password = System.getenv("GITHUB_TOKEN") ?: project.findProperty("gpr.key")
             }
         }
     }
