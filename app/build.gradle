@@ -10,6 +10,9 @@ plugins {
     id 'application'
     id 'maven-publish'
 }
+
+group = 'com.example.BMCS2023'
+version = '1.0.0'
 publishing {
     publications {
         mavenJava(MavenPublication) {
@@ -22,7 +25,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/tanzhenyu/BMCS2023-Assignment")
+            url = uri("https://maven.pkg.github.com/tzhenyu/BMCS2023-Assignment")
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")
