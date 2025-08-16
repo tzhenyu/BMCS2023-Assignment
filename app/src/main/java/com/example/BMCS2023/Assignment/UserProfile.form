@@ -23,57 +23,64 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="102" max="-2" attributes="0"/>
-                              <Component id="ID" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="IDdisplayText" min="-2" pref="136" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
-                              <Component id="username" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="usernameDisplayText" min="-2" pref="136" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="editInfoButton" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace pref="46" max="32767" attributes="0"/>
-                      <Component id="backButton" min="-2" pref="82" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="emergencyContactNumDisplayText" alignment="0" min="-2" pref="136" max="-2" attributes="0"/>
-                          <Component id="email" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="emailDisplayText" alignment="0" min="-2" pref="136" max="-2" attributes="0"/>
-                          <Component id="contactNum" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="contactNumDIsplayText" alignment="0" min="-2" pref="136" max="-2" attributes="0"/>
-                          <Component id="emergencyContactNum" alignment="0" min="-2" pref="157" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="ordersPanel" min="-2" pref="146" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="1" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="logoutButton" min="-2" pref="95" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="oilAlert" min="-2" max="-2" attributes="0"/>
-                  <Component id="button1" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="username" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="usernameDisplayText" min="-2" pref="136" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="1" attributes="0">
+                                                  <Component id="email" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="ID" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="IDdisplayText" min="-2" pref="136" max="-2" attributes="0"/>
+                                                  <Component id="emailDisplayText" min="-2" pref="136" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
+                                      <Component id="editInfoButton" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace pref="46" max="32767" attributes="0"/>
+                              <Component id="backButton" min="-2" pref="82" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="emergencyContactNumDisplayText" alignment="0" min="-2" pref="136" max="-2" attributes="0"/>
+                                  <Component id="contactNum" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="contactNumDIsplayText" alignment="0" min="-2" pref="136" max="-2" attributes="0"/>
+                                  <Component id="emergencyContactNum" alignment="0" min="-2" pref="157" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="ordersPanel" min="-2" pref="146" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="logoutButton" min="-2" pref="95" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="oilAlert" min="-2" max="-2" attributes="0"/>
+                          <Component id="button1" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -97,12 +104,13 @@
                                   <Component id="IDdisplayText" min="-2" pref="22" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Component id="email" min="-2" pref="22" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="email" min="-2" pref="22" max="-2" attributes="0"/>
+                                          <Component id="emailDisplayText" min="-2" max="-2" attributes="0"/>
+                                      </Group>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="emailDisplayText" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                                       <Component id="contactNum" min="-2" pref="22" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="contactNumDIsplayText" min="-2" max="-2" attributes="0"/>
@@ -111,7 +119,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="emergencyContactNumDisplayText" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="ordersPanel" max="32767" attributes="0"/>
+                                  <Component id="ordersPanel" min="-2" pref="178" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
