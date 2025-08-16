@@ -186,7 +186,12 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        Point pos = AdminDashboard.this.getLocation(); 
+        ManageUserPage frame = new ManageUserPage();   // create an instance
+        frame.setResizable(false);       // lock resizing
+        frame.setLocation(pos); 
+        frame.setVisible(true);          // show the frame
+        AdminDashboard.this.dispose();                  // close current frame         // TODO add your handling code here:// TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

@@ -93,9 +93,6 @@
           <Font name="Times New Roman" size="14" style="1"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/com/example/BMCS2023/Assignment/user.png"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Hi XXX"/>
       </Properties>
     </Component>

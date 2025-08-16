@@ -4,6 +4,7 @@ import javax.swing.SwingUtilities; // or FlatDarkLaf
 import javax.swing.UIManager;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class App {
     
@@ -15,13 +16,13 @@ public class App {
         try {
             // Set FlatLaf theme
             UIManager.setLookAndFeel(new FlatLightLaf());
-        } catch (Exception ex) {
+        } catch (UnsupportedLookAndFeelException ex) {
             System.err.println("Failed to initialize LaF");
         }
 
         // Launch the GUI
         SwingUtilities.invokeLater(() -> {
-            new CarDetailsPage().setVisible(true);  // <-- Launch your designed frame
+            new AdminDashboard().setVisible(true);  // <-- Launch your designed frame
         });
     }
 }
