@@ -25,17 +25,17 @@ public class App {
         });   
     }
 }
-            List<Vehicle> cars = DatabaseClient.getRecords("vehicles", Vehicle.class);
-            
-            // Loop through and print
-            for (Vehicle car : cars) {
-                System.out.println(car.getBrand() + " - " + car.getModel() + " - " + car.getPricePerDay());
-            }
-                       
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-}
+//            List<Vehicle> cars = DatabaseClient.getRecords("vehicles", Vehicle.class);
+//            
+//            // Loop through and print
+//            for (Vehicle car : cars) {
+//                System.out.println(car.getBrand() + " - " + car.getModel() + " - " + car.getPricePerDay());
+//            }
+//                       
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//}
 

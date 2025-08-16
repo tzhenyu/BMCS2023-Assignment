@@ -4,7 +4,6 @@
  */
 package com.example.BMCS2023.Assignment;
 import java.time.LocalDateTime; // Import the LocalDateTime class
-import java.time.format.DateTimeFormatter; // Import the DateTimeFormatter class
 // https://www.w3schools.com/java/java_date.asp for datetimeformat
 /**
  *
