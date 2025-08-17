@@ -12,11 +12,45 @@ import java.awt.Point;
  */
 public class CarDetails extends javax.swing.JFrame {
 
+    private Vehicle selectedVehicle;
+
     /**
      * Creates new form CarDetails
      */
     public CarDetails() {
         initComponents();
+    }
+    
+    /**
+     * Creates new form CarDetails with selected vehicle
+     */
+    public CarDetails(Vehicle vehicle) {
+        this.selectedVehicle = vehicle;
+        initComponents();
+        populateVehicleData();
+    }
+    
+    private void populateVehicleData() {
+        if (selectedVehicle != null) {
+            jLabel2.setText(selectedVehicle.getBrand() + " " + selectedVehicle.getModel());
+            
+            // Format the type nicely
+            String type = selectedVehicle.getType().toString();
+            type = type.charAt(0) + type.substring(1).toLowerCase();
+            jLabel3.setText(type);
+            
+            jLabel4.setText(selectedVehicle.getLocation());
+            
+            // Format add-ons nicely
+            if (selectedVehicle.getAddOn() != null) {
+                String addon = selectedVehicle.getAddOn().toString();
+                addon = addon.replace("_", " ");
+                addon = addon.charAt(0) + addon.substring(1).toLowerCase();
+                jLabel5.setText(addon);
+            } else {
+                jLabel5.setText("No add-ons");
+            }
+        }
     }
 
     /**
