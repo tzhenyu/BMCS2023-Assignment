@@ -4,8 +4,6 @@
  */
 package com.example.BMCS2023.Assignment;
 
-import java.awt.Point;
-
 /**
  *
  * @author Joel
@@ -79,12 +77,8 @@ public class ReminderFillOil extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
-        Point pos = this.getLocation();
         UserProfile frame = new UserProfile();    //create an instance
-        frame.setResizable(false);          //lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);             //show the frame
-        this.dispose();                     //close current frame
+        GUIClient.switchPage(this, frame);
     }//GEN-LAST:event_okButtonActionPerformed
 
     /**

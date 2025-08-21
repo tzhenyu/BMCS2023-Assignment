@@ -8,6 +8,20 @@ package com.example.BMCS2023.Assignment;
  *
  * @author zhenyu
  */
-public class User {
+public class User extends Person {
+    private String emergencyContact;
+    private String pendingVerificationPin;
+    
+    public boolean verifyPin(String inputPin) {
+        return false;
+    }
+
+    public void register(){
+        
+    }
+    
+    public void updateProfile() {
+    
+    }
     
 }

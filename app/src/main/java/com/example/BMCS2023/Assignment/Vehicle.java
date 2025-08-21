@@ -57,7 +57,7 @@ public class Vehicle {
     private Status status;
     private Type type;
     private String location;
-    private AddOn addon;
+    private AddOn[] addon;
     private FuelType fueltype;
     private double priceperday;
     
@@ -70,7 +70,7 @@ public class Vehicle {
         this.status = status;
         this.type = type;
         this.location = location;
-        this.addon = addOn;
+        this.addon = addOn != null ? new AddOn[]{addOn} : null;
         this.fueltype = fuelType;
         this.priceperday = pricePerDay;
     }
@@ -137,11 +137,35 @@ public class Vehicle {
     }
 
     public AddOn getAddOn() {
-        return addon;
+        return addon != null && addon.length > 0 ? addon[0] : null;
     }
 
     public void setAddOn(AddOn addOn) {
-        this.addon = addOn;
+        this.addon = addOn != null ? new AddOn[]{addOn} : null;
+    }
+    
+    // New methods to handle multiple addons
+    public AddOn[] getAddOns() {
+        return addon;
+    }
+    
+    public void setAddOns(AddOn[] addons) {
+        this.addon = addons;
+    }
+    
+    public String getAddOnsAsString() {
+        if (addon == null || addon.length == 0) {
+            return "No add-ons";
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < addon.length; i++) {
+            if (i > 0) sb.append(", ");
+            String addonStr = addon[i].toString().replace("_", " ");
+            addonStr = addonStr.charAt(0) + addonStr.substring(1).toLowerCase();
+            sb.append(addonStr);
+        }
+        return sb.toString();
     }
 
     public FuelType getFuelType() {

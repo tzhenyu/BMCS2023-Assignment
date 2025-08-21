@@ -83,13 +83,8 @@ public class CarBookingSuccess extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void backToMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backToMenuButtonActionPerformed
-        // TODO add your handling code here:
-        Point pos = this.getLocation(); 
-        CarMenu frame = new CarMenu();   // create an instance
-        frame.setResizable(false);       // lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);          // show the frame
-        this.dispose();                  // close current frame  
+
+        GUIClient.switchPage(this, new CarMenu());
     }//GEN-LAST:event_backToMenuButtonActionPerformed
 
     /**

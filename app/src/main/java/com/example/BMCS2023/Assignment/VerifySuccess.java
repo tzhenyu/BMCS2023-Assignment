@@ -4,8 +4,6 @@
  */
 package com.example.BMCS2023.Assignment;
 
-import java.awt.Point;
-
 /**
  *
  * @author H 4 Z A R D
@@ -75,13 +73,9 @@ public class VerifySuccess extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void verifySuccessOKbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifySuccessOKbuttonActionPerformed
-        Point pos = this.getLocation();
         CarMenu frame = new CarMenu();
-        frame.setResizable(false);
-        frame.setLocation(pos);
-        frame.setVisible(true);
+        GUIClient.switchPage(this, frame);
         parent.dispose();
-        this.dispose();
     }//GEN-LAST:event_verifySuccessOKbuttonActionPerformed
 
     /**

@@ -4,8 +4,6 @@
  */
 package com.example.BMCS2023.Assignment;
 
-import java.awt.Point;
-
 /**
  *
  * @author H 4 Z A R D
@@ -201,12 +199,8 @@ public class RegisterPage extends javax.swing.JFrame {
     }//GEN-LAST:event_bloginActionPerformed
 
     private void signupConfirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupConfirmButtonActionPerformed
-        Point pos = this.getLocation();
         VerifyPage frame = new VerifyPage();    //create an instance
-        frame.setResizable(false);          //lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);             //show the frame
-        this.dispose();                     //close current frame
+        GUIClient.switchPage(this, frame);
     }//GEN-LAST:event_signupConfirmButtonActionPerformed
 
     private void signupEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupEmailActionPerformed
@@ -218,12 +212,8 @@ public class RegisterPage extends javax.swing.JFrame {
     }//GEN-LAST:event_signupEmergencyContactNumActionPerformed
 
     private void signupCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupCancelButtonActionPerformed
-        Point pos = this.getLocation();
         UserLoginPage frame = new UserLoginPage();
-        frame.setResizable(false);
-        frame.setLocation(pos);
-        frame.setVisible(true);
-        this.dispose();
+        GUIClient.switchPage(this, frame);
     }//GEN-LAST:event_signupCancelButtonActionPerformed
 
     /**

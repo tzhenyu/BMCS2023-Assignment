@@ -20,20 +20,9 @@ public class App {
 
         // Launch the GUI
         SwingUtilities.invokeLater(() -> {
-            new CarMenu().setVisible(true);  // <-- Launch your designed frame
+            CarMenu frame = new CarMenu();  
+            frame.setResizable(false);          
+            frame.setVisible(true);            
         });   
     }
 }
-//            List<Vehicle> cars = DatabaseClient.getRecords("vehicles", Vehicle.class);
-//            
-//            // Loop through and print
-//            for (Vehicle car : cars) {
-//                System.out.println(car.getBrand() + " - " + car.getModel() + " - " + car.getPricePerDay());
-//            }
-//                       
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-//}

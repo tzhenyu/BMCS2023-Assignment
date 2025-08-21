@@ -12,6 +12,7 @@ import java.awt.Point;
  */
 public class CarBooking extends javax.swing.JFrame {
 
+    private Vehicle selectedVehicle;
     /**
      * Creates new form CarDetails
      */
@@ -28,6 +29,31 @@ public class CarBooking extends javax.swing.JFrame {
         // Set day spinner (1-31)
         jSpinner3.setModel(new javax.swing.SpinnerNumberModel(1, 1, 31, 1));
     }
+
+    public CarBooking(Vehicle vehicle) {
+        this.selectedVehicle = vehicle;
+        initComponents();
+        // Call populateVehicleData after components are initialized
+        populateVehicleData();
+    }
+    
+    private void populateVehicleData() {
+        if (selectedVehicle != null) {
+            jLabel2.setText(selectedVehicle.getBrand() + " " + selectedVehicle.getModel());
+            
+            // Format the type nicely
+            String type = selectedVehicle.getType().toString();
+            type = type.charAt(0) + type.substring(1).toLowerCase();
+            jLabel3.setText(type);
+            
+            jLabel4.setText(selectedVehicle.getLocation());
+            
+            // Format add-ons nicely - now handles multiple addons
+            jLabel5.setText(selectedVehicle.getAddOnsAsString());
+        }
+    }
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -302,12 +328,7 @@ public class CarBooking extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        Point pos = this.getLocation(); 
-        CarMenu frame = new CarMenu();   // create an instance
-        frame.setResizable(false);       // lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);          // show the frame
-        this.dispose();                  // close current frame   
+        GUIClient.switchPage(this, new CarMenu());
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
@@ -315,13 +336,7 @@ public class CarBooking extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void rentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rentButtonActionPerformed
-        // TODO add your handling code here:
-        Point pos = this.getLocation(); 
-        CarBookingSuccess frame = new CarBookingSuccess();   // create an instance
-        frame.setResizable(false);       // lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);          // show the frame
-        this.dispose();                  // close current frame   
+        GUIClient.switchPage(this, new CarBookingSuccess());
     }//GEN-LAST:event_rentButtonActionPerformed
 
     /**
