@@ -21,7 +21,9 @@ public class App {
 
         // Launch the GUI
         SwingUtilities.invokeLater(() -> {
-            new CarMenu().setVisible(true);  // <-- Launch your designed frame
+            CarMenu carMenu = new CarMenu();
+            carMenu.setLocationRelativeTo(null);  // Centers on screen
+            carMenu.setVisible(true);
         });   
     }
 }
