@@ -126,7 +126,12 @@ public class AdminLoginPage extends javax.swing.JFrame {
     }//GEN-LAST:event_adminPasswordActionPerformed
 
     private void adminLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminLoginButtonActionPerformed
-        // TODO add your handling code here:
+        Point pos = this.getLocation();
+        AdminDashboard frame = new AdminDashboard();
+        frame.setResizable(false);
+        frame.setLocation(pos);
+        frame.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_adminLoginButtonActionPerformed
 
     private void adminCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminCancelButtonActionPerformed
