@@ -5,11 +5,15 @@ import javax.swing.UIManager;
 import com.formdev.flatlaf.FlatLightLaf;
 import javax.swing.UnsupportedLookAndFeelException;
 
+
+import java.util.List;
+
 public class App {
-    
+
     
     public static void main(String[] args) {
         try {
+
             // Set FlatLaf theme
             UIManager.setLookAndFeel(new FlatLightLaf());
         } catch (UnsupportedLookAndFeelException ex) {
@@ -18,7 +22,9 @@ public class App {
 
         // Launch the GUI
         SwingUtilities.invokeLater(() -> {
-            new CarMenu().setVisible(true);  // <-- Launch your designed frame
+            CarMenu carMenu = new CarMenu();
+            carMenu.setLocationRelativeTo(null);  // Centers on screen
+            carMenu.setVisible(true);
         });   
-    }
-}
+ }
+

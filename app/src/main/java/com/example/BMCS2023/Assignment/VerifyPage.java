@@ -175,11 +175,11 @@ public class VerifyPage extends javax.swing.JFrame {
 
     private void verifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifyButtonActionPerformed
         Point pos = this.getLocation();
-        VerifySuccess frame = new VerifySuccess();
+        VerifySuccess frame = new VerifySuccess(this);
+        frame.setLocationRelativeTo(this);
         frame.setResizable(false);
         frame.setLocation(pos);
         frame.setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_verifyButtonActionPerformed
 
     /**

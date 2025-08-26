@@ -11,11 +11,15 @@ import java.awt.Point;
  * @author H 4 Z A R D
  */
 public class VerifySuccess extends javax.swing.JFrame {
-
+    private VerifyPage parent;
     /**
      * Creates new form VerifySuccess
      */
     public VerifySuccess() {
+        initComponents();
+    }
+    public VerifySuccess(VerifyPage parent) {
+        this.parent = parent;
         initComponents();
     }
 
@@ -76,6 +80,7 @@ public class VerifySuccess extends javax.swing.JFrame {
         frame.setResizable(false);
         frame.setLocation(pos);
         frame.setVisible(true);
+        parent.dispose();
         this.dispose();
     }//GEN-LAST:event_verifySuccessOKbuttonActionPerformed
 

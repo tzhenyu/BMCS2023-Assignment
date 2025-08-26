@@ -216,7 +216,7 @@ public class UserProfile extends javax.swing.JFrame {
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         Point pos = this.getLocation();
-        UserLoginPage frame = new UserLoginPage();    //create an instance
+        CarMenu frame = new CarMenu();    //create an instance
         frame.setResizable(false);          //lock resizing
         frame.setLocation(pos); 
         frame.setVisible(true);             //show the frame
