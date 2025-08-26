@@ -21,21 +21,10 @@ public class App {
 
         // Launch the GUI
         SwingUtilities.invokeLater(() -> {
+            CarMenu carMenu = new CarMenu();
             new CarMenu().setVisible(true);  // <-- Launch your designed frame
-        });   
+            carMenu.setLocationRelativeTo(null);  // Centers on screen
+            carMenu.setVisible(true);
+        });
     }
 }
-            List<Vehicle> cars = DatabaseClient.getRecords("vehicles", Vehicle.class);
-            
-            // Loop through and print
-            for (Vehicle car : cars) {
-                System.out.println(car.getBrand() + " - " + car.getModel() + " - " + car.getPricePerDay());
-            }
-                       
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-}
-
