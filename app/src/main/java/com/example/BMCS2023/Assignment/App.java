@@ -25,8 +25,8 @@ public class App {
             carMenu.setLocationRelativeTo(null);  // Centers on screen
             carMenu.setVisible(true);
         });   
-    }
-}
+    
+        try {
             List<Vehicle> cars = DatabaseClient.getRecords("vehicles", Vehicle.class);
             
             // Loop through and print
@@ -39,5 +39,5 @@ public class App {
             e.printStackTrace();
         }
     }
-}
+ }
 
