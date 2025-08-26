@@ -30,10 +30,11 @@ public class Rental {
     //no need testdrive as we abondon already
     //no need selectedaddons for now
 
+    // For database serialization - uses IDs as strings
     public Rental(String id, String userId, String vehicleId, LocalDateTime startTime, LocalDateTime endTime, String pickupLocation, String returnLocation, Status status, boolean fuelStatusOnReturn) {
         this.id = id;
-        this.user = user;
-        this.vehicle = vehicle;
+        // Note: This constructor stores IDs as references for database serialization
+        // The actual User and Vehicle objects would be loaded separately when needed
         this.startTime = startTime;
         this.endTime = endTime;
         this.pickupLocation = pickupLocation;
@@ -41,6 +42,32 @@ public class Rental {
         this.status = status;
         this.fuelStatusOnReturn = fuelStatusOnReturn;
     }
+
+    // For object-oriented use with actual User and Vehicle objects
+    public Rental(User user, Vehicle vehicle, LocalDateTime startTime, LocalDateTime endTime) {
+        this.id = "rental_" + System.currentTimeMillis(); // Generate unique ID
+        this.user = user;
+        this.vehicle = vehicle;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.status = Status.PENDING;
+        this.fuelStatusOnReturn = false;
+    }
+
+    // Additional constructor for creating rental with all basic info
+    public Rental(String id, User user, Vehicle vehicle, LocalDateTime startTime, LocalDateTime endTime, String pickupLocation, String returnLocation) {
+        this.id = id;
+        this.user = user;
+        this.vehicle = vehicle;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.pickupLocation = pickupLocation;
+        this.returnLocation = returnLocation;
+        this.status = Status.PENDING;
+        this.fuelStatusOnReturn = false;
+    }
+    
+    
 
     public String getId() {
         return id;

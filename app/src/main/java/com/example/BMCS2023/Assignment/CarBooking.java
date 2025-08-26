@@ -4,7 +4,7 @@
  */
 package com.example.BMCS2023.Assignment;
 
-import java.awt.Point;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -53,6 +53,69 @@ public class CarBooking extends javax.swing.JFrame {
         }
     }
 
+
+public void handleFormSubmission() {
+    try {
+        // Create dummy user for demonstration (in a real app, get from session)
+        User user = new User();
+        user.setId("user123");
+        user.setName("John Doe");
+        user.setEmail("john@example.com");
+        
+        // Use the selected vehicle passed to this form
+        Vehicle vehicle = this.selectedVehicle;
+        if (vehicle == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "No vehicle selected. Please go back and select a vehicle.", 
+                "Error", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Get date components from spinners
+        int year = (Integer) jSpinner1.getValue();
+        int month = (Integer) jSpinner2.getValue();
+        int day = (Integer) jSpinner3.getValue();
+        
+        // Get time strings from text fields (for future enhancement)
+        String pickupTime = jTextField2.getText();
+        String returnTime = jTextField3.getText();
+        
+        // Create LocalDateTime objects (simplified - using default hour/minute)
+        LocalDateTime startTime = LocalDateTime.of(year, month, day, 9, 0); // 9 AM default
+        LocalDateTime endTime = LocalDateTime.of(year, month, day, 17, 0);  // 5 PM default
+        
+        // Generate unique rental ID 
+        String rentalId = java.util.UUID.randomUUID().toString();
+        
+        // Create rental DTO for database insertion (matches database schema)
+        RentalDTO rentalDTO = new RentalDTO(
+            rentalId,
+            user.getId(),       // user_id
+            vehicle.getId(),    // vehicle_id  
+            startTime,          // start_time
+            endTime,            // end_time
+            "pending"           // status (lowercase to match database constraint)
+        );
+        
+        // For database insertion, create array
+        RentalDTO[] rentals = { rentalDTO };
+        
+        // Insert into database (use plural table name)
+        String response = DatabaseClient.insertRecords("rentals", rentals);
+        System.out.println("Insert response: " + response);
+        
+        // Show success message and navigate to success page
+        GUIClient.switchPage(this, new CarBookingSuccess());
+        
+    } catch (Exception e) {
+        e.printStackTrace();
+        javax.swing.JOptionPane.showMessageDialog(this, 
+            "Error creating rental: " + e.getMessage(), 
+            "Error", 
+            javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -336,7 +399,7 @@ public class CarBooking extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void rentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rentButtonActionPerformed
-        GUIClient.switchPage(this, new CarBookingSuccess());
+        handleFormSubmission();
     }//GEN-LAST:event_rentButtonActionPerformed
 
     /**
