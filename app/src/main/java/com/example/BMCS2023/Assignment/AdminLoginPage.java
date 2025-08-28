@@ -40,6 +40,11 @@ public class AdminLoginPage extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jCheckBox1.setText("Show password");
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
 
         adminLoginButton.setText("LOGIN");
         adminLoginButton.addActionListener(new java.awt.event.ActionListener() {
@@ -120,6 +125,14 @@ public class AdminLoginPage extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        if (jCheckBox1.isSelected()) {
+            adminPassword.setEchoChar((char) 0); // show password
+        } else {
+            adminPassword.setEchoChar('*'); // hide password
+        }
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void adminPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminPasswordActionPerformed
         adminLoginButton.doClick(); // press Enter to trigger login
