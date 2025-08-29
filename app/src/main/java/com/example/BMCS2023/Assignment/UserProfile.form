@@ -68,12 +68,7 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="logoutButton" min="-2" pref="95" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="oilAlert" min="-2" max="-2" attributes="0"/>
-                  <Component id="testConditionChecklist" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+              <EmptySpace min="21" pref="397" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -121,18 +116,8 @@
                       <Component id="backButton" min="-2" pref="35" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="logoutButton" min="-2" pref="33" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="oilAlert" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                      <Component id="testConditionChecklist" min="-2" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
+              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+              <Component id="logoutButton" min="-2" pref="33" max="-2" attributes="0"/>
               <EmptySpace pref="10" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -231,22 +216,6 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="logoutButtonActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="java.awt.Button" name="testConditionChecklist">
-      <Properties>
-        <Property name="label" type="java.lang.String" value="test for Condition checklist"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="testConditionChecklistActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="oilAlert">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Oil Alert Test"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="oilAlertActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -43,8 +43,6 @@ public class UserProfile extends javax.swing.JFrame {
         ordersPanel = new javax.swing.JScrollPane();
         jLabel1 = new javax.swing.JLabel();
         logoutButton = new javax.swing.JButton();
-        testConditionChecklist = new java.awt.Button();
-        oilAlert = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,20 +93,6 @@ public class UserProfile extends javax.swing.JFrame {
             }
         });
 
-        testConditionChecklist.setLabel("test for Condition checklist");
-        testConditionChecklist.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                testConditionChecklistActionPerformed(evt);
-            }
-        });
-
-        oilAlert.setText("Oil Alert Test");
-        oilAlert.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                oilAlertActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -149,11 +133,7 @@ public class UserProfile extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(oilAlert)
-                    .addComponent(testConditionChecklist, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21))
+                .addGap(21, 397, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,15 +170,8 @@ public class UserProfile extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(oilAlert)
-                        .addGap(9, 9, 9)
-                        .addComponent(testConditionChecklist, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(40, 40, 40)
+                .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
@@ -231,24 +204,6 @@ public class UserProfile extends javax.swing.JFrame {
         frame.setVisible(true);             //show the frame
         this.dispose();                     //close current frame
     }//GEN-LAST:event_logoutButtonActionPerformed
-
-    private void testConditionChecklistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testConditionChecklistActionPerformed
-        Point pos = this.getLocation();
-        ConditionChecklist frame = new ConditionChecklist();    //create an instance
-        frame.setResizable(false);          //lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);             //show the frame
-        this.dispose();                     //close current frame
-    }//GEN-LAST:event_testConditionChecklistActionPerformed
-
-    private void oilAlertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oilAlertActionPerformed
-        Point pos = this.getLocation();
-        OilAlert frame = new OilAlert();    //create an instance
-        frame.setResizable(false);          //lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);             //show the frame
-        this.dispose();                     //close current frame
-    }//GEN-LAST:event_oilAlertActionPerformed
 
     private void usernameText(){
         
@@ -301,9 +256,7 @@ public class UserProfile extends javax.swing.JFrame {
     private java.awt.Label emergencyContactNumDisplayText;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton logoutButton;
-    private javax.swing.JButton oilAlert;
     private javax.swing.JScrollPane ordersPanel;
-    private java.awt.Button testConditionChecklist;
     private java.awt.Label username;
     private java.awt.Label usernameDisplayText;
     // End of variables declaration//GEN-END:variables
