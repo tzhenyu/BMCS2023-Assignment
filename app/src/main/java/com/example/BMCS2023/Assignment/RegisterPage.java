@@ -5,6 +5,8 @@
 package com.example.BMCS2023.Assignment;
 
 import java.awt.Point;
+import java.util.Random;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,6 +21,13 @@ public class RegisterPage extends javax.swing.JFrame {
         initComponents();
     }
 
+    private String generateUserId() {
+    Random random = new Random();
+    
+    int id = 100000 + random.nextInt(900000);
+    return String.valueOf(id);
+}
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,7 +41,6 @@ public class RegisterPage extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         signupUsername = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         signupEmergencyContactNum = new javax.swing.JTextField();
         signupConfirmPassword = new javax.swing.JPasswordField();
         jLabel4 = new javax.swing.JLabel();
@@ -42,7 +50,6 @@ public class RegisterPage extends javax.swing.JFrame {
         signupPassword = new javax.swing.JPasswordField();
         jLabel7 = new javax.swing.JLabel();
         signupConfirmButton = new javax.swing.JButton();
-        signupEmail = new javax.swing.JTextField();
         signupCancelButton = new javax.swing.JButton();
 
         blogin.setText("LOGIN");
@@ -59,9 +66,6 @@ public class RegisterPage extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Username");
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel3.setText("Email");
 
         signupEmergencyContactNum.setText("+60");
         signupEmergencyContactNum.addActionListener(new java.awt.event.ActionListener() {
@@ -103,12 +107,6 @@ public class RegisterPage extends javax.swing.JFrame {
             }
         });
 
-        signupEmail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                signupEmailActionPerformed(evt);
-            }
-        });
-
         signupCancelButton.setText("Cancel");
         signupCancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -123,9 +121,9 @@ public class RegisterPage extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(217, 217, 217)
                 .addComponent(jLabel1)
-                .addContainerGap(217, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(112, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addGroup(layout.createSequentialGroup()
@@ -133,8 +131,7 @@ public class RegisterPage extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addComponent(jLabel4)
                             .addComponent(jLabel6)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel3))
+                            .addComponent(jLabel7))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -145,7 +142,6 @@ public class RegisterPage extends javax.swing.JFrame {
                             .addComponent(signupConfirmPassword, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(signupEmergencyContactNum, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(signupUsername, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(signupEmail)
                             .addComponent(signupPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(79, 79, 79))
         );
@@ -154,15 +150,11 @@ public class RegisterPage extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(signupUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(signupEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(signupPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -182,7 +174,7 @@ public class RegisterPage extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(signupCancelButton)
                     .addComponent(signupConfirmButton))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         pack();
@@ -201,17 +193,42 @@ public class RegisterPage extends javax.swing.JFrame {
     }//GEN-LAST:event_bloginActionPerformed
 
     private void signupConfirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupConfirmButtonActionPerformed
+        try {
         Point pos = this.getLocation();
-        VerifyPage frame = new VerifyPage();    //create an instance
-        frame.setResizable(false);          //lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);             //show the frame
-        this.dispose();                     //close current frame
-    }//GEN-LAST:event_signupConfirmButtonActionPerformed
+        String username = signupUsername.getText();
+        String contactNum = signupContactNum.getText();
+        String emergency = signupEmergencyContactNum.getText();
+        
+        // Generate random user ID
+        String userId = generateUserId();
+        
+        // Create user object
+        User newUser = new User(userId, username, contactNum, emergency);
+        
+        // Convert to JSON and insert using a simple HTTP POST
+        // (You'll need to add this method to DatabaseClient)
+        String result = DatabaseClient.insertUser(newUser);
+        System.out.println("User saved: " + result);
+        
+        // Store current user ID in session
+        SessionManager.setCurrentUserId(userId);
+        
+        // Navigate to UserProfile
+        UserProfile frame = new UserProfile();
+        frame.setLocation(pos);
+        frame.loadUserData(); // This now uses getRecords internally
+        
+        frame.setVisible(true);
+        frame.setResizable(false);
+        this.dispose();
+        
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error saving user data: " + e.getMessage(), 
+                                    "Database Error", JOptionPane.ERROR_MESSAGE);
+    }
 
-    private void signupEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupEmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_signupEmailActionPerformed
+    }//GEN-LAST:event_signupConfirmButtonActionPerformed
 
     private void signupEmergencyContactNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupEmergencyContactNumActionPerformed
         // TODO add your handling code here:
@@ -265,7 +282,6 @@ public class RegisterPage extends javax.swing.JFrame {
     private javax.swing.JButton blogin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -274,7 +290,6 @@ public class RegisterPage extends javax.swing.JFrame {
     private javax.swing.JButton signupConfirmButton;
     private javax.swing.JPasswordField signupConfirmPassword;
     private javax.swing.JTextField signupContactNum;
-    private javax.swing.JTextField signupEmail;
     private javax.swing.JTextField signupEmergencyContactNum;
     private javax.swing.JPasswordField signupPassword;
     private javax.swing.JTextField signupUsername;

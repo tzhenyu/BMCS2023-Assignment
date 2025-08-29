@@ -5,6 +5,7 @@
 package com.example.BMCS2023.Assignment;
 
 import java.awt.Point;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -358,12 +359,22 @@ public class CarMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void profileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileButtonActionPerformed
-        Point pos = this.getLocation();
-        UserProfile frame = new UserProfile();    //create an instance
-        frame.setResizable(false);          //lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);             //show the frame
-        this.dispose();                     //close current frame
+        try {
+        String currentUserId = SessionManager.getCurrentUserId();
+        if (currentUserId != null) {
+            UserProfile profileFrame = new UserProfile();
+            profileFrame.loadUserData();
+            profileFrame.setLocationRelativeTo(null);
+            profileFrame.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "No user logged in!", 
+                                        "Error", JOptionPane.WARNING_MESSAGE);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error loading profile: " + e.getMessage(), 
+                                    "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_profileButtonActionPerformed
 
     private void carDetailPanelButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_carDetailPanelButton1MouseClicked

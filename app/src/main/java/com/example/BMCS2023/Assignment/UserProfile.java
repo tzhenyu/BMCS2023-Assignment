@@ -5,6 +5,10 @@
 package com.example.BMCS2023.Assignment;
 
 import java.awt.Point;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,6 +21,95 @@ public class UserProfile extends javax.swing.JFrame {
      */
     public UserProfile() {
         initComponents();
+    }
+    
+        public void loadUserData() {
+        try {
+            String currentUserId = SessionManager.getCurrentUserId();
+            if (currentUserId != null) {
+                // Use getRecords to get all users, then filter by ID
+                List<User> users = DatabaseClient.getRecords("users", User.class);
+                
+                // Find the current user
+                User currentUser = users.stream()
+                    .filter(user -> currentUserId.equals(user.getId()))
+                    .findFirst()
+                    .orElse(null);
+                
+                if (currentUser != null) {
+                    IDdisplayText(currentUser.getId());
+                    usernameDisplayText(currentUser.getUsername());
+                    contactNumDisplayText(currentUser.getContactNum());
+                    emergencyContactNumDisplayText(currentUser.getEmergencyContactNum());
+                } else {
+                    JOptionPane.showMessageDialog(this, "User not found!", 
+                                                "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error loading user data: " + e.getMessage(), 
+                                        "Database Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    // Alternative method using readRecords with manual JSON parsing
+    public void loadUserDataWithReadRecords() {
+        try {
+            String currentUserId = SessionManager.getCurrentUserId();
+            if (currentUserId != null) {
+                // Use readRecords to get raw JSON
+                String jsonResult = DatabaseClient.readRecords("users");
+                System.out.println("Raw JSON: " + jsonResult); // Debug print
+                
+                // Parse JSON manually using Gson
+                Gson gson = new Gson();
+                java.lang.reflect.Type listType = TypeToken.getParameterized(List.class, User.class).getType();
+                List<User> users = gson.fromJson(jsonResult, listType);
+                
+                // Find the current user
+                User currentUser = null;
+                for (User user : users) {
+                    if (currentUserId.equals(user.getId())) {
+                        currentUser = user;
+                        break;
+                    }
+                }
+                
+                if (currentUser != null) {
+                    IDdisplayText(currentUser.getId());
+                    usernameDisplayText(currentUser.getUsername());
+                    contactNumDisplayText(currentUser.getContactNum());
+                    emergencyContactNumDisplayText(currentUser.getEmergencyContactNum());
+                } else {
+                    JOptionPane.showMessageDialog(this, "User not found!", 
+                                                "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error loading user data: " + e.getMessage(), 
+                                        "Database Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    // Your existing display methods
+    public void IDdisplayText(String id) {
+        // Update your ID label/field
+        IDdisplayText.setText(id); // Replace 'idLabel' with your actual component name
+    }
+    
+    public void usernameDisplayText(String username) {
+        // Update your username label/field
+        usernameDisplayText.setText(username); // Replace with your actual component name
+    }
+    
+    public void contactNumDisplayText(String contactNum) {
+        // Update your contact number label/field
+        contactNumDisplayText.setText(contactNum); // Replace with your actual component name
+    }
+    
+    public void emergencyContactNumDisplayText(String emergencyContactNum) {
+        // Update your emergency contact label/field
+        emergencyContactNumDisplayText.setText(emergencyContactNum); // Replace with your actual component name
     }
 
     /**
@@ -34,17 +127,13 @@ public class UserProfile extends javax.swing.JFrame {
         backButton = new javax.swing.JButton();
         ID = new java.awt.Label();
         IDdisplayText = new java.awt.Label();
-        contactNumDIsplayText = new java.awt.Label();
+        contactNumDisplayText = new java.awt.Label();
         emergencyContactNumDisplayText = new java.awt.Label();
-        emailDisplayText = new java.awt.Label();
-        email = new java.awt.Label();
         contactNum = new java.awt.Label();
         emergencyContactNum = new java.awt.Label();
         ordersPanel = new javax.swing.JScrollPane();
         jLabel1 = new javax.swing.JLabel();
         logoutButton = new javax.swing.JButton();
-        testConditionChecklist = new java.awt.Button();
-        oilAlert = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,13 +159,9 @@ public class UserProfile extends javax.swing.JFrame {
 
         IDdisplayText.setText("ID");
 
-        contactNumDIsplayText.setText("contact num");
+        contactNumDisplayText.setText("contact num");
 
         emergencyContactNumDisplayText.setText("emergency contact num");
-
-        emailDisplayText.setText("email");
-
-        email.setText("Email:");
 
         contactNum.setText("Contact Number:");
 
@@ -92,20 +177,6 @@ public class UserProfile extends javax.swing.JFrame {
         logoutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 logoutButtonActionPerformed(evt);
-            }
-        });
-
-        testConditionChecklist.setLabel("test for Condition checklist");
-        testConditionChecklist.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                testConditionChecklistActionPerformed(evt);
-            }
-        });
-
-        oilAlert.setText("Oil Alert Test");
-        oilAlert.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                oilAlertActionPerformed(evt);
             }
         });
 
@@ -138,10 +209,8 @@ public class UserProfile extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(emergencyContactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(emailDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(contactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(contactNumDIsplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(contactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(emergencyContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(ordersPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -149,11 +218,7 @@ public class UserProfile extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(oilAlert)
-                    .addComponent(testConditionChecklist, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21))
+                .addGap(21, 397, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,33 +237,24 @@ public class UserProfile extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(IDdisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(6, 6, 6)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(6, 6, 6)
+                                        .addComponent(ordersPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(emailDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(14, 14, 14)
                                         .addComponent(contactNum, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(contactNumDIsplayText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(contactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(emergencyContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(emergencyContactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(ordersPanel)))))
+                                        .addComponent(emergencyContactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(oilAlert)
-                        .addGap(9, 9, 9)
-                        .addComponent(testConditionChecklist, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(40, 40, 40)
+                .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
@@ -232,27 +288,7 @@ public class UserProfile extends javax.swing.JFrame {
         this.dispose();                     //close current frame
     }//GEN-LAST:event_logoutButtonActionPerformed
 
-    private void testConditionChecklistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testConditionChecklistActionPerformed
-        Point pos = this.getLocation();
-        ConditionChecklist frame = new ConditionChecklist();    //create an instance
-        frame.setResizable(false);          //lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);             //show the frame
-        this.dispose();                     //close current frame
-    }//GEN-LAST:event_testConditionChecklistActionPerformed
-
-    private void oilAlertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oilAlertActionPerformed
-        Point pos = this.getLocation();
-        OilAlert frame = new OilAlert();    //create an instance
-        frame.setResizable(false);          //lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);             //show the frame
-        this.dispose();                     //close current frame
-    }//GEN-LAST:event_oilAlertActionPerformed
-
-    private void usernameText(){
-        
-    }
+    
     /**
      * @param args the command line arguments
      */
@@ -293,17 +329,13 @@ public class UserProfile extends javax.swing.JFrame {
     private java.awt.Label IDdisplayText;
     private javax.swing.JButton backButton;
     private java.awt.Label contactNum;
-    private java.awt.Label contactNumDIsplayText;
+    private java.awt.Label contactNumDisplayText;
     private javax.swing.JButton editInfoButton;
-    private java.awt.Label email;
-    private java.awt.Label emailDisplayText;
     private java.awt.Label emergencyContactNum;
     private java.awt.Label emergencyContactNumDisplayText;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton logoutButton;
-    private javax.swing.JButton oilAlert;
     private javax.swing.JScrollPane ordersPanel;
-    private java.awt.Button testConditionChecklist;
     private java.awt.Label username;
     private java.awt.Label usernameDisplayText;
     // End of variables declaration//GEN-END:variables
