@@ -9,7 +9,6 @@ package com.example.BMCS2023.Assignment;
  * @author zhenyu
  */
 public class User {
-    
     private String userId;
     private String username;
     private String password;
@@ -27,7 +26,7 @@ public class User {
     }
 
     User() {
-        
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public String getUserId() {
@@ -77,7 +76,4 @@ public class User {
     public void setEmergencyContactNum(String emergencyContactNum) {
         this.emergencyContactNum = emergencyContactNum;
     }
-    
-    
-    
 }
