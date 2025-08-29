@@ -5,10 +5,8 @@
 package com.example.BMCS2023.Assignment;
 
 import java.awt.Point;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import java.util.List;
 import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -23,6 +21,34 @@ public class UserProfile extends javax.swing.JFrame {
         initComponents();
     }
     
+    public void loadUserData(User user) {
+        IDdisplayText.setText(user.getUserId());
+        usernameDisplayText.setText(user.getUsername());
+        emailDisplayText.setText(user.getEmail());
+        contactNumDisplayText.setText(user.getContactNum());
+        emergencyContactNumDisplayText.setText(user.getEmergencyContactNum());
+        
+        User loggedInUser = DatabaseClient.getRecords("users", User.class)
+                                  .stream()
+                                  .filter(u -> u.getUsername().equals(inputUsername)) // or email
+                                  .findFirst()
+                                  .orElse(null);
+
+        if (loggedInUser != null) {
+            Point pos = this.getLocation();
+            UserProfile profile = new UserProfile();
+            profile.setLocation(pos);
+            profile.setResizable(false);
+
+        // Pass data into profile
+        profile.loadUserData(loggedInUser);
+
+        profile.setVisible(true);
+        this.dispose();
+    }   else {
+        JOptionPane.showMessageDialog(this, "User not found in database!");
+    }
+    }
     
     // Your existing display methods
     public void IDdisplayText(String id) {
@@ -67,6 +93,8 @@ public class UserProfile extends javax.swing.JFrame {
         ordersPanel = new javax.swing.JScrollPane();
         jLabel1 = new javax.swing.JLabel();
         logoutButton = new javax.swing.JButton();
+        email = new java.awt.Label();
+        emailDisplayText = new java.awt.Label();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -113,6 +141,10 @@ public class UserProfile extends javax.swing.JFrame {
             }
         });
 
+        email.setText("Email:");
+
+        emailDisplayText.setText("email");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -144,7 +176,9 @@ public class UserProfile extends javax.swing.JFrame {
                             .addComponent(emergencyContactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(contactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(contactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(emergencyContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(emergencyContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(emailDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(ordersPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18))
@@ -170,11 +204,12 @@ public class UserProfile extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(IDdisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(6, 6, 6)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
-                                        .addComponent(ordersPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(2, 2, 2)
+                                        .addComponent(emailDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(contactNum, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -182,7 +217,8 @@ public class UserProfile extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(emergencyContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(emergencyContactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                        .addComponent(emergencyContactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(ordersPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -213,12 +249,14 @@ public class UserProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
+        SessionManager.logout();
+    
         Point pos = this.getLocation();
-        UserLoginPage frame = new UserLoginPage();    //create an instance
+        CarMenu frame = new CarMenu();    //create an instance
         frame.setResizable(false);          //lock resizing
         frame.setLocation(pos); 
         frame.setVisible(true);             //show the frame
-        this.dispose();                     //close current frame
+        this.dispose();  
     }//GEN-LAST:event_logoutButtonActionPerformed
 
 
@@ -230,6 +268,8 @@ public class UserProfile extends javax.swing.JFrame {
     private java.awt.Label contactNum;
     private java.awt.Label contactNumDisplayText;
     private javax.swing.JButton editInfoButton;
+    private java.awt.Label email;
+    private java.awt.Label emailDisplayText;
     private java.awt.Label emergencyContactNum;
     private java.awt.Label emergencyContactNumDisplayText;
     private javax.swing.JLabel jLabel1;

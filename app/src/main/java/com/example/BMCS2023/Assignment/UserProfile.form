@@ -56,6 +56,8 @@
                           <Component id="contactNum" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="contactNumDisplayText" alignment="0" min="-2" pref="136" max="-2" attributes="0"/>
                           <Component id="emergencyContactNum" alignment="0" min="-2" pref="157" max="-2" attributes="0"/>
+                          <Component id="email" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="emailDisplayText" alignment="0" min="-2" pref="136" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="ordersPanel" min="-2" pref="146" max="-2" attributes="0"/>
@@ -89,12 +91,12 @@
                                   <Component id="ID" min="-2" pref="22" max="-2" attributes="0"/>
                                   <Component id="IDdisplayText" min="-2" pref="22" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                                      <Component id="ordersPanel" min="-2" pref="178" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="email" min="-2" pref="22" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                                      <Component id="emailDisplayText" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="contactNum" min="-2" pref="22" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
@@ -104,6 +106,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="emergencyContactNumDisplayText" min="-2" max="-2" attributes="0"/>
                                   </Group>
+                                  <Component id="ordersPanel" min="-2" pref="178" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -204,6 +207,16 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="logoutButtonActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="java.awt.Label" name="email">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Email:"/>
+      </Properties>
+    </Component>
+    <Component class="java.awt.Label" name="emailDisplayText">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="email"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

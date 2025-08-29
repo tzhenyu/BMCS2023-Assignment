@@ -8,18 +8,24 @@ package com.example.BMCS2023.Assignment;
  *
  * @author Joel
  */
+
 public class SessionManager {
-    private static String currentUserId;
-    
-    public static void setCurrentUserId(String userId) {
-        currentUserId = userId;
+    private static User currentUser;
+
+    public static void setCurrentUser(User user) {
+        currentUser = user;
     }
-    
-    public static String getCurrentUserId() {
-        return currentUserId;
+
+    public static User getCurrentUser() {
+        return currentUser;
     }
-    
-    public static void clearSession() {
-        currentUserId = null;
+
+    public static boolean isLoggedIn() {
+        return currentUser != null;
+    }
+
+    public static void logout() {
+        currentUser = null;
     }
 }
+
