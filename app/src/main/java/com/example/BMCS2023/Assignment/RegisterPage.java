@@ -203,12 +203,12 @@ public class RegisterPage extends javax.swing.JFrame {
         String userId = generateUserId();
         
         // Create user object
-        User newUser = new User(userId, username, contactNum, emergency);
+        //User newUser = new User(userId, username, contactNum, emergency);
         
         // Convert to JSON and insert using a simple HTTP POST
         // (You'll need to add this method to DatabaseClient)
-        String result = DatabaseClient.insertUser(newUser);
-        System.out.println("User saved: " + result);
+        //String result = DatabaseClient.insertUser(newUser);
+        //System.out.println("User saved: " + result);
         
         // Store current user ID in session
         SessionManager.setCurrentUserId(userId);
@@ -216,7 +216,7 @@ public class RegisterPage extends javax.swing.JFrame {
         // Navigate to UserProfile
         UserProfile frame = new UserProfile();
         frame.setLocation(pos);
-        frame.loadUserData(); // This now uses getRecords internally
+        //frame.loadUserData(); // This now uses getRecords internally
         
         frame.setVisible(true);
         frame.setResizable(false);
