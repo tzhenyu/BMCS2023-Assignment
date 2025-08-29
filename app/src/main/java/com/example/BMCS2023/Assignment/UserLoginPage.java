@@ -5,6 +5,8 @@
 package com.example.BMCS2023.Assignment;
 
 import java.awt.Point;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -167,20 +169,46 @@ public class UserLoginPage extends javax.swing.JFrame {
     }//GEN-LAST:event_loginPasswordActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        String username = loginUsername.getText();
-        String password = new String(loginPassword.getPassword());
-
-        if (username.isEmpty() || password.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Please enter both username and password.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        try {
+            String username = loginUsername.getText();
+            String password = new String(loginPassword.getPassword());
+    
+            if (username.isEmpty() || password.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(
+            this, "Please enter both username and password.", "Error",javax.swing.JOptionPane.ERROR_MESSAGE);
             return;
-        }
+            }
+    
+        User loggedInUser = DatabaseClient.getRecords("users", User.class)
+            .stream()
+            .filter(u -> u.getUsername().equals(username) && u.getPassword().equals(password))
+            .findFirst()
+            .orElse(null);
+    
+        if (loggedInUser != null) {
+            // ✅ Save the session
+            SessionManager.setCurrentUser(loggedInUser);
 
-        Point pos = this.getLocation();
-        CarMenu frame = new CarMenu();    //create an instance
-        frame.setResizable(false);          //lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);             //show the frame
-        this.dispose();                     //close current frame
+            // ✅ Open next screen
+            Point pos = this.getLocation();
+            CarMenu frame = new CarMenu();    
+            frame.setResizable(false);        
+            frame.setLocation(pos); 
+            frame.setVisible(true);           
+            this.dispose();                   
+        } else {
+            // ❌ Invalid credentials
+            javax.swing.JOptionPane.showMessageDialog(
+            this, "Invalid username or password.", "Login Failed",javax.swing.JOptionPane.ERROR_MESSAGE );
+        
+            // 🔄 Clear fields
+            loginUsername.setText("");
+            loginPassword.setText("");
+        }
+    
+        } catch (Exception ex) {
+            Logger.getLogger(UserLoginPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void signupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupButtonActionPerformed

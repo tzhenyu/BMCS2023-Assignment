@@ -5,7 +5,6 @@
 package com.example.BMCS2023.Assignment;
 
 import java.awt.Point;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,8 +17,23 @@ public class CarMenu extends javax.swing.JFrame {
      */
     public CarMenu() {
         initComponents();
+        updateUIBasedOnLogin();
     }
-
+    
+    private void updateUIBasedOnLogin() {
+    if (SessionManager.isLoggedIn()) {
+        User u = SessionManager.getCurrentUser();
+        loginButton.setVisible(false);
+        profileButton.setVisible(true);
+        loggedInLabel.setVisible(true);
+        loggedInLabel.setText("Hi, " + u.getUsername());
+    } else {
+        loginButton.setVisible(true);
+        profileButton.setVisible(false);
+        loggedInLabel.setVisible(false);
+    }
+}
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

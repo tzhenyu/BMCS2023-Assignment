@@ -5,7 +5,7 @@
 package com.example.BMCS2023.Assignment;
 
 import java.awt.Point;
-import java.util.Random;
+import java.util.UUID;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,12 +21,6 @@ public class RegisterPage extends javax.swing.JFrame {
         initComponents();
     }
 
-    private String generateUserId() {
-    Random random = new Random();
-    
-    int id = 100000 + random.nextInt(900000);
-    return String.valueOf(id);
-}
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -131,25 +125,28 @@ public class RegisterPage extends javax.swing.JFrame {
                 .addContainerGap(112, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(signupCancelButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(signupConfirmButton))
-                            .addComponent(signupContactNum, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(signupConfirmPassword, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(signupEmergencyContactNum, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(signupUsername, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(signupPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(signupEmail))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel8)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(signupEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel4)
+                                .addComponent(jLabel6)
+                                .addComponent(jLabel7))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(signupCancelButton)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(signupConfirmButton))
+                                .addComponent(signupContactNum, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(signupConfirmPassword, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(signupEmergencyContactNum, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(signupUsername, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(signupPassword, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(79, 79, 79))
         );
         layout.setVerticalGroup(
@@ -161,14 +158,14 @@ public class RegisterPage extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(signupUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(signupPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
+                .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(signupEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(signupPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
@@ -185,7 +182,7 @@ public class RegisterPage extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(signupCancelButton)
                     .addComponent(signupConfirmButton))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
@@ -205,42 +202,41 @@ public class RegisterPage extends javax.swing.JFrame {
 
     private void signupConfirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupConfirmButtonActionPerformed
         try {
-        String username = signupUsername.getText();
-        String password = new String(signupPassword.getPassword());
-        String confirmPassword = new String(signupConfirmPassword.getPassword());
-        String email = signupEmail.getText();  
-        String contactNum = signupContactNum.getText();
-        String emergencyContactNum = signupEmergencyContactNum.getText();
+            // Get password fields
+            String password = new String(signupPassword.getPassword());
+            String confirmPassword = new String(signupConfirmPassword.getPassword());
 
-        // Password match validation
-        if (!password.equals(confirmPassword)) {
-            JOptionPane.showMessageDialog(this, "Passwords do not match!", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+            // Check if they match
+            if (!password.equals(confirmPassword)) {
+                JOptionPane.showMessageDialog(this, "Passwords do not match!", "Warning", JOptionPane.WARNING_MESSAGE);
+                return; // stop execution, don’t insert into DB
+            }
+
+            // Build a new user object from the form fields
+            User user = new User();
+            // Generate random ID
+            String randomId = UUID.randomUUID().toString(); 
+            user.setUserId(randomId);
+            user.setUsername(signupUsername.getText());
+            user.setEmail(signupEmail.getText());
+            user.setContactNum(signupContactNum.getText());
+            user.setEmergencyContactNum(signupEmergencyContactNum.getText());
+            user.setPassword(new String(signupPassword.getPassword())); // if you have password
+
+            // Insert into Supabase
+            String response = DatabaseClient.insertUser(user);
+
+            JOptionPane.showMessageDialog(this, "Registration successful!");
+        
+            // Optionally go to login page
+            UserLoginPage login = new UserLoginPage();
+            login.setLocationRelativeTo(this);
+            login.setVisible(true);
+            this.dispose();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Registration failed: " + e.getMessage());
         }
-
-        // Generate random userId
-        String userId = generateUserId();
-
-        // Create User object
-        User newUser = new User(userId, username, password, email, contactNum, emergencyContactNum);
-
-        // Insert into database
-        String response = DatabaseClient.insertUser(newUser);
-
-        JOptionPane.showMessageDialog(this, "User registered successfully!\n" + response);
-
-        // Optionally redirect to login page
-        Point pos = this.getLocation();
-        UserLoginPage frame = new UserLoginPage();
-        frame.setResizable(false);
-        frame.setLocation(pos);
-        frame.setVisible(true);
-        this.dispose();
-
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Failed to register: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        e.printStackTrace();
-    }
 
     }//GEN-LAST:event_signupConfirmButtonActionPerformed
 

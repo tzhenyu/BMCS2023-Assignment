@@ -61,6 +61,29 @@ public class DatabaseClient {
             throw new Exception("Failed to insert user: HTTP " + response.statusCode() + " - " + response.body());
         }
     }
+    
+    public static String updateUser(User user) throws Exception {
+        Gson gson = new Gson();
+        String jsonData = gson.toJson(user);
+
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create(SUPABASE_URL + "/rest/v1/users?id=eq." + user.getUserId()))
+            .header("apikey", SUPABASE_API_KEY)
+            .header("Authorization", "Bearer " + SUPABASE_API_KEY)
+            .header("Content-Type", "application/json")
+            .header("Prefer", "return=representation")
+            .method("PATCH", HttpRequest.BodyPublishers.ofString(jsonData))
+            .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() == 200) {
+            return response.body();
+        } else {
+            throw new Exception("Failed to update user: HTTP " + response.statusCode() + " - " + response.body());
+        }
+    }
+
 
 }
 
