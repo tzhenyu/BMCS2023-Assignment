@@ -23,73 +23,6 @@ public class UserProfile extends javax.swing.JFrame {
         initComponents();
     }
     
-        public void loadUserData() {
-        try {
-            String currentUserId = SessionManager.getCurrentUserId();
-            if (currentUserId != null) {
-                // Use getRecords to get all users, then filter by ID
-                List<User> users = DatabaseClient.getRecords("users", User.class);
-                
-                // Find the current user
-                User currentUser = users.stream()
-                    .filter(user -> currentUserId.equals(user.getId()))
-                    .findFirst()
-                    .orElse(null);
-                
-                if (currentUser != null) {
-                    IDdisplayText(currentUser.getId());
-                    usernameDisplayText(currentUser.getUsername());
-                    contactNumDisplayText(currentUser.getContactNum());
-                    emergencyContactNumDisplayText(currentUser.getEmergencyContactNum());
-                } else {
-                    JOptionPane.showMessageDialog(this, "User not found!", 
-                                                "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error loading user data: " + e.getMessage(), 
-                                        "Database Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    
-    // Alternative method using readRecords with manual JSON parsing
-    public void loadUserDataWithReadRecords() {
-        try {
-            String currentUserId = SessionManager.getCurrentUserId();
-            if (currentUserId != null) {
-                // Use readRecords to get raw JSON
-                String jsonResult = DatabaseClient.readRecords("users");
-                System.out.println("Raw JSON: " + jsonResult); // Debug print
-                
-                // Parse JSON manually using Gson
-                Gson gson = new Gson();
-                java.lang.reflect.Type listType = TypeToken.getParameterized(List.class, User.class).getType();
-                List<User> users = gson.fromJson(jsonResult, listType);
-                
-                // Find the current user
-                User currentUser = null;
-                for (User user : users) {
-                    if (currentUserId.equals(user.getId())) {
-                        currentUser = user;
-                        break;
-                    }
-                }
-                
-                if (currentUser != null) {
-                    IDdisplayText(currentUser.getId());
-                    usernameDisplayText(currentUser.getUsername());
-                    contactNumDisplayText(currentUser.getContactNum());
-                    emergencyContactNumDisplayText(currentUser.getEmergencyContactNum());
-                } else {
-                    JOptionPane.showMessageDialog(this, "User not found!", 
-                                                "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error loading user data: " + e.getMessage(), 
-                                        "Database Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
     
     // Your existing display methods
     public void IDdisplayText(String id) {
@@ -288,41 +221,7 @@ public class UserProfile extends javax.swing.JFrame {
         this.dispose();                     //close current frame
     }//GEN-LAST:event_logoutButtonActionPerformed
 
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UserProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UserProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UserProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UserProfile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new UserProfile().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Label ID;

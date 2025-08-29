@@ -53,6 +53,11 @@ public class UserLoginPage extends javax.swing.JFrame {
         jLabel3.setText("PASSWORD");
 
         jCheckBox1.setText("Show password");
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
 
         loginButton.setText("LOGIN");
         loginButton.addActionListener(new java.awt.event.ActionListener() {
@@ -142,18 +147,34 @@ public class UserLoginPage extends javax.swing.JFrame {
 
     private void adminLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminLoginButtonActionPerformed
         Point pos = this.getLocation();
-        AdminLoginPage frame = new AdminLoginPage();    //create an instance
+        UserLoginPage frame = new UserLoginPage();    //create an instance
         frame.setResizable(false);          //lock resizing
         frame.setLocation(pos); 
         frame.setVisible(true);             //show the frame
         this.dispose();                     //close current frame
     }//GEN-LAST:event_adminLoginButtonActionPerformed
 
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        if (jCheckBox1.isSelected()) {
+            loginPassword.setEchoChar((char) 0); // show password
+        } else {
+            loginPassword.setEchoChar('*'); // hide password
+        }
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
+
     private void loginPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginPasswordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_loginPasswordActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+        String username = loginUsername.getText();
+        String password = new String(loginPassword.getPassword());
+
+        if (username.isEmpty() || password.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Please enter both username and password.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         Point pos = this.getLocation();
         CarMenu frame = new CarMenu();    //create an instance
         frame.setResizable(false);          //lock resizing
