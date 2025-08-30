@@ -2,11 +2,9 @@ package com.example.BMCS2023.Assignment;
 
 import javax.swing.SwingUtilities; // or FlatDarkLaf
 import javax.swing.UIManager;
-import com.formdev.flatlaf.FlatLightLaf;
 import javax.swing.UnsupportedLookAndFeelException;
 
-
-import java.util.List;
+import com.formdev.flatlaf.FlatLightLaf;
 
 public class App {
 
@@ -22,16 +20,7 @@ public class App {
 
         // Launch the GUI
         SwingUtilities.invokeLater(() -> {
-<<<<<<< HEAD
             new Test().setVisible(true);  // <-- Launch your designed frame
         });
     }
 }
-=======
-            CarMenu carMenu = new CarMenu();
-            carMenu.setLocationRelativeTo(null);  // Centers on screen
-            carMenu.setVisible(true);
-        });   
- }
-
->>>>>>> 62439881294eddad987e7aaf7d811f8dca451acf
