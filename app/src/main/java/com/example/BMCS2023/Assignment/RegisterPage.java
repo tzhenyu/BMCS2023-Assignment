@@ -3,9 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.example.BMCS2023.Assignment;
-
 import java.awt.Point;
-import java.util.UUID;
 import javax.swing.JOptionPane;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -203,40 +201,24 @@ public class RegisterPage extends javax.swing.JFrame {
     }//GEN-LAST:event_bloginActionPerformed
 
     private void signupConfirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupConfirmButtonActionPerformed
-//        try {
-//        User newUser = buildUserFromForm();
-//
-//        // Insert into database
-//        DatabaseClient.insertUser(newUser);
-//
-//        JOptionPane.showMessageDialog(this, "Registration successful!");
-//        this.dispose();  // close register page
-//        new UserLoginPage().setVisible(true);
-//
-//        } catch (Exception ex) {
-//            Logger.getLogger(RegisterPage.class.getName()).log(Level.SEVERE, null, ex);
-//            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-//        }
-
-        Point pos = this.getLocation();
-        UserProfile frame = new UserProfile();
-        frame.setResizable(false);
-        frame.setLocation(pos);
-        frame.setVisible(true);
-        this.dispose();
-
+        try{
+            User newUser = buildUserFromForm();
+            DatabaseClient.insertUser(newUser);
+            JOptionPane.showMessageDialog(this, "Registration successful!");
+            
+            Point pos = this.getLocation();
+            UserLoginPage frame = new UserLoginPage();
+            frame.setResizable(false);
+            frame.setLocation(pos);
+            frame.setVisible(true);
+            this.dispose();
+        } catch(Exception ex){
+            Logger.getLogger(RegisterPage.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_signupConfirmButtonActionPerformed
 
-//    private User buildUserFromForm() {
-//        User user = new User();
-//        user.setUserId(UUID.randomUUID().toString());   // or any random ID
-//        user.setUsername(signupUsername.getText());
-//        user.setPassword(new String(signupPassword.getPassword()));
-//        user.setEmail(signupEmail.getText());
-//        user.setContactNum(signupContactNum.getText());
-//        user.setEmergencyContactNum(signupEmergencyContactNum.getText());
-//        return user;
-//    }
+}
     
     private void signupEmergencyContactNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupEmergencyContactNumActionPerformed
         // TODO add your handling code here:
