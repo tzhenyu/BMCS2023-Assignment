@@ -111,6 +111,11 @@ public class ManageCarPage extends javax.swing.JFrame {
 
         jButton3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jButton3.setText("Log Out");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -151,7 +156,6 @@ public class ManageCarPage extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Proton X50");
 
-        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\yanzh\\Downloads\\proton.png")); // NOI18N
         jLabel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel4.setPreferredSize(new java.awt.Dimension(2, 2));
 
@@ -189,7 +193,6 @@ public class ManageCarPage extends javax.swing.JFrame {
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("Proton X50");
 
-        jLabel13.setIcon(new javax.swing.ImageIcon("C:\\Users\\yanzh\\Downloads\\proton.png")); // NOI18N
         jLabel13.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel13.setPreferredSize(new java.awt.Dimension(2, 2));
 
@@ -223,7 +226,6 @@ public class ManageCarPage extends javax.swing.JFrame {
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel16.setText("Proton X50");
 
-        jLabel17.setIcon(new javax.swing.ImageIcon("C:\\Users\\yanzh\\Downloads\\proton.png")); // NOI18N
         jLabel17.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel17.setPreferredSize(new java.awt.Dimension(2, 2));
 
@@ -256,7 +258,6 @@ public class ManageCarPage extends javax.swing.JFrame {
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel20.setText("Proton X50");
 
-        jLabel21.setIcon(new javax.swing.ImageIcon("C:\\Users\\yanzh\\Downloads\\proton.png")); // NOI18N
         jLabel21.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel21.setPreferredSize(new java.awt.Dimension(2, 2));
 
@@ -290,7 +291,6 @@ public class ManageCarPage extends javax.swing.JFrame {
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Proton X50");
 
-        jLabel8.setIcon(new javax.swing.ImageIcon("C:\\Users\\yanzh\\Downloads\\proton.png")); // NOI18N
         jLabel8.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel8.setPreferredSize(new java.awt.Dimension(2, 2));
 
@@ -324,7 +324,6 @@ public class ManageCarPage extends javax.swing.JFrame {
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel22.setText("Proton X50");
 
-        jLabel23.setIcon(new javax.swing.ImageIcon("C:\\Users\\yanzh\\Downloads\\proton.png")); // NOI18N
         jLabel23.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel23.setPreferredSize(new java.awt.Dimension(2, 2));
 
@@ -447,6 +446,15 @@ public class ManageCarPage extends javax.swing.JFrame {
         frame.setVisible(true);          // show the frame
         ManageCarPage.this.dispose();                  // close current frame         // TODO add your handling code here:        // TODO add your handling code here: // TODO add your handling code here:
     }//GEN-LAST:event_jPanel4MouseClicked
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        Point pos = this.getLocation();
+        AdminLoginPage frame = new AdminLoginPage();
+        frame.setResizable(false);
+        frame.setLocation(pos);
+        frame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

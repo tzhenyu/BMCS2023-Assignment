@@ -17,19 +17,6 @@ public class User {
     private String contactNum;
     private String emergencyContactNum;
 
-    public User(String userId, String username, String password, String email, String contactNum, String emergencyContactNum) {
-        this.userId = userId;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.contactNum = contactNum;
-        this.emergencyContactNum = emergencyContactNum;
-    }
-
-    User() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
     public String getUserId() {
         return userId;
     }

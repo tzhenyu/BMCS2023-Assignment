@@ -7,6 +7,8 @@ package com.example.BMCS2023.Assignment;
 import java.awt.Point;
 import java.util.UUID;
 import javax.swing.JOptionPane;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -201,45 +203,41 @@ public class RegisterPage extends javax.swing.JFrame {
     }//GEN-LAST:event_bloginActionPerformed
 
     private void signupConfirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupConfirmButtonActionPerformed
-        try {
-            // Get password fields
-            String password = new String(signupPassword.getPassword());
-            String confirmPassword = new String(signupConfirmPassword.getPassword());
+//        try {
+//        User newUser = buildUserFromForm();
+//
+//        // Insert into database
+//        DatabaseClient.insertUser(newUser);
+//
+//        JOptionPane.showMessageDialog(this, "Registration successful!");
+//        this.dispose();  // close register page
+//        new UserLoginPage().setVisible(true);
+//
+//        } catch (Exception ex) {
+//            Logger.getLogger(RegisterPage.class.getName()).log(Level.SEVERE, null, ex);
+//            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+//        }
 
-            // Check if they match
-            if (!password.equals(confirmPassword)) {
-                JOptionPane.showMessageDialog(this, "Passwords do not match!", "Warning", JOptionPane.WARNING_MESSAGE);
-                return; // stop execution, don’t insert into DB
-            }
-
-            // Build a new user object from the form fields
-            User user = new User();
-            // Generate random ID
-            String randomId = UUID.randomUUID().toString(); 
-            user.setUserId(randomId);
-            user.setUsername(signupUsername.getText());
-            user.setEmail(signupEmail.getText());
-            user.setContactNum(signupContactNum.getText());
-            user.setEmergencyContactNum(signupEmergencyContactNum.getText());
-            user.setPassword(new String(signupPassword.getPassword())); // if you have password
-
-            // Insert into Supabase
-            String response = DatabaseClient.insertUser(user);
-
-            JOptionPane.showMessageDialog(this, "Registration successful!");
-        
-            // Optionally go to login page
-            UserLoginPage login = new UserLoginPage();
-            login.setLocationRelativeTo(this);
-            login.setVisible(true);
-            this.dispose();
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Registration failed: " + e.getMessage());
-        }
+        Point pos = this.getLocation();
+        UserProfile frame = new UserProfile();
+        frame.setResizable(false);
+        frame.setLocation(pos);
+        frame.setVisible(true);
+        this.dispose();
 
     }//GEN-LAST:event_signupConfirmButtonActionPerformed
 
+//    private User buildUserFromForm() {
+//        User user = new User();
+//        user.setUserId(UUID.randomUUID().toString());   // or any random ID
+//        user.setUsername(signupUsername.getText());
+//        user.setPassword(new String(signupPassword.getPassword()));
+//        user.setEmail(signupEmail.getText());
+//        user.setContactNum(signupContactNum.getText());
+//        user.setEmergencyContactNum(signupEmergencyContactNum.getText());
+//        return user;
+//    }
+    
     private void signupEmergencyContactNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupEmergencyContactNumActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_signupEmergencyContactNumActionPerformed
