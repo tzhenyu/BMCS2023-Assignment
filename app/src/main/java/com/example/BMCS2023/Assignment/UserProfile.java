@@ -5,7 +5,6 @@
 package com.example.BMCS2023.Assignment;
 
 import java.awt.Point;
-import javax.swing.JOptionPane;
 
 
 /**
@@ -226,10 +225,13 @@ public class UserProfile extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void loadUserData() {
-        User currentUser  = SessionManager.getCurrentUser();
-        if(currentUser != null){
+        User currentUser = SessionManager.getCurrentUser();
+        if (currentUser != null) {
             usernameDisplayText.setText(currentUser.getUsername());
-            IDdisplayText.setText(currentUser);
+            IDdisplayText.setText(currentUser.getUserId());
+            emailDisplayText.setText(currentUser.getEmail());
+            contactNumDisplayText.setText(currentUser.getContactNum());
+            emergencyContactNumDisplayText.setText(currentUser.getEmergencyContactNum());
         }
     }
 }

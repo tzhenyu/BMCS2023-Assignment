@@ -171,37 +171,41 @@ public class UserLoginPage extends javax.swing.JFrame {
     }//GEN-LAST:event_loginPasswordActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        try{
-            String username = loginUsername.getText();
-            String password = new String(loginPassword.getPassword());
+        try {
+        String username = loginUsername.getText();
+        String password = new String(loginPassword.getPassword());
+
+        if (username.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter both username and password.", 
+                "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        List<User> users = DatabaseClient.getRecords("users", User.class);
+        User loggedInUser = users.stream()
+            .filter(u -> u.getUsername().equals(username) && u.getPassword().equals(password))
+            .findFirst()
+            .orElse(null);
+
+        if (loggedInUser != null) {
+            SessionManager.setCurrentUser(loggedInUser);
             
-            if(username.isEmpty() || password.isEmpty()){
-                JOptionPane.showMessageDialog(this, "Please enter both username and password !", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            
-            List<User>users = DatabaseClient.getRecords("user", User.class);
-            User loggedInUser = users.stream().filter(u -> u.getUsername().equals(username) && u.getPassword.equals(password)).findFirst().orElse(null);
-            
-            if(loggedInUser != null){
-                SessionManager.setCurrentUser(loggedInUser);
-                
-                Point pos = this.getLocation();
-                CarMenu frame = new CarMenu();
-                frame.setResizable(false);
-                frame.setLocation(pos);
-                frame.setVisible(true);
-                
-                this.dispose();
-            }
-            else{
-                JOptionPane.showMessageDialog(this, "Invalid username or password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
-                loginUsername.setText("");
-                loginPassword.setText("");
-            }
-        } catch (Exception ex){
+            Point pos = this.getLocation();
+            UserProfile frame = new UserProfile();    
+            frame.setResizable(false);        
+            frame.setLocation(pos); 
+            frame.setVisible(true);           
+            this.dispose();                   
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid username or password.", 
+                "Login Failed", JOptionPane.ERROR_MESSAGE);
+            loginUsername.setText("");
+            loginPassword.setText("");
+        }
+
+        } catch (Exception ex) {
             Logger.getLogger(UserLoginPage.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_loginButtonActionPerformed
 
