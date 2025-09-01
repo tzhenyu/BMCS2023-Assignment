@@ -70,6 +70,18 @@ public class DatabaseClient {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         return response.body();
+    }
+
+    public static String deleteRecord(String tableName, int id) throws Exception {
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create(SUPABASE_URL + "/rest/v1/" + tableName + "?id=eq." + id))
+            .header("apikey", SUPABASE_API_KEY)
+            .header("Authorization", "Bearer " + SUPABASE_API_KEY)
+            .DELETE()
+            .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        return response.body();
     }    
 }
 
