@@ -4,7 +4,8 @@
  */
 package com.example.BMCS2023.Assignment;
 import java.time.LocalDateTime; // Import the LocalDateTime class
-// https://www.w3schools.com/java/java_date.asp for datetimeformat
+
+import com.google.gson.annotations.SerializedName; // Import SerializedName for JSON mapping
 /**
  *
  * @author zhenyu
@@ -12,63 +13,53 @@ import java.time.LocalDateTime; // Import the LocalDateTime class
 public class Rental {
     
     
-    public enum Status {
-        AVAILABLE,
-        PENDING,
-        CONFIRME
-    }
-    
+    // Database fields only - matches PostgreSQL schema exactly
+    @SerializedName("id")
     private String id;
-    private User user;
-    private Vehicle vehicle;
+    
+    @SerializedName("user_id")
+    private String userId;  // Changed from User object to String
+    
+    @SerializedName("vehicle_id") 
+    private String vehicleId;  // Changed from Vehicle object to String
+    
+    @SerializedName("start_time")
     private LocalDateTime startTime;
+    
+    @SerializedName("end_time")
     private LocalDateTime endTime;
-    private String pickupLocation;
-    private String returnLocation;
-    private Status status;
-    private boolean fuelStatusOnReturn;
-    //no need testdrive as we abondon already
-    //no need selectedaddons for now
+    
+    @SerializedName("status")
+    private String status;  // Changed from Status enum to String to match DB
+
+    @SerializedName("amount")
+    private double amount;  // Added amount field to match new DB schema
+
+    @SerializedName("method")
+    private String method;  // Payment method field
 
     // For database serialization - uses IDs as strings
-    public Rental(String id, String userId, String vehicleId, LocalDateTime startTime, LocalDateTime endTime, String pickupLocation, String returnLocation, Status status, boolean fuelStatusOnReturn) {
+    public Rental(String id, String userId, String vehicleId, LocalDateTime startTime, LocalDateTime endTime, String status, String method) {
         this.id = id;
-        // Note: This constructor stores IDs as references for database serialization
-        // The actual User and Vehicle objects would be loaded separately when needed
+        this.userId = userId;
+        this.vehicleId = vehicleId;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.pickupLocation = pickupLocation;
-        this.returnLocation = returnLocation;
         this.status = status;
-        this.fuelStatusOnReturn = fuelStatusOnReturn;
+        this.method = method;
     }
 
-    // For object-oriented use with actual User and Vehicle objects
-    public Rental(User user, Vehicle vehicle, LocalDateTime startTime, LocalDateTime endTime) {
-        this.id = "rental_" + System.currentTimeMillis(); // Generate unique ID
-        this.user = user;
-        this.vehicle = vehicle;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.status = Status.PENDING;
-        this.fuelStatusOnReturn = false;
-    }
-
-    // Additional constructor for creating rental with all basic info
-    public Rental(String id, User user, Vehicle vehicle, LocalDateTime startTime, LocalDateTime endTime, String pickupLocation, String returnLocation) {
+    // Constructor for database operations with string IDs
+    public Rental(String id, String userId, String vehicleId, LocalDateTime startTime, LocalDateTime endTime, String status, double amount) {
         this.id = id;
-        this.user = user;
-        this.vehicle = vehicle;
+        this.userId = userId;
+        this.vehicleId = vehicleId;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.pickupLocation = pickupLocation;
-        this.returnLocation = returnLocation;
-        this.status = Status.PENDING;
-        this.fuelStatusOnReturn = false;
+        this.status = status;
+        this.amount = amount;
     }
     
-    
-
     public String getId() {
         return id;
     }
@@ -77,13 +68,13 @@ public class Rental {
         this.id = id;
     }
 
-    public User getUserId() {
-        return user;
+    public String getUserId() {
+        return userId;
     }
 
 
-    public Vehicle getVehicleId() {
-        return vehicle;
+    public String getVehicleId() {
+        return vehicleId;
     }
 
 
@@ -103,38 +94,35 @@ public class Rental {
         this.endTime = endTime;
     }
 
-    public String getPickupLocation() {
-        return pickupLocation;
-    }
-
-    public void setPickupLocation(String pickupLocation) {
-        this.pickupLocation = pickupLocation;
-    }
-
-    public String getReturnLocation() {
-        return returnLocation;
-    }
-
-    public void setReturnLocation(String returnLocation) {
-        this.returnLocation = returnLocation;
-    }
-
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
-
-    public boolean isFuelStatusOnReturn() {
-        return fuelStatusOnReturn;
-    }
-
-    public void setFuelStatusOnReturn(boolean fuelStatusOnReturn) {
-        this.fuelStatusOnReturn = fuelStatusOnReturn;
+    
+    public double getAmount() {
+        return amount;
     }
     
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
     
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
+    
+    // Calculate fare on demand (recommended approach)
+    public double calculateFare() {
+        // You'll need to get the vehicle and calculate based on duration
+        // This is a simplified version - you might need to load the vehicle from DB
+        return 0.0; // Placeholder - implement proper calculation
+    }
     
 }

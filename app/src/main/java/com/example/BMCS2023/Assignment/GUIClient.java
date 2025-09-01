@@ -18,6 +18,7 @@ public class GUIClient {
     }
     
 public static void switchPage(JFrame currentFrame, JFrame nextFrame) {
+    nextFrame.setSize(800, 600);
     Point pos = currentFrame.getLocation(); 
     nextFrame.setResizable(false);       
     nextFrame.setLocation(pos); 

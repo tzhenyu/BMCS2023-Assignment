@@ -6,6 +6,15 @@ package com.example.BMCS2023.Assignment;
 
 import java.time.LocalDateTime;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import javax.swing.JOptionPane;
+
+import static java.time.LocalDateTime.now;
+
 /**
  *
  * @author zhenyu
@@ -19,23 +28,95 @@ public class CarBooking extends javax.swing.JFrame {
     
     public CarBooking() {
         initComponents();
+        loadTimeComponents();
 
-        // Set year spinner (range: 2024 - 2035 for example)
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(2025, 2024, 2035, 1));
-
-        // Set month spinner (1-12)
-        jSpinner2.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
-
-        // Set day spinner (1-31)
-        jSpinner3.setModel(new javax.swing.SpinnerNumberModel(1, 1, 31, 1));
     }
 
     public CarBooking(Vehicle vehicle) {
         this.selectedVehicle = vehicle;
         initComponents();
-        // Call populateVehicleData after components are initialized
+        loadTimeComponents();
         populateVehicleData();
     }
+    
+    private String getSelectedPaymentMethod() {
+        if (jRadioButton1.isSelected()) {
+            return "E-Wallet";
+        } else if (jRadioButton2.isSelected()) {
+            return "Cash on Delivery";
+        } else if (jRadioButton3.isSelected()) {
+            return "FPX";
+        }
+        return "";
+    }
+    
+    private void loadTimeComponents() {
+
+        // Set year spinner with current year
+        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(now().getYear(), 2024, 2035, 1));
+
+        // Set month spinner with current month
+        jSpinner2.setModel(new javax.swing.SpinnerNumberModel(now().getMonthValue(), 1, 12, 1));
+
+        // Set day spinner with current day
+        jSpinner3.setModel(new javax.swing.SpinnerNumberModel(now().getDayOfMonth(), 1, 31, 1));
+
+        // Set initial hour models and values based on whether it's today
+        updateHourSpinners();
+        
+        // Add change listeners to automatically update fare when time changes
+        returnHour.addChangeListener(e -> calculateFare());
+        
+        // When date changes, update hour spinners and calculate fare
+        jSpinner1.addChangeListener(e -> { updateHourSpinners(); calculateFare(); });
+        jSpinner2.addChangeListener(e -> { updateHourSpinners(); calculateFare(); });
+        jSpinner3.addChangeListener(e -> { updateHourSpinners(); calculateFare(); });
+    }
+    
+    private void updateHourSpinners() {
+        if (isToday()) {
+            // For today: minimum pickup is current hour + 1
+            int minPickupHour = Math.max(9, now().getHour() + 1);
+            int initialReturnHour = minPickupHour + 1;
+            
+            pickupHour.setModel(new javax.swing.SpinnerNumberModel(minPickupHour, minPickupHour, 23, 1));
+            returnHour.setModel(new javax.swing.SpinnerNumberModel(initialReturnHour, minPickupHour + 1, 23, 1));
+        } else {
+            // For future dates: allow any hour from 9 AM to 11 PM
+            pickupHour.setModel(new javax.swing.SpinnerNumberModel(9, 9, 23, 1));
+            returnHour.setModel(new javax.swing.SpinnerNumberModel(10, 10, 23, 1));
+        }
+        
+        // Add listener to pickup hour to update return hour minimum
+        pickupHour.addChangeListener(e -> {
+            int currentPickupHour = (Integer) pickupHour.getValue();
+            int currentReturnHour = (Integer) returnHour.getValue();
+            int minReturnHour = currentPickupHour + 1;
+            
+            // Update return hour model with new minimum
+            if (minReturnHour <= 23) {
+                returnHour.setModel(new javax.swing.SpinnerNumberModel(
+                    Math.max(currentReturnHour, minReturnHour), 
+                    minReturnHour, 
+                    23, 
+                    1
+                ));
+            }
+            calculateFare();
+        });
+    }
+    
+    private boolean isToday() {
+        int year = (Integer) jSpinner1.getValue();
+        int month = (Integer) jSpinner2.getValue();
+        int day = (Integer) jSpinner3.getValue();
+        
+        LocalDateTime selectedDate = LocalDateTime.of(year, month, day, 0, 0);
+        LocalDateTime today = now();
+        
+        return selectedDate.toLocalDate().equals(today.toLocalDate());
+    }
+
     
     private void populateVehicleData() {
         if (selectedVehicle != null) {
@@ -50,73 +131,172 @@ public class CarBooking extends javax.swing.JFrame {
             
             // Format add-ons nicely - now handles multiple addons
             jLabel5.setText(selectedVehicle.getAddOnsAsString());
+            
+            // Calculate initial fare
+            calculateFare();
         }
     }
 
 
-public void handleFormSubmission() {
-    try {
-        // Create dummy user for demonstration (in a real app, get from session)
-        User user = new User();
-        user.setId("user123");
-        user.setName("John Doe");
-        user.setEmail("john@example.com");
+    public void handleFormSubmission() {
+        try {
+            // Validate form inputs
+            if (selectedVehicle == null) {
+                javax.swing.JOptionPane.showMessageDialog(this, 
+                    "No vehicle selected. Please go back and select a vehicle.", 
+                    "Error", 
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Get date and time components from spinners
+            int year = (Integer) jSpinner1.getValue();
+            int month = (Integer) jSpinner2.getValue();
+            int day = (Integer) jSpinner3.getValue();
+            int pickupH = (Integer) pickupHour.getValue();
+            int returnH = (Integer) returnHour.getValue();
+            
+            // Validate date inputs
+            LocalDateTime startTime = LocalDateTime.of(year, month, day, pickupH, 0);
+            LocalDateTime endTime = LocalDateTime.of(year, month, day, returnH, 0);
+            LocalDateTime now = LocalDateTime.now();
+            
+            // Check if booking is for today and enforce minimum pickup time
+            if (startTime.toLocalDate().equals(now.toLocalDate())) {
+                if (pickupH <= now.getHour()) {
+                    javax.swing.JOptionPane.showMessageDialog(this, 
+                        "For same-day bookings, pickup time must be at least " + (now.getHour() + 1) + ":00.", 
+                        "Invalid Pickup Time", 
+                        javax.swing.JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+            
+            if (startTime.isBefore(now)) {
+                javax.swing.JOptionPane.showMessageDialog(this, 
+                    "Pickup time cannot be in the past.", 
+                    "Invalid Date", 
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Generate UUIDs for rental and use existing user from database
+            String rentalId = java.util.UUID.randomUUID().toString();
+            
+            // TODO: In a real application, get the current logged-in user ID from session
+            // For now, using the first user ID from the database sample data
+            String userId = "22222222-2222-2222-2222-222222222221";
+            String vehicleId = selectedVehicle.getId();
+            
+            // Validate that vehicle ID is a proper UUID
+            if (vehicleId == null || vehicleId.trim().isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, 
+                    "Invalid vehicle ID. Please select a valid vehicle.", 
+                    "Error", 
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Validate payment method selection
+            if (!jRadioButton1.isSelected() && !jRadioButton2.isSelected() && !jRadioButton3.isSelected()) {
+                javax.swing.JOptionPane.showMessageDialog(this, 
+                    "Please select a payment method.", 
+                    "Payment Method Required", 
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+                
+                return;
+            }
+
+            JOptionPane.showMessageDialog(
+            null, // Parent component (null for a default frame)
+            "You will be redirected to a payment webpage.", // The message to display
+            "Payment", // The title of the dialog box
+            JOptionPane.INFORMATION_MESSAGE 
         
-        // Use the selected vehicle passed to this form
-        Vehicle vehicle = this.selectedVehicle;
-        if (vehicle == null) {
+            );            
+
+            // Move browser-opening code here (after the dialog)
+            String url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";  // Or a real payment URL
+            if (Desktop.isDesktopSupported()) {
+                Desktop desktop = Desktop.getDesktop();
+                if (desktop.isSupported(Desktop.Action.BROWSE)) {
+                    try {
+                        URI uri = new URI(url);
+                        desktop.browse(uri);
+                    } catch (IOException | URISyntaxException e) {
+                        System.err.println("Error opening browser: " + e.getMessage());
+                    }
+                } else {
+                    System.out.println("BROWSE action not supported.");
+                }
+            } else {
+                System.out.println("Desktop not supported.");
+            }
+            
+           
+            // Calculate the total fare (for display/logging only)
+            double totalFare = calculateFare();
+            
+            // Get selected payment method
+            String paymentMethod = getSelectedPaymentMethod();
+            
+            Rental rental = new Rental(
+                rentalId,
+                userId,
+                vehicleId,
+                startTime,
+                endTime,
+                "confirmed",
+                paymentMethod  // Add payment method parameter
+            );
+            
+            // Set the calculated amount
+            rental.setAmount(totalFare);
+
+            Rental[] rentals = { rental };
+            String response = DatabaseClient.insertRecords("rentals", rentals);
+            System.out.println("Rental created successfully. Response: " + response);
+            GUIClient.switchPage(this, new CarBookingSuccess());
+
+            
+        } catch (Exception e) {
+            System.err.println("Error creating rental: " + e.getMessage());
+            e.printStackTrace();
             javax.swing.JOptionPane.showMessageDialog(this, 
-                "No vehicle selected. Please go back and select a vehicle.", 
+                "Error creating rental: " + e.getMessage(), 
                 "Error", 
                 javax.swing.JOptionPane.ERROR_MESSAGE);
-            return;
+        }
+    }
+        
+    public double calculateFare() {
+        if (selectedVehicle == null) {
+            jLabel10.setText("0.00");
+            return 0.0;  // Return 0 when no vehicle selected
         }
         
-        // Get date components from spinners
-        int year = (Integer) jSpinner1.getValue();
-        int month = (Integer) jSpinner2.getValue();
-        int day = (Integer) jSpinner3.getValue();
-        
-        // Get time strings from text fields (for future enhancement)
-        String pickupTime = jTextField2.getText();
-        String returnTime = jTextField3.getText();
-        
-        // Create LocalDateTime objects (simplified - using default hour/minute)
-        LocalDateTime startTime = LocalDateTime.of(year, month, day, 9, 0); // 9 AM default
-        LocalDateTime endTime = LocalDateTime.of(year, month, day, 17, 0);  // 5 PM default
-        
-        // Generate unique rental ID 
-        String rentalId = java.util.UUID.randomUUID().toString();
-        
-        // Create rental DTO for database insertion (matches database schema)
-        RentalDTO rentalDTO = new RentalDTO(
-            rentalId,
-            user.getId(),       // user_id
-            vehicle.getId(),    // vehicle_id  
-            startTime,          // start_time
-            endTime,            // end_time
-            "pending"           // status (lowercase to match database constraint)
-        );
-        
-        // For database insertion, create array
-        RentalDTO[] rentals = { rentalDTO };
-        
-        // Insert into database (use plural table name)
-        String response = DatabaseClient.insertRecords("rentals", rentals);
-        System.out.println("Insert response: " + response);
-        
-        // Show success message and navigate to success page
-        GUIClient.switchPage(this, new CarBookingSuccess());
-        
-    } catch (Exception e) {
-        e.printStackTrace();
-        javax.swing.JOptionPane.showMessageDialog(this, 
-            "Error creating rental: " + e.getMessage(), 
-            "Error", 
-            javax.swing.JOptionPane.ERROR_MESSAGE);
+        try {
+            // Get hour components directly
+            int pickupH = (Integer) pickupHour.getValue();
+            int returnH = (Integer) returnHour.getValue();
+            
+            // Calculate duration in hours
+            int durationHours = returnH - pickupH;
+            
+            double dailyRate = selectedVehicle.getPricePerDay();
+            double totalFare = dailyRate * (durationHours);
+            
+            // Format to 2 decimal places
+            jLabel10.setText(String.format("RM "+"%.2f",  + totalFare));
+            
+            return totalFare;  // ✅ Return the calculated fare
+            
+        } catch (Exception e) {
+            jLabel10.setText("Error");
+            System.err.println("Error calculating fare: " + e.getMessage());
+            return 0.0;  // ✅ Return 0 on error
+        }
     }
-}
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -130,7 +310,6 @@ public void handleFormSubmission() {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jCheckBox1 = new javax.swing.JCheckBox();
         jPanel1 = new javax.swing.JPanel();
@@ -139,12 +318,13 @@ public void handleFormSubmission() {
         jRadioButton3 = new javax.swing.JRadioButton();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
         jSpinner1 = new javax.swing.JSpinner();
         jSpinner2 = new javax.swing.JSpinner();
         jSpinner3 = new javax.swing.JSpinner();
         jPanel3 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
+        pickupHour = new javax.swing.JSpinner();
+        returnHour = new javax.swing.JSpinner();
         jPanel6 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -190,7 +370,7 @@ public void handleFormSubmission() {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
                     .addComponent(jRadioButton1)
@@ -201,7 +381,7 @@ public void handleFormSubmission() {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addContainerGap()
                 .addComponent(jLabel8)
                 .addGap(18, 18, 18)
                 .addComponent(jRadioButton1)
@@ -209,7 +389,7 @@ public void handleFormSubmission() {
                 .addComponent(jRadioButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jRadioButton3)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         jLabel9.setText("Return Time");
@@ -217,54 +397,52 @@ public void handleFormSubmission() {
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel10.setFont(new java.awt.Font("sansserif", 0, 36)); // NOI18N
-        jLabel10.setText("RM100");
+        jLabel10.setText("RM 0.00");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(96, 96, 96)
+                .addGap(153, 153, 153)
                 .addComponent(jLabel10)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(46, 46, 46)
+                .addGap(40, 40, 40)
                 .addComponent(jLabel10)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jTextField2))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jSpinner3))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jSpinner3, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
                             .addComponent(jLabel6)
-                            .addComponent(jCheckBox1))
+                            .addComponent(pickupHour, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(returnHour, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9))
+                        .addGap(48, 48, 48))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jCheckBox1)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -279,20 +457,18 @@ public void handleFormSubmission() {
                     .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(pickupHour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(returnHour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jCheckBox1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(65, 65, 65)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -375,16 +551,18 @@ public void handleFormSubmission() {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rentButton, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
-                            .addComponent(backButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(rentButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20))))
         );
 
         pack();
@@ -462,8 +640,8 @@ public void handleFormSubmission() {
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JSpinner jSpinner2;
     private javax.swing.JSpinner jSpinner3;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JSpinner pickupHour;
     private javax.swing.JButton rentButton;
+    private javax.swing.JSpinner returnHour;
     // End of variables declaration//GEN-END:variables
 }
