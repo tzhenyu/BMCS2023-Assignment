@@ -14,7 +14,7 @@ public class User {
     private String username;
     private String password;
     private String email;
-    private String contactNum;
+    private String phone;
     private String emergencyContactNum;
 
     public String getUserId() {
@@ -49,14 +49,15 @@ public class User {
         this.email = email;
     }
 
-    public String getContactNum() {
-        return contactNum;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setContactNum(String contactNum) {
-        this.contactNum = contactNum;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
+ 
     public String getEmergencyContactNum() {
         return emergencyContactNum;
     }

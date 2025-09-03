@@ -232,7 +232,7 @@ public class RegisterPage extends javax.swing.JFrame {
         user.setUsername(signupUsername.getText());
         user.setPassword(new String(signupPassword.getPassword()));
         user.setEmail(signupEmail.getText());
-        user.setContactNum(signupContactNum.getText());
+        user.setPhone(signupContactNum.getText());
         user.setEmergencyContactNum(signupEmergencyContactNum.getText());
         return user;
     }

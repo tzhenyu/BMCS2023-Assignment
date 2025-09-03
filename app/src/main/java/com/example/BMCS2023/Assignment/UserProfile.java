@@ -230,7 +230,7 @@ public class UserProfile extends javax.swing.JFrame {
             usernameDisplayText.setText(currentUser.getUsername());
             IDdisplayText.setText(currentUser.getUserId());
             emailDisplayText.setText(currentUser.getEmail());
-            contactNumDisplayText.setText(currentUser.getContactNum());
+            contactNumDisplayText.setText(currentUser.getPhone());
             emergencyContactNumDisplayText.setText(currentUser.getEmergencyContactNum());
         }
     }
