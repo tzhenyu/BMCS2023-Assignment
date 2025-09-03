@@ -180,7 +180,7 @@ public class UserLoginPage extends javax.swing.JFrame {
                 "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
+        
         List<User> users = DatabaseClient.getRecords("users", User.class);
         User loggedInUser = users.stream()
             .filter(u -> u.getUsername().equals(username) && u.getPassword().equals(password))
@@ -188,6 +188,7 @@ public class UserLoginPage extends javax.swing.JFrame {
             .orElse(null);
 
         if (loggedInUser != null) {
+            // Login successful
             SessionManager.setCurrentUser(loggedInUser);
             
             Point pos = this.getLocation();
@@ -196,11 +197,15 @@ public class UserLoginPage extends javax.swing.JFrame {
             frame.setLocation(pos); 
             frame.setVisible(true);           
             this.dispose();                   
-        } else {
-            JOptionPane.showMessageDialog(this, "Invalid username or password.", 
+        } 
+        else {
+            // Login failed - username/password combination not found in database
+            JOptionPane.showMessageDialog(this, 
+                "Invalid username or password. Please check your credentials and try again.", 
                 "Login Failed", JOptionPane.ERROR_MESSAGE);
             loginUsername.setText("");
             loginPassword.setText("");
+            loginUsername.requestFocus();
         }
 
         } catch (Exception ex) {
