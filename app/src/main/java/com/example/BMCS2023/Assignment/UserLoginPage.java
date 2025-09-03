@@ -191,7 +191,7 @@ public class UserLoginPage extends javax.swing.JFrame {
             SessionManager.setCurrentUser(loggedInUser);
             
             Point pos = this.getLocation();
-            UserProfile frame = new UserProfile();    
+            CarMenu frame = new CarMenu();    
             frame.setResizable(false);        
             frame.setLocation(pos); 
             frame.setVisible(true);           
