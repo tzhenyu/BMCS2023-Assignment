@@ -285,7 +285,7 @@ private boolean validateForm() {
     }//GEN-LAST:event_signupEmailActionPerformed
 
     private void signupEmergencyContactNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupEmergencyContactNumActionPerformed
-        // TODO add your handling code here:
+        signupConfirmButton.doClick(); // press Enter to trigger login
     }//GEN-LAST:event_signupEmergencyContactNumActionPerformed
 
     private void signupCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupCancelButtonActionPerformed

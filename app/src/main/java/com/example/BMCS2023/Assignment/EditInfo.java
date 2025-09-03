@@ -55,6 +55,12 @@ public class EditInfo extends javax.swing.JFrame {
         emergencyContactNum.setPreferredSize(new java.awt.Dimension(157, 20));
         emergencyContactNum.setText("Emergency Contact Number:");
 
+        editEmergencyContactNum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editEmergencyContactNumActionPerformed(evt);
+            }
+        });
+
         cancelButton.setText("Cancel");
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -155,6 +161,10 @@ public class EditInfo extends javax.swing.JFrame {
         frame.setVisible(true);             //show the frame
         this.dispose();                     //close current frame
     }//GEN-LAST:event_confirmButtonActionPerformed
+
+    private void editEmergencyContactNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editEmergencyContactNumActionPerformed
+        confirmButton.doClick(); // press Enter to trigger login
+    }//GEN-LAST:event_editEmergencyContactNumActionPerformed
 
     /**
      * @param args the command line arguments
