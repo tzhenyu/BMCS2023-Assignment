@@ -5,8 +5,10 @@
 package com.example.BMCS2023.Assignment;
 
 import java.awt.Point;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -149,7 +151,7 @@ public class UserLoginPage extends javax.swing.JFrame {
 
     private void adminLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminLoginButtonActionPerformed
         Point pos = this.getLocation();
-        UserLoginPage frame = new UserLoginPage();    //create an instance
+        AdminLoginPage frame = new AdminLoginPage();    //create an instance
         frame.setResizable(false);          //lock resizing
         frame.setLocation(pos); 
         frame.setVisible(true);             //show the frame
@@ -170,44 +172,40 @@ public class UserLoginPage extends javax.swing.JFrame {
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         try {
-            String username = loginUsername.getText();
-            String password = new String(loginPassword.getPassword());
-    
-            if (username.isEmpty() || password.isEmpty()) {
-                javax.swing.JOptionPane.showMessageDialog(
-            this, "Please enter both username and password.", "Error",javax.swing.JOptionPane.ERROR_MESSAGE);
+        String username = loginUsername.getText();
+        String password = new String(loginPassword.getPassword());
+
+        if (username.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter both username and password.", 
+                "Error", JOptionPane.ERROR_MESSAGE);
             return;
-            }
-    
-        User loggedInUser = DatabaseClient.getRecords("users", User.class)
-            .stream()
+        }
+
+        List<User> users = DatabaseClient.getRecords("users", User.class);
+        User loggedInUser = users.stream()
             .filter(u -> u.getUsername().equals(username) && u.getPassword().equals(password))
             .findFirst()
             .orElse(null);
-    
-        if (loggedInUser != null) {
-            // ✅ Save the session
-            SessionManager.setCurrentUser(loggedInUser);
 
-            // ✅ Open next screen
+        if (loggedInUser != null) {
+            SessionManager.setCurrentUser(loggedInUser);
+            
             Point pos = this.getLocation();
-            CarMenu frame = new CarMenu();    
+            UserProfile frame = new UserProfile();    
             frame.setResizable(false);        
             frame.setLocation(pos); 
             frame.setVisible(true);           
             this.dispose();                   
         } else {
-            // ❌ Invalid credentials
-            javax.swing.JOptionPane.showMessageDialog(
-            this, "Invalid username or password.", "Login Failed",javax.swing.JOptionPane.ERROR_MESSAGE );
-        
-            // 🔄 Clear fields
+            JOptionPane.showMessageDialog(this, "Invalid username or password.", 
+                "Login Failed", JOptionPane.ERROR_MESSAGE);
             loginUsername.setText("");
             loginPassword.setText("");
         }
-    
+
         } catch (Exception ex) {
             Logger.getLogger(UserLoginPage.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_loginButtonActionPerformed
 

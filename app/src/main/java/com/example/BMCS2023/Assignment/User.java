@@ -14,21 +14,8 @@ public class User {
     private String username;
     private String password;
     private String email;
-    private String contactNum;
+    private String phone;
     private String emergencyContactNum;
-
-    public User(String userId, String username, String password, String email, String contactNum, String emergencyContactNum) {
-        this.userId = userId;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.contactNum = contactNum;
-        this.emergencyContactNum = emergencyContactNum;
-    }
-
-    User() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
     public String getUserId() {
         return userId;
@@ -62,14 +49,15 @@ public class User {
         this.email = email;
     }
 
-    public String getContactNum() {
-        return contactNum;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setContactNum(String contactNum) {
-        this.contactNum = contactNum;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
+ 
     public String getEmergencyContactNum() {
         return emergencyContactNum;
     }
