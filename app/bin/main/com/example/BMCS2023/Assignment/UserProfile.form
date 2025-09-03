@@ -53,11 +53,11 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="emergencyContactNumDisplayText" alignment="0" min="-2" pref="136" max="-2" attributes="0"/>
+                          <Component id="contactNum" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="contactNumDisplayText" alignment="0" min="-2" pref="136" max="-2" attributes="0"/>
+                          <Component id="emergencyContactNum" alignment="0" min="-2" pref="157" max="-2" attributes="0"/>
                           <Component id="email" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="emailDisplayText" alignment="0" min="-2" pref="136" max="-2" attributes="0"/>
-                          <Component id="contactNum" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="contactNumDIsplayText" alignment="0" min="-2" pref="136" max="-2" attributes="0"/>
-                          <Component id="emergencyContactNum" alignment="0" min="-2" pref="157" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="ordersPanel" min="-2" pref="146" max="-2" attributes="0"/>
@@ -68,12 +68,7 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="logoutButton" min="-2" pref="95" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="oilAlert" min="-2" max="-2" attributes="0"/>
-                  <Component id="testConditionChecklist" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+              <EmptySpace min="21" pref="397" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -97,21 +92,21 @@
                                   <Component id="IDdisplayText" min="-2" pref="22" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <Component id="email" min="-2" pref="22" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                                       <Component id="emailDisplayText" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
                                       <Component id="contactNum" min="-2" pref="22" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="contactNumDIsplayText" min="-2" max="-2" attributes="0"/>
+                                      <Component id="contactNumDisplayText" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="emergencyContactNum" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="emergencyContactNumDisplayText" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="ordersPanel" max="32767" attributes="0"/>
+                                  <Component id="ordersPanel" min="-2" pref="178" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -121,18 +116,8 @@
                       <Component id="backButton" min="-2" pref="35" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="logoutButton" min="-2" pref="33" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="oilAlert" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                      <Component id="testConditionChecklist" min="-2" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
+              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+              <Component id="logoutButton" min="-2" pref="33" max="-2" attributes="0"/>
               <EmptySpace pref="10" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -175,7 +160,7 @@
         <Property name="text" type="java.lang.String" value="ID"/>
       </Properties>
     </Component>
-    <Component class="java.awt.Label" name="contactNumDIsplayText">
+    <Component class="java.awt.Label" name="contactNumDisplayText">
       <Properties>
         <Property name="text" type="java.lang.String" value="contact num"/>
       </Properties>
@@ -183,16 +168,6 @@
     <Component class="java.awt.Label" name="emergencyContactNumDisplayText">
       <Properties>
         <Property name="text" type="java.lang.String" value="emergency contact num"/>
-      </Properties>
-    </Component>
-    <Component class="java.awt.Label" name="emailDisplayText">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="email"/>
-      </Properties>
-    </Component>
-    <Component class="java.awt.Label" name="email">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Email:"/>
       </Properties>
     </Component>
     <Component class="java.awt.Label" name="contactNum">
@@ -233,21 +208,15 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="logoutButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="java.awt.Button" name="testConditionChecklist">
+    <Component class="java.awt.Label" name="email">
       <Properties>
-        <Property name="label" type="java.lang.String" value="test for Condition checklist"/>
+        <Property name="text" type="java.lang.String" value="Email:"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="testConditionChecklistActionPerformed"/>
-      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="oilAlert">
+    <Component class="java.awt.Label" name="emailDisplayText">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Oil Alert Test"/>
+        <Property name="text" type="java.lang.String" value="email"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="oilAlertActionPerformed"/>
-      </Events>
     </Component>
   </SubComponents>
 </Form>
