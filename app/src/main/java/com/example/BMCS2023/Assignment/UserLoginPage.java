@@ -5,6 +5,7 @@
 package com.example.BMCS2023.Assignment;
 
 import java.awt.Point;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -177,8 +178,8 @@ public class UserLoginPage extends javax.swing.JFrame {
             return;
         }
         
-        List<User> users = DatabaseClient.getRecords("users", User.class);
-        User loggedInUser = users.stream()
+        User[] users = DatabaseClient.getRecords("users", User.class);
+        User loggedInUser = Arrays.stream(users)
             .filter(u -> u.getUsername().equals(username) && u.getPassword().equals(password))
             .findFirst()
             .orElse(null);

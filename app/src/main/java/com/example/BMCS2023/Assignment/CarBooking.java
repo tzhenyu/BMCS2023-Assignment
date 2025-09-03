@@ -183,9 +183,16 @@ public class CarBooking extends javax.swing.JFrame {
             // Generate UUIDs for rental and use existing user from database
             String rentalId = java.util.UUID.randomUUID().toString();
             
-            // TODO: In a real application, get the current logged-in user ID from session
-            // For now, using the first user ID from the database sample data
-            String userId = "22222222-2222-2222-2222-222222222221";
+            // Get the current logged-in user ID from session
+            User currentUser = SessionManager.getCurrentUser();
+            if (currentUser == null) {
+                javax.swing.JOptionPane.showMessageDialog(this, 
+                    "You must be logged in to rent a vehicle.", 
+                    "Login Required", 
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            String userId = currentUser.getUserId();
             String vehicleId = selectedVehicle.getId();
             
             // Validate that vehicle ID is a proper UUID

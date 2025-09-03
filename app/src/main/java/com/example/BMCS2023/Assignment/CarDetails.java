@@ -77,8 +77,8 @@ public class CarDetails extends javax.swing.JFrame {
             String userName = "Unknown User";
             if (users != null) {
                 for (User user : users) {
-                    if (user.getId() != null && user.getId().equals(f.getUserId())) {
-                        userName = user.getName() != null ? user.getName() : "User";
+                    if (user.getUserId() != null && user.getUserId().equals(f.getUserId())) {
+                        userName = user.getUsername() != null ? user.getUsername() : "User";
                         break;
                     }
                 }
@@ -419,6 +419,17 @@ public class CarDetails extends javax.swing.JFrame {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void rentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rentButtonActionPerformed
+        // Check if user is logged in before proceeding to booking
+        if (!SessionManager.isLoggedIn()) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Please log in to rent a vehicle.", 
+                "Login Required", 
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+            // Redirect to login page
+            GUIClient.switchPage(this, new UserLoginPage());
+            return;
+        }
+        
         if (selectedVehicle != null) {
             CarBooking frame = new CarBooking(selectedVehicle);
             GUIClient.switchPage(this, frame);

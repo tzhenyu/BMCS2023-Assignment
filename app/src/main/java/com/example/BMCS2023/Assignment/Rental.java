@@ -17,7 +17,6 @@ public class Rental {
     @SerializedName("id")
     private String id;
     
-    @SerializedName("user_id")
     private String userId;  // Changed from User object to String
     
     @SerializedName("vehicle_id") 

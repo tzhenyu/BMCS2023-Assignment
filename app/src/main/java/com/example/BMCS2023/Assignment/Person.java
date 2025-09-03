@@ -10,19 +10,17 @@ package com.example.BMCS2023.Assignment;
  */
 public class Person {
     private String id; 
-    private String name;
-    private String email;
-    private String phone;
-    private String password;
-    private int accountCount = 0;
+    protected String username;
+    protected String email;
+    protected String phone;
+    protected String password;
     
     public Person(){
         
     }
 
-    public Person(String name, String email, String phone, String password) {
-        accountCount++;
-        this.name = name;
+    public Person(String username, String email, String phone, String password) {
+        this.username = username;
         this.email = email;
         this.phone = phone;
         this.password = password;
@@ -37,12 +35,12 @@ public class Person {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {

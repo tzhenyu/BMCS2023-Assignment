@@ -209,7 +209,8 @@ public class RegisterPage extends javax.swing.JFrame {
             }
             
             User newUser = buildUserFromForm();
-            DatabaseClient.insertUser(newUser);
+            User[] users = new User[]{newUser};
+            DatabaseClient.insertRecords("users", users);
             JOptionPane.showMessageDialog(this, "Registration successful!");
             
             Point pos = this.getLocation();

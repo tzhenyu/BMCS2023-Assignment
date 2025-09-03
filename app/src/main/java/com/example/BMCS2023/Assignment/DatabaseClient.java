@@ -11,6 +11,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -50,12 +51,14 @@ public class DatabaseClient {
         return response.body();
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> T[] getRecords(String tableName, Class<T> clazz) throws Exception {
         String readResult = readRecords(tableName);
-        Type arrayType = TypeToken.getArray(clazz).getType();
-        return gson.fromJson(readResult, arrayType);
+        Type listType = TypeToken.getParameterized(List.class, clazz).getType();
+        List<T> list = gson.fromJson(readResult, listType);
+        return list.toArray((T[]) java.lang.reflect.Array.newInstance(clazz, 0));
     }
- 
+
     public static <T> String insertRecords(String tableName, T[] records) throws Exception {
         String json = gson.toJson(records);
 
@@ -69,7 +72,12 @@ public class DatabaseClient {
             .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        return response.body();
+        
+        if (response.statusCode() == 201) {
+            return response.body();
+        } else {
+            throw new Exception("Failed to insert records: HTTP " + response.statusCode() + " - " + response.body());
+        }
     }
 
     public static String deleteRecord(String tableName, int id) throws Exception {
@@ -97,7 +105,13 @@ public class DatabaseClient {
             .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        return response.body();
-    }    
+        
+        if (response.statusCode() == 200) {
+            return response.body();
+        } else {
+            throw new Exception("Failed to update record: HTTP " + response.statusCode() + " - " + response.body());
+        }
+    }
+
 }
 
