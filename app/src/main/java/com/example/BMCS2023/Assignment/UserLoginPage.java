@@ -150,12 +150,8 @@ public class UserLoginPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void adminLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminLoginButtonActionPerformed
-        Point pos = this.getLocation();
         AdminLoginPage frame = new AdminLoginPage();    //create an instance
-        frame.setResizable(false);          //lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);             //show the frame
-        this.dispose();                     //close current frame
+        GUIClient.switchPage(this, frame);
     }//GEN-LAST:event_adminLoginButtonActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
@@ -215,12 +211,8 @@ public class UserLoginPage extends javax.swing.JFrame {
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void signupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupButtonActionPerformed
-        Point pos = this.getLocation();
         RegisterPage frame = new RegisterPage();    //create an instance
-        frame.setResizable(false);          //lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);             //show the frame
-        this.dispose();                     //close current frame
+        GUIClient.switchPage(this, frame);
     }//GEN-LAST:event_signupButtonActionPerformed
 
     /**
