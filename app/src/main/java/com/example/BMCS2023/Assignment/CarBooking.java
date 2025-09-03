@@ -262,7 +262,13 @@ public class CarBooking extends javax.swing.JFrame {
 
             Rental[] rentals = { rental };
             String response = DatabaseClient.insertRecords("rentals", rentals);
+            
+            // Update vehicle status to rented
+            selectedVehicle.setStatus(Vehicle.Status.rented);
+            String vehicleUpdateResponse = DatabaseClient.updateRecord("vehicles", selectedVehicle.getId(), selectedVehicle);
+            
             System.out.println("Rental created successfully. Response: " + response);
+            System.out.println("Vehicle status updated. Response: " + vehicleUpdateResponse);
             GUIClient.switchPage(this, new CarBookingSuccess());
 
             
