@@ -167,7 +167,7 @@ public class UserLoginPage extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void loginPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginPasswordActionPerformed
-        // TODO add your handling code here:
+        loginButton.doClick(); // press Enter to trigger login
     }//GEN-LAST:event_loginPasswordActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
