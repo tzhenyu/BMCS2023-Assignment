@@ -40,6 +40,11 @@ public class AdminLoginPage extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jCheckBox1.setText("Show password");
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
 
         adminLoginButton.setText("LOGIN");
         adminLoginButton.addActionListener(new java.awt.event.ActionListener() {
@@ -121,21 +126,43 @@ public class AdminLoginPage extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        if (jCheckBox1.isSelected()) {
+            adminPassword.setEchoChar((char) 0); // show password
+        } else {
+            adminPassword.setEchoChar('*'); // hide password
+        }
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
+
     private void adminPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminPasswordActionPerformed
-        // TODO add your handling code here:
+        adminLoginButton.doClick(); // press Enter to trigger login
     }//GEN-LAST:event_adminPasswordActionPerformed
 
     private void adminLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminLoginButtonActionPerformed
-        // TODO add your handling code here:
+        String username = adminUsername.getText();
+        String password = new String(adminPassword.getPassword());
+
+        if (username.isEmpty() || password.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Please enter both username and password.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (username.equals("admin") && password.equals("admin123")) { // correct credentials
+            Point pos = this.getLocation();
+            AdminDashboard frame = new AdminDashboard();
+            frame.setResizable(false);
+            frame.setLocation(pos);
+            frame.setVisible(true);
+            this.dispose();
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Invalid username or password.", "Login Failed", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_adminLoginButtonActionPerformed
 
     private void adminCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminCancelButtonActionPerformed
-        Point pos = this.getLocation();
-        UserLoginPage frame = new UserLoginPage();
-        frame.setResizable(false);
-        frame.setLocation(pos);
-        frame.setVisible(true);
-        this.dispose();
+
+        GUIClient.switchPage(this, new UserLoginPage());
     }//GEN-LAST:event_adminCancelButtonActionPerformed
 
     /**

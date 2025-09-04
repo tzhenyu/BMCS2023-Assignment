@@ -5,6 +5,10 @@
 package com.example.BMCS2023.Assignment;
 
 import java.awt.Point;
+import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -32,7 +36,6 @@ public class RegisterPage extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         signupUsername = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         signupEmergencyContactNum = new javax.swing.JTextField();
         signupConfirmPassword = new javax.swing.JPasswordField();
         jLabel4 = new javax.swing.JLabel();
@@ -42,8 +45,9 @@ public class RegisterPage extends javax.swing.JFrame {
         signupPassword = new javax.swing.JPasswordField();
         jLabel7 = new javax.swing.JLabel();
         signupConfirmButton = new javax.swing.JButton();
-        signupEmail = new javax.swing.JTextField();
         signupCancelButton = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        signupEmail = new javax.swing.JTextField();
 
         blogin.setText("LOGIN");
         blogin.addActionListener(new java.awt.event.ActionListener() {
@@ -59,9 +63,6 @@ public class RegisterPage extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Username");
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel3.setText("Email");
 
         signupEmergencyContactNum.setText("+60");
         signupEmergencyContactNum.addActionListener(new java.awt.event.ActionListener() {
@@ -103,18 +104,15 @@ public class RegisterPage extends javax.swing.JFrame {
             }
         });
 
-        signupEmail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                signupEmailActionPerformed(evt);
-            }
-        });
-
         signupCancelButton.setText("Cancel");
         signupCancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 signupCancelButtonActionPerformed(evt);
             }
         });
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel8.setText("Email");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -123,30 +121,33 @@ public class RegisterPage extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(217, 217, 217)
                 .addComponent(jLabel1)
-                .addContainerGap(217, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(112, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel3))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(signupCancelButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(signupConfirmButton))
-                            .addComponent(signupContactNum, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(signupConfirmPassword, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(signupEmergencyContactNum, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(signupUsername, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(signupEmail)
-                            .addComponent(signupPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel8)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(signupEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel4)
+                                .addComponent(jLabel6)
+                                .addComponent(jLabel7))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(signupCancelButton)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(signupConfirmButton))
+                                .addComponent(signupContactNum, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(signupConfirmPassword, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(signupEmergencyContactNum, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(signupUsername, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(signupPassword, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(79, 79, 79))
         );
         layout.setVerticalGroup(
@@ -158,9 +159,9 @@ public class RegisterPage extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(signupUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
+                    .addComponent(jLabel8)
                     .addComponent(signupEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -182,7 +183,7 @@ public class RegisterPage extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(signupCancelButton)
                     .addComponent(signupConfirmButton))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
@@ -201,29 +202,96 @@ public class RegisterPage extends javax.swing.JFrame {
     }//GEN-LAST:event_bloginActionPerformed
 
     private void signupConfirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupConfirmButtonActionPerformed
-        Point pos = this.getLocation();
-        VerifyPage frame = new VerifyPage();    //create an instance
-        frame.setResizable(false);          //lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);             //show the frame
-        this.dispose();                     //close current frame
+        try {
+            // Validate input fields
+            if (!validateForm()) {
+                return;
+            }
+            
+            User newUser = buildUserFromForm();
+            User[] users = new User[]{newUser};
+            DatabaseClient.insertRecords("users", users);
+            JOptionPane.showMessageDialog(this, "Registration successful!");
+            
+            Point pos = this.getLocation();
+            UserLoginPage frame = new UserLoginPage();
+            frame.setResizable(false);
+            frame.setLocation(pos);
+            frame.setVisible(true);
+            this.dispose();
+            
+        } catch (Exception ex) {
+            Logger.getLogger(RegisterPage.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "User exist! Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+        }                                                   
     }//GEN-LAST:event_signupConfirmButtonActionPerformed
+
+private User buildUserFromForm() {
+        User user = new User();
+        user.setUserId(UUID.randomUUID().toString());
+        user.setUsername(signupUsername.getText());
+        user.setPassword(new String(signupPassword.getPassword()));
+        user.setEmail(signupEmail.getText());
+        user.setPhone(signupContactNum.getText());
+        user.setEmergencyContactNum(signupEmergencyContactNum.getText());
+        return user;
+    }
+
+private boolean validateForm() {
+        // Check if any field is empty
+        if (signupUsername.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Username is required.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        if (signupEmail.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Email is required.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        if (signupPassword.getPassword().length == 0) {
+            JOptionPane.showMessageDialog(this, "Password is required.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        if (signupConfirmPassword.getPassword().length == 0) {
+            JOptionPane.showMessageDialog(this, "Please confirm your password.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        if (signupContactNum.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Contact number is required.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        if (signupEmergencyContactNum.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Emergency contact number is required.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        // Check if passwords match
+        String password = new String(signupPassword.getPassword());
+        String confirmPassword = new String(signupConfirmPassword.getPassword());
+        
+        if (!password.equals(confirmPassword)) {
+            JOptionPane.showMessageDialog(this, "Passwords do not match.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        return true;
+    }
 
     private void signupEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupEmailActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_signupEmailActionPerformed
 
     private void signupEmergencyContactNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupEmergencyContactNumActionPerformed
-        // TODO add your handling code here:
+        signupConfirmButton.doClick(); // press Enter to trigger login
     }//GEN-LAST:event_signupEmergencyContactNumActionPerformed
 
     private void signupCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupCancelButtonActionPerformed
-        Point pos = this.getLocation();
         UserLoginPage frame = new UserLoginPage();
-        frame.setResizable(false);
-        frame.setLocation(pos);
-        frame.setVisible(true);
-        this.dispose();
+        GUIClient.switchPage(this, frame);
     }//GEN-LAST:event_signupCancelButtonActionPerformed
 
     /**
@@ -265,11 +333,11 @@ public class RegisterPage extends javax.swing.JFrame {
     private javax.swing.JButton blogin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JButton signupCancelButton;
     private javax.swing.JButton signupConfirmButton;
     private javax.swing.JPasswordField signupConfirmPassword;

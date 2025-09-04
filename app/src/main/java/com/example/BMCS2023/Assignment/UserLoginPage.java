@@ -5,6 +5,11 @@
 package com.example.BMCS2023.Assignment;
 
 import java.awt.Point;
+import java.util.Arrays;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -53,6 +58,11 @@ public class UserLoginPage extends javax.swing.JFrame {
         jLabel3.setText("PASSWORD");
 
         jCheckBox1.setText("Show password");
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
 
         loginButton.setText("LOGIN");
         loginButton.addActionListener(new java.awt.event.ActionListener() {
@@ -141,34 +151,69 @@ public class UserLoginPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void adminLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminLoginButtonActionPerformed
-        Point pos = this.getLocation();
         AdminLoginPage frame = new AdminLoginPage();    //create an instance
-        frame.setResizable(false);          //lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);             //show the frame
-        this.dispose();                     //close current frame
+        GUIClient.switchPage(this, frame);
     }//GEN-LAST:event_adminLoginButtonActionPerformed
 
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        if (jCheckBox1.isSelected()) {
+            loginPassword.setEchoChar((char) 0); // show password
+        } else {
+            loginPassword.setEchoChar('*'); // hide password
+        }
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
+
     private void loginPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginPasswordActionPerformed
-        // TODO add your handling code here:
+        loginButton.doClick(); // press Enter to trigger login
     }//GEN-LAST:event_loginPasswordActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        Point pos = this.getLocation();
-        CarMenu frame = new CarMenu();    //create an instance
-        frame.setResizable(false);          //lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);             //show the frame
-        this.dispose();                     //close current frame
+        try {
+        String username = loginUsername.getText();
+        String password = new String(loginPassword.getPassword());
+
+        if (username.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter both username and password.", 
+                "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        User[] users = DatabaseClient.getRecords("users", User.class);
+        User loggedInUser = Arrays.stream(users)
+            .filter(u -> u.getUsername().equals(username) && u.getPassword().equals(password))
+            .findFirst()
+            .orElse(null);
+
+        if (loggedInUser != null) {
+            // Login successful
+            SessionManager.setCurrentUser(loggedInUser);
+            
+            Point pos = this.getLocation();
+            CarMenu frame = new CarMenu();    
+            frame.setResizable(false);        
+            frame.setLocation(pos); 
+            frame.setVisible(true);           
+            this.dispose();                   
+        } 
+        else {
+            // Login failed - username/password combination not found in database
+            JOptionPane.showMessageDialog(this, 
+                "Invalid username or password. Please check your credentials and try again.", 
+                "Login Failed", JOptionPane.ERROR_MESSAGE);
+            loginUsername.setText("");
+            loginPassword.setText("");
+            loginUsername.requestFocus();
+        }
+
+        } catch (Exception ex) {
+            Logger.getLogger(UserLoginPage.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void signupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupButtonActionPerformed
-        Point pos = this.getLocation();
         RegisterPage frame = new RegisterPage();    //create an instance
-        frame.setResizable(false);          //lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);             //show the frame
-        this.dispose();                     //close current frame
+        GUIClient.switchPage(this, frame);
     }//GEN-LAST:event_signupButtonActionPerformed
 
     /**

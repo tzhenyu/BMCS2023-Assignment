@@ -14,40 +14,28 @@ package com.example.BMCS2023.Assignment;
 public class Vehicle {
     //Variables
     public enum Status {
-        @com.google.gson.annotations.SerializedName("available")
-        AVAILABLE,
-        @com.google.gson.annotations.SerializedName("rented")
-        RENTED,
-        @com.google.gson.annotations.SerializedName("returned")
-        RETURNED,
-        @com.google.gson.annotations.SerializedName("maintenance")
-        MAINTENANCE
+        available,
+        rented,
+        returned,
+        maintenance
     }
     public enum Type {
-        @com.google.gson.annotations.SerializedName("suv")
-        SUV,
-        @com.google.gson.annotations.SerializedName("hatchback")
-        HATCHBACK,
-        @com.google.gson.annotations.SerializedName("sedan")
-        SEDAN,
-        @com.google.gson.annotations.SerializedName("coupe")
-        COUPE
+        suv,
+        hatchback,
+        sedan,
+        coupe,
+        pickup
     }  
     public enum AddOn {
-        @com.google.gson.annotations.SerializedName("child_seat")
-        CHILD_SEAT,
-        @com.google.gson.annotations.SerializedName("wifi")
-        WIFI
+        child_seat,
+        wifi,
+        none        
     }  
     public enum FuelType {
-        @com.google.gson.annotations.SerializedName("petrol")
-        PETROL,
-        @com.google.gson.annotations.SerializedName("diesel")
-        DIESEL,
-        @com.google.gson.annotations.SerializedName("electric")
-        ELECTRIC,
-        @com.google.gson.annotations.SerializedName("pickup")
-        PICKUP
+        petrol,
+        diesel,
+        electric,
+        pickup
     }  
 
     // Vairable are declared in all small capital to match database column name
@@ -61,7 +49,7 @@ public class Vehicle {
     private AddOn[] addon;
     private FuelType fueltype;
     private double priceperday;
-    private String carPlate;
+    
     // Constructors
     public Vehicle(String id, String brand, String model, String color, Status status, Type type, String location, AddOn addOn, FuelType fuelType, double pricePerDay, String carPlate) {
         this.id = id;
@@ -74,7 +62,6 @@ public class Vehicle {
         this.addon = addOn != null ? new AddOn[]{addOn} : null;
         this.fueltype = fuelType;
         this.priceperday = pricePerDay;
-        this.carPlate = carPlate;
     }
     
     public Vehicle(){
