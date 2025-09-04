@@ -218,7 +218,7 @@ public class RegisterPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void signupConfirmPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupConfirmPasswordActionPerformed
-        signupConfirmButton.requestFocus();
+        signupConfirmButton.doClick();
     }//GEN-LAST:event_signupConfirmPasswordActionPerformed
 
     private void signupPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupPasswordActionPerformed
