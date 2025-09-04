@@ -20,6 +20,11 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 /**
  *
  * @author zhenyu
@@ -92,6 +97,20 @@ public class DatabaseClient {
         return response.body();
     }
 
+    public static int deleteById(String tableName, String id) throws Exception {
+    String encoded = URLEncoder.encode(id, StandardCharsets.UTF_8);
+    HttpRequest request = HttpRequest.newBuilder()
+        .uri(URI.create(SUPABASE_URL + "/rest/v1/" + tableName + "?id=eq." + encoded))
+        .header("apikey", SUPABASE_API_KEY)
+        .header("Authorization", "Bearer " + SUPABASE_API_KEY)
+        .DELETE()
+        .build();
+
+    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+    return response.statusCode(); // 204 expected on success
+}
+
+    
     public static <T> String updateRecord(String tableName, int id, T record) throws Exception {
         String json = gson.toJson(record);
 
@@ -133,6 +152,51 @@ public class DatabaseClient {
             throw new Exception("Failed to update record: HTTP " + response.statusCode() + " - " + response.body());
         }
     }
+// Gets a single record by id. Returns null if not found.
+public static <T> T getRecordById(String tableName, String id, Class<T> clazz) throws Exception {
+    // encode ID (handles UUIDs or special chars)
+    String encoded = URLEncoder.encode(id, StandardCharsets.UTF_8);
+
+    HttpRequest request = HttpRequest.newBuilder()
+        .uri(URI.create(SUPABASE_URL + "/rest/v1/" + tableName + "?id=eq." + encoded + "&select=*"))
+        .header("apikey", SUPABASE_API_KEY)
+        .header("Authorization", "Bearer " + SUPABASE_API_KEY)
+        .GET()
+        .build();
+
+    // debug (optional) - uncomment if you want to see request/response
+    // System.out.println("DB GET URI: " + request.uri());
+
+    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+    // debug (optional)
+    // System.out.println("DB GET STATUS: " + response.statusCode());
+    // System.out.println("DB GET BODY: " + response.body());
+
+    if (response.statusCode() >= 400) {
+        throw new RuntimeException("Supabase error: " + response.statusCode() + " - " + response.body());
+    }
+
+    String body = response.body();
+    Type arrayType = TypeToken.getArray(clazz).getType();
+    T[] array = gson.fromJson(body, arrayType);
+
+    if (array == null || array.length == 0) return null;
+    return array[0];
+}
+    public static JsonObject getRecordByIdAsJson(String table, String id) throws Exception {
+    String encoded = URLEncoder.encode(id, StandardCharsets.UTF_8);
+    HttpRequest request = HttpRequest.newBuilder()
+        .uri(URI.create(SUPABASE_URL + "/rest/v1/" + table + "?id=eq." + encoded + "&select=*"))
+        .header("apikey", SUPABASE_API_KEY)
+        .header("Authorization", "Bearer " + SUPABASE_API_KEY)
+        .GET()
+        .build();
+
+    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+    JsonArray arr = JsonParser.parseString(response.body()).getAsJsonArray();
+    return arr.size() > 0 ? arr.get(0).getAsJsonObject() : null;
+}
 
 }
 

@@ -371,9 +371,6 @@ DefaultTableModel model = (DefaultTableModel) cartable.getModel();
     }//GEN-LAST:event_btndeleteActionPerformed
 
 
-    /**
-     * Fetch vehicles from Supabase and populate cartable.
-     */
     private void loadUserData() {
         try {
             User[] users = DatabaseClient.getRecords("users", User.class);

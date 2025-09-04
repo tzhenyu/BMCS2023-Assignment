@@ -48,6 +48,7 @@ public class Vehicle {
     private String location;
     private AddOn[] addon;
     private FuelType fueltype;
+    private String carPlate;
     private double priceperday;
     
     // Constructors

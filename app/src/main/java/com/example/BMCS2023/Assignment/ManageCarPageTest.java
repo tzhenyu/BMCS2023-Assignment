@@ -374,7 +374,7 @@ public class ManageCarPageTest extends javax.swing.JFrame {
     v.setModel(modelCar.trim());
     v.setLocation(location.trim());
     v.setCarPlate(carPlate.trim());  
-    v.setStatus(Vehicle.Status.AVAILABLE); // default status
+    v.setStatus(Vehicle.Status.available); // default status
 
     try {
         // Insert into database
