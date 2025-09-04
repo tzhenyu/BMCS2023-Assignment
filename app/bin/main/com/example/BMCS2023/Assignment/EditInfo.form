@@ -24,7 +24,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace pref="47" max="32767" attributes="0"/>
+              <EmptySpace pref="33" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="cancelButton" min="-2" max="-2" attributes="0"/>
@@ -44,26 +44,29 @@
                               <Component id="editUsername" min="-2" pref="120" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="emergencyContactNum" min="-2" pref="157" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="contactNum" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="editEmergencyContactNum" max="32767" attributes="0"/>
-                                  <Component id="editContactNum" min="-2" pref="120" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="contactNum" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="editContactNum" min="-2" pref="120" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="email" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="editEmail" min="-2" pref="120" max="-2" attributes="0"/>
                           </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="contactNum1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="emergencyContactNum" min="-2" pref="157" max="-2" attributes="0"/>
+                                  <Component id="contactNum2" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="editEmergencyContactNum" min="-2" pref="120" max="-2" attributes="0"/>
+                                  <Component id="editInfoPassword" min="-2" pref="120" max="-2" attributes="0"/>
+                                  <Component id="editInfoConfirmPassword" min="-2" pref="120" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Component id="editInfoShowPassCheckbox" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
                   </Group>
@@ -88,15 +91,27 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="contactNum" alignment="0" min="-2" pref="22" max="-2" attributes="0"/>
+                  <Component id="contactNum" min="-2" pref="22" max="-2" attributes="0"/>
                   <Component id="editContactNum" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="emergencyContactNum" min="-2" max="-2" attributes="0"/>
-                  <Component id="editEmergencyContactNum" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="emergencyContactNum" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="editEmergencyContactNum" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="33" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="editInfoPassword" min="-2" max="-2" attributes="0"/>
+                  <Component id="contactNum1" min="-2" pref="22" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="editInfoConfirmPassword" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="contactNum2" alignment="0" min="-2" pref="22" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="editInfoShowPassCheckbox" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="confirmButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cancelButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -146,6 +161,9 @@
     <Component class="javax.swing.JTextField" name="editEmail">
     </Component>
     <Component class="javax.swing.JTextField" name="editEmergencyContactNum">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editEmergencyContactNumActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="editContactNum">
     </Component>
@@ -164,6 +182,31 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="confirmButtonActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="java.awt.Label" name="contactNum1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Password:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="editInfoPassword">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editInfoPasswordActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="editInfoConfirmPassword">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editInfoConfirmPasswordActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="java.awt.Label" name="contactNum2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Confirm Password:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="editInfoShowPassCheckbox">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Show password"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
