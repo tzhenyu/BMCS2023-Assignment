@@ -48,6 +48,7 @@ public class RegisterPage extends javax.swing.JFrame {
         signupCancelButton = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         signupEmail = new javax.swing.JTextField();
+        signupShowPasswordCheckbox = new javax.swing.JCheckBox();
 
         blogin.setText("LOGIN");
         blogin.addActionListener(new java.awt.event.ActionListener() {
@@ -60,6 +61,12 @@ public class RegisterPage extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("SIGN UP");
+
+        signupUsername.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signupUsernameActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Username");
@@ -87,6 +94,11 @@ public class RegisterPage extends javax.swing.JFrame {
         jLabel6.setText("Contact Number");
 
         signupContactNum.setText("+60");
+        signupContactNum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signupContactNumActionPerformed(evt);
+            }
+        });
 
         signupPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -114,6 +126,19 @@ public class RegisterPage extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel8.setText("Email");
 
+        signupEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signupEmailActionPerformed(evt);
+            }
+        });
+
+        signupShowPasswordCheckbox.setText("Show Password");
+        signupShowPasswordCheckbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signupShowPasswordCheckboxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -123,7 +148,7 @@ public class RegisterPage extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(112, Short.MAX_VALUE)
+                .addContainerGap(107, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -147,7 +172,8 @@ public class RegisterPage extends javax.swing.JFrame {
                                 .addComponent(signupConfirmPassword, javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(signupEmergencyContactNum, javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(signupUsername, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(signupPassword, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(signupPassword, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(signupShowPasswordCheckbox)))
                 .addGap(79, 79, 79))
         );
         layout.setVerticalGroup(
@@ -163,15 +189,7 @@ public class RegisterPage extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(signupEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(signupPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(signupConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(signupContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -179,22 +197,32 @@ public class RegisterPage extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(signupEmergencyContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(signupPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(signupConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(signupShowPasswordCheckbox)
+                .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(signupCancelButton)
                     .addComponent(signupConfirmButton))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void signupConfirmPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupConfirmPasswordActionPerformed
-        // TODO add your handling code here:
+        signupConfirmButton.requestFocus();
     }//GEN-LAST:event_signupConfirmPasswordActionPerformed
 
     private void signupPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupPasswordActionPerformed
-        // TODO add your handling code here:
+        signupConfirmPassword.requestFocus();
     }//GEN-LAST:event_signupPasswordActionPerformed
 
     private void bloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bloginActionPerformed
@@ -281,11 +309,11 @@ private boolean validateForm() {
     }
 
     private void signupEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupEmailActionPerformed
-        // TODO add your handling code here:
+        signupContactNum.requestFocus();
     }//GEN-LAST:event_signupEmailActionPerformed
 
     private void signupEmergencyContactNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupEmergencyContactNumActionPerformed
-        // TODO add your handling code here:
+        signupPassword.requestFocus();
     }//GEN-LAST:event_signupEmergencyContactNumActionPerformed
 
     private void signupCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupCancelButtonActionPerformed
@@ -296,6 +324,24 @@ private boolean validateForm() {
         frame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_signupCancelButtonActionPerformed
+
+    private void signupShowPasswordCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupShowPasswordCheckboxActionPerformed
+        if(signupShowPasswordCheckbox.isSelected()){
+            signupPassword.setEchoChar((char)0);
+            signupConfirmPassword.setEchoChar((char)0);
+        } else{
+            signupPassword.setEchoChar('*');
+            signupConfirmPassword.setEchoChar('*');
+        }
+    }//GEN-LAST:event_signupShowPasswordCheckboxActionPerformed
+
+    private void signupUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupUsernameActionPerformed
+        signupEmail.requestFocus();
+    }//GEN-LAST:event_signupUsernameActionPerformed
+
+    private void signupContactNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupContactNumActionPerformed
+        signupEmergencyContactNum.requestFocus();
+    }//GEN-LAST:event_signupContactNumActionPerformed
 
     /**
      * @param args the command line arguments
@@ -348,6 +394,7 @@ private boolean validateForm() {
     private javax.swing.JTextField signupEmail;
     private javax.swing.JTextField signupEmergencyContactNum;
     private javax.swing.JPasswordField signupPassword;
+    private javax.swing.JCheckBox signupShowPasswordCheckbox;
     private javax.swing.JTextField signupUsername;
     // End of variables declaration//GEN-END:variables
 }
