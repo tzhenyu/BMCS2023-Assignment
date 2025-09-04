@@ -20,7 +20,7 @@ public class App {
 
         // Launch the GUI
         SwingUtilities.invokeLater(() -> {
-            new Test().setVisible(true);  // <-- Launch your designed frame
+            new AdminDashboard().setVisible(true);  // <-- Launch your designed frame
         });
     }
 }

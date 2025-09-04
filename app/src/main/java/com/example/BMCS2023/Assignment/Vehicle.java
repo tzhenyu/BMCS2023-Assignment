@@ -4,6 +4,7 @@
  */
 package com.example.BMCS2023.Assignment;
 
+
 /**
  *
  * @author zhenyu
@@ -60,9 +61,9 @@ public class Vehicle {
     private AddOn[] addon;
     private FuelType fueltype;
     private double priceperday;
-    
+    private String carPlate;
     // Constructors
-    public Vehicle(String id, String brand, String model, String color, Status status, Type type, String location, AddOn addOn, FuelType fuelType, double pricePerDay) {
+    public Vehicle(String id, String brand, String model, String color, Status status, Type type, String location, AddOn addOn, FuelType fuelType, double pricePerDay, String carPlate) {
         this.id = id;
         this.brand = brand;
         this.model = model;
@@ -73,6 +74,7 @@ public class Vehicle {
         this.addon = addOn != null ? new AddOn[]{addOn} : null;
         this.fueltype = fuelType;
         this.priceperday = pricePerDay;
+        this.carPlate = carPlate;
     }
     
     public Vehicle(){
@@ -184,6 +186,12 @@ public class Vehicle {
         this.priceperday = pricePerDay;
     }
     
-    
+    public String getCarPlate(){
+             return carPlate;
+    }
 
+    public void setCarPlate(String carPlate) {
+        this.carPlate = carPlate;
+    }
+    
 }

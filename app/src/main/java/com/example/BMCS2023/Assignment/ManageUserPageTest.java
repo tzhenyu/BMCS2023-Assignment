@@ -4,6 +4,8 @@
  */
 package com.example.BMCS2023.Assignment;
 
+import com.example.BMCS2023.Assignment.DatabaseClient;
+import com.example.BMCS2023.Assignment.User;
 import java.awt.Color;
 import java.awt.Point;
 import javax.swing.JOptionPane;
@@ -14,16 +16,18 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author yanzhe
  */
-public class ManageCarPageTest extends javax.swing.JFrame {
+public class ManageUserPageTest extends javax.swing.JFrame {
 
     /**
      * Creates new form AdminDashboard
      */
-    public ManageCarPageTest() {
+    public ManageUserPageTest() {
         initComponents();
+        loadUserData();
         cartable.getTableHeader().setFont(new java.awt.Font("Times New Roman", java.awt.Font.BOLD, 14));
         cartable.getTableHeader().setBackground(Color.BLACK);
         cartable.getTableHeader().setForeground(Color.WHITE);
+        
         
         
     }
@@ -138,7 +142,7 @@ public class ManageCarPageTest extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Serif", 3, 36)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("Manage Car Page");
+        jLabel9.setText("Manage User Page");
 
         jButton5.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jButton5.setText("back");
@@ -152,16 +156,14 @@ public class ManageCarPageTest extends javax.swing.JFrame {
         cartable.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         cartable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Proton", "X50", "BMW1231"},
-                {"Honda", "City", "QQ1231"},
-                {"Porsche", "911", "WTF1"}
+
             },
             new String [] {
-                "Brand", "Model", "CarPlate"
+                "Username", "UserID", "Email", "Phone"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -170,8 +172,6 @@ public class ManageCarPageTest extends javax.swing.JFrame {
         });
         cartable.setGridColor(new java.awt.Color(0, 0, 0));
         cartable.setShowGrid(true);
-        cartable.setShowHorizontalLines(true);
-        cartable.setShowVerticalLines(true);
         cartable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cartableMouseClicked(evt);
@@ -271,127 +271,133 @@ public class ManageCarPageTest extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Point pos = ManageCarPageTest.this.getLocation(); 
-        ManageUserPage frame = new ManageUserPage();   // create CarDetailsPage instance
+ Point pos = ManageUserPageTest.this.getLocation(); 
+        ManageCarPageTest frame = new ManageCarPageTest();   // create CarDetailsPage instance
         frame.setResizable(false);       // lock resizing
         frame.setLocation(pos); 
         frame.setVisible(true);          // show the new frame
-        ManageCarPageTest.this.dispose();    // close current page          // close current frame         // TODO add your handling code here:        // TODO add your handling code here:
+        ManageUserPageTest.this.dispose();    // close current page          // close current frame         // TODO add your handling code here:        // TODO add your handling code here:                                        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Point pos = ManageUserPageTest.this.getLocation(); 
+        ManageUserPageTest frame = new ManageUserPageTest();   // create CarDetailsPage instance
+        frame.setResizable(false);       // lock resizing
+        frame.setLocation(pos); 
+        frame.setVisible(true);          // show the new frame
+        ManageUserPageTest.this.dispose();    // close current page          // close current frame         // TODO add your handling code here:        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        Point pos = ManageCarPageTest.this.getLocation(); 
+        Point pos = ManageUserPageTest.this.getLocation(); 
         AdminDashboard frame = new AdminDashboard();   // create an instance
         frame.setResizable(false);       // lock resizing
         frame.setLocation(pos); 
         frame.setVisible(true);          // show the frame
-        ManageCarPageTest.this.dispose();                  // close current frame         // TODO add your handling code here: 
+        ManageUserPageTest.this.dispose();                  // close current frame         // TODO add your handling code here: 
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void cartableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartableMouseClicked
-         int selectedRow = cartable.getSelectedRow();
-          if (selectedRow != -1) {
-             String brand = cartable.getValueAt(selectedRow, 0).toString(); 
-             String model = cartable.getValueAt(selectedRow, 1).toString(); 
-             String CarPlate = cartable.getValueAt(selectedRow, 2).toString();
-             
-          if (brand.equals("Proton") && model.equals("X50")) {
-           CarDetailsPage details = new CarDetailsPage();
-            details.setVisible(true);
-            this.dispose(); 
-        }
-          }
+
     }//GEN-LAST:event_cartableMouseClicked
 
     private void btnaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddActionPerformed
-      DefaultTableModel model = (DefaultTableModel) cartable.getModel();
-    
-    // Regex for Brand: only alphabets and spaces
-    String brandRegex = "^[a-zA-Z ]+$";
-    // Regex for Model: alphabets + numbers allowed
-    String modelRegex = "^[a-zA-Z0-9 ]+$";
-    //Regex for Plate: aplphabets and numbers allowed
-    String PlateRegex = "^[a-zA-Z0-9 ]+$";
+   DefaultTableModel model = (DefaultTableModel) cartable.getModel();
 
-    // --- Brand ---
-    String brand = JOptionPane.showInputDialog(this, "Enter Brand:");
-    if (brand == null || brand.trim().isEmpty()) return; // Cancel / empty
-    if (!brand.matches(brandRegex)) {
-        JOptionPane.showMessageDialog(this, "FUCK YOUUUUU ALPHABET ONLY");
-        return;
+    // --- Input dialogs ---
+    String username = JOptionPane.showInputDialog(this, "Enter Username:");
+    if (username == null || username.trim().isEmpty()) return;
+
+    String password = JOptionPane.showInputDialog(this, "Enter Password:");
+    if (password == null || password.trim().isEmpty()) return;
+
+    String email = JOptionPane.showInputDialog(this, "Enter Email:");
+    if (email == null || email.trim().isEmpty()) return;
+
+    String phone = JOptionPane.showInputDialog(this, "Enter Phone Number:");
+    if (phone == null || phone.trim().isEmpty()) return;
+
+    String emergency = JOptionPane.showInputDialog(this, "Enter Emergency Contact:");
+    if (emergency == null || emergency.trim().isEmpty()) return;
+
+    // --- Build User object ---
+    User u = new User();
+    u.setUserId(java.util.UUID.randomUUID().toString()); 
+    u.setUsername(username.trim());
+    u.setPassword(password.trim());
+    u.setEmail(email.trim());
+    u.setPhone(phone.trim());
+    u.setEmergencyContactNum(emergency.trim());
+
+    try {
+        // Insert into database
+        String response = DatabaseClient.insertRecords("users", new User[] { u });
+        JOptionPane.showMessageDialog(this, "User added successfully. " + response);
+
+        // Reload table
+        loadUserData();
+    } catch (Exception ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error adding user: " + ex.getMessage());
     }
-
-    // --- Model ---
-    String modelCar = JOptionPane.showInputDialog(this, "Enter Model:");
-    if (modelCar == null || modelCar.trim().isEmpty()) return;
-    if (!modelCar.matches(modelRegex)) {
-        JOptionPane.showMessageDialog(this, "Model can only contain letters and numbers!");
-        return;
-    }
-
-    // --- Car Plate (no strict validation) ---
-     String carPlate = JOptionPane.showInputDialog(this, "Enter Car Plate:");
-    if (carPlate == null || carPlate.trim().isEmpty()) return;
-    if (!carPlate.matches(PlateRegex)) {
-        JOptionPane.showMessageDialog(this, "Car Plate can only contain letters and numbers!");
-        return;
-    }
-
-    // Add into table
-    model.addRow(new Object[]{brand, modelCar, carPlate});
 
     }//GEN-LAST:event_btnaddActionPerformed
 
     private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
-    DefaultTableModel model = (DefaultTableModel) cartable.getModel();
-    int row = cartable.getSelectedRow();   // get the selected row index
+DefaultTableModel model = (DefaultTableModel) cartable.getModel();
+    int row = cartable.getSelectedRow();
 
-    if (row != -1) {   // -1 means no row selected
-        model.removeRow(row);  // remove the selected row
-    } else {
+    if (row == -1) {
         JOptionPane.showMessageDialog(this, "Please select a row to delete.");
+        return;
+    }
+
+    String userId = cartable.getValueAt(row, 1).toString(); // column 1 = UserID
+    int confirm = JOptionPane.showConfirmDialog(this, "Delete user " + userId + "?", "Confirm", JOptionPane.YES_NO_OPTION);
+    if (confirm != JOptionPane.YES_OPTION) return;
+
+    try {
+        int status = DatabaseClient.deleteById("users", userId);
+        if (status == 204 || status == 200) {
+            JOptionPane.showMessageDialog(this, "User deleted.");
+            loadUserData(); // refresh table
+        } else {
+            JOptionPane.showMessageDialog(this, "Delete returned HTTP " + status + ". Check policies and ID.");
+        }
+    } catch (Exception ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error deleting user: " + ex.getMessage());
     }
     }//GEN-LAST:event_btndeleteActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ManageCarPageTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ManageCarPageTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ManageCarPageTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ManageCarPageTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            new ManageCarPageTest().setVisible(true);
-        });
+    /**
+     * Fetch vehicles from Supabase and populate cartable.
+     */
+    private void loadUserData() {
+        try {
+            User[] users = DatabaseClient.getRecords("users", User.class);
+
+            DefaultTableModel model = (DefaultTableModel) cartable.getModel();
+            model.setRowCount(0); // clear old rows
+
+            for (User u : users) {
+                model.addRow(new Object[]{
+                    u.getUsername(),
+                    u.getUserId(),
+                    u.getEmail(),
+                    u.getPhone()
+                });
+}   
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error loading Users: " + ex.getMessage());
+        }
     }
+
+
+
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnadd;
@@ -414,4 +420,5 @@ public class ManageCarPageTest extends javax.swing.JFrame {
     private java.awt.Menu menu2;
     private java.awt.MenuBar menuBar1;
     // End of variables declaration//GEN-END:variables
+
 }

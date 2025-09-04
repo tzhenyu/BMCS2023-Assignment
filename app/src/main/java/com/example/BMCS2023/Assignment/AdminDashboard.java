@@ -164,12 +164,17 @@ public class AdminDashboard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        Point pos = AdminDashboard.this.getLocation();
+        CarMenu frame = new CarMenu();   // create an instance
+        frame.setResizable(false);       // lock resizing
+        frame.setLocation(pos);
+        frame.setVisible(true);          // show the frame
+        AdminDashboard.this.dispose(); 
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         Point pos = AdminDashboard.this.getLocation();
-        ManageUserPage frame = new ManageUserPage();   // create an instance
+        ManageUserPageTest frame = new ManageUserPageTest();   // create an instance
         frame.setResizable(false);       // lock resizing
         frame.setLocation(pos);
         frame.setVisible(true);          // show the frame
@@ -179,7 +184,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         Point pos = AdminDashboard.this.getLocation();
-        ManageCarPage frame = new ManageCarPage();   // create an instance
+        ManageCarPageTest frame = new ManageCarPageTest();   // create an instance
         frame.setResizable(false);       // lock resizing
         frame.setLocation(pos);
         frame.setVisible(true);          // show the frame
