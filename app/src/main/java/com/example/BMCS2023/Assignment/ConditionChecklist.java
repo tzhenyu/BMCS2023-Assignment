@@ -114,6 +114,7 @@ public class ConditionChecklist extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
+        
         Point pos = this.getLocation();
         AlertDriveSafe frame = new AlertDriveSafe();    //create an instance
         frame.setResizable(false);          //lock resizing

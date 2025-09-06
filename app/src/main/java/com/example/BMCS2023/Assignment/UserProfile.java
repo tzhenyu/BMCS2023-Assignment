@@ -5,6 +5,7 @@
 package com.example.BMCS2023.Assignment;
 
 import java.awt.Point;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -40,17 +41,17 @@ public class UserProfile extends javax.swing.JFrame {
         emailDisplayText = new java.awt.Label();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        vehicleIDLabel = new javax.swing.JLabel();
+        dateLabel = new javax.swing.JLabel();
+        vehicle1Button = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
+        vehicleID2Label = new javax.swing.JLabel();
+        vehicle2Button = new javax.swing.JButton();
+        date2Label = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
+        vehicleID3Label = new javax.swing.JLabel();
+        vehicle3Button = new javax.swing.JButton();
+        date3Label = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -112,14 +113,14 @@ public class UserProfile extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("ORDERS");
 
-        jLabel3.setText("vehicle id");
+        vehicleIDLabel.setText("vehicle id");
 
-        jLabel4.setText("dd/mm/yyyy time");
+        dateLabel.setText("dd/mm/yyyy time");
 
-        jButton1.setText("status");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        vehicle1Button.setText("status");
+        vehicle1Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                vehicle1ButtonActionPerformed(evt);
             }
         });
 
@@ -130,10 +131,10 @@ public class UserProfile extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dateLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(vehicleIDLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(vehicle1Button)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -142,23 +143,23 @@ public class UserProfile extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel3)
+                        .addComponent(vehicleIDLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4))
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(dateLabel))
+                    .addComponent(vehicle1Button, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12))
         );
 
-        jLabel5.setText("perodua kancil 2004");
+        vehicleID2Label.setText("perodua kancil 2004");
 
-        jButton2.setText("ongoing");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        vehicle2Button.setText("ongoing");
+        vehicle2Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                vehicle2ButtonActionPerformed(evt);
             }
         });
 
-        jLabel6.setText("2/8/2025 18:00");
+        date2Label.setText("2/8/2025 18:00");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -167,10 +168,10 @@ public class UserProfile extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(date2Label, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(vehicleID2Label, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(vehicle2Button)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -179,23 +180,23 @@ public class UserProfile extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
+                        .addComponent(vehicleID2Label)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6))
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(date2Label))
+                    .addComponent(vehicle2Button, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        jLabel7.setText("perodua kancil 2004");
+        vehicleID3Label.setText("perodua kancil 2004");
 
-        jButton3.setText("completed");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        vehicle3Button.setText("completed");
+        vehicle3Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                vehicle3ButtonActionPerformed(evt);
             }
         });
 
-        jLabel8.setText("2/8/2025 18:00");
+        date3Label.setText("2/8/2025 18:00");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -204,10 +205,10 @@ public class UserProfile extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(date3Label, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(vehicleID3Label, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addComponent(vehicle3Button)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -216,10 +217,10 @@ public class UserProfile extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
+                        .addComponent(vehicleID3Label)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel8))
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(date3Label))
+                    .addComponent(vehicle3Button, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -346,17 +347,62 @@ public class UserProfile extends javax.swing.JFrame {
         this.dispose();  
     }//GEN-LAST:event_logoutButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void vehicle1ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vehicle1ButtonActionPerformed
+        String currentText = vehicle1Button.getText().trim(); // Added trim() for safety
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        switch (currentText) {
+            case "Pickup" -> {
+                try {
+                    // Update button text BEFORE navigating
+                    vehicle1Button.setText("Return");
+            
+                    // Navigate to ConditionChecklist
+                    Point pos = this.getLocation();
+                    ConditionChecklist frame = new ConditionChecklist();
+                    frame.setResizable(false);
+                    frame.setLocation(pos);
+                    frame.setVisible(true);             
+                    this.dispose();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Error opening ConditionChecklist: " + e.getMessage(),"Navigation Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        
+            case "Return" -> {
+                try {
+                    // Update button text BEFORE navigating
+                    vehicle1Button.setText("Completed");
+            
+                    // Navigate to ReturnVehicle
+                    Point pos = this.getLocation();
+                    ReturnVehicle frame = new ReturnVehicle();
+                    frame.setResizable(false);
+                    frame.setLocation(pos);
+                    frame.setVisible(true);             
+                    this.dispose();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Error opening ReturnVehicle: " + e.getMessage(),"Navigation Error", JOptionPane.ERROR_MESSAGE);
+                }   
+            }
+        
+            case "Completed" -> JOptionPane.showMessageDialog(this, "Vehicle process completed!", "Status", JOptionPane.INFORMATION_MESSAGE);
+        
+            default -> {
+                // Handle unexpected button text (debugging helper)
+                System.out.println("Unexpected button text: '" + currentText + "'");
+                JOptionPane.showMessageDialog(this,"Unknown button state: '" + currentText + "'\nResetting to 'Pickup'", "State Error", JOptionPane.WARNING_MESSAGE);
+                vehicle1Button.setText("Pickup"); // Reset to default state
+            }
+    }
+    }//GEN-LAST:event_vehicle1ButtonActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void vehicle2ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vehicle2ButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_vehicle2ButtonActionPerformed
+
+    private void vehicle3ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vehicle3ButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_vehicle3ButtonActionPerformed
 
 
 
@@ -366,27 +412,27 @@ public class UserProfile extends javax.swing.JFrame {
     private javax.swing.JButton backButton;
     private java.awt.Label contactNum;
     private java.awt.Label contactNumDisplayText;
+    private javax.swing.JLabel date2Label;
+    private javax.swing.JLabel date3Label;
+    private javax.swing.JLabel dateLabel;
     private javax.swing.JButton editInfoButton;
     private java.awt.Label email;
     private java.awt.Label emailDisplayText;
     private java.awt.Label emergencyContactNum;
     private java.awt.Label emergencyContactNumDisplayText;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JButton logoutButton;
     private java.awt.Label username;
     private java.awt.Label usernameDisplayText;
+    private javax.swing.JButton vehicle1Button;
+    private javax.swing.JButton vehicle2Button;
+    private javax.swing.JButton vehicle3Button;
+    private javax.swing.JLabel vehicleID2Label;
+    private javax.swing.JLabel vehicleID3Label;
+    private javax.swing.JLabel vehicleIDLabel;
     // End of variables declaration//GEN-END:variables
 
     private void loadUserData() {
