@@ -5,8 +5,7 @@
 package com.example.BMCS2023.Assignment;
 
 import java.awt.Point;
-import javax.swing.JOptionPane;
-
+import java.util.List;
 
 /**
  *
@@ -117,7 +116,6 @@ public class UserProfile extends javax.swing.JFrame {
 
         dateLabel.setText("dd/mm/yyyy time");
 
-        vehicle1Button.setText("status");
         vehicle1Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 vehicle1ButtonActionPerformed(evt);
@@ -339,61 +337,12 @@ public class UserProfile extends javax.swing.JFrame {
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
         SessionManager.logout();
     
-        Point pos = this.getLocation();
-        CarMenu frame = new CarMenu();    //create an instance
-        frame.setResizable(false);          //lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);             //show the frame
-        this.dispose();  
+        { CarMenu frame = new CarMenu(); frame.setResizable(false); frame.setLocation(this.getLocation()); frame.setVisible(true); this.dispose(); }
     }//GEN-LAST:event_logoutButtonActionPerformed
 
     private void vehicle1ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vehicle1ButtonActionPerformed
-        String currentText = vehicle1Button.getText().trim(); // Added trim() for safety
-
-        switch (currentText) {
-            case "Pickup" -> {
-                try {
-                    // Update button text BEFORE navigating
-                    vehicle1Button.setText("Return");
-            
-                    // Navigate to ConditionChecklist
-                    Point pos = this.getLocation();
-                    ConditionChecklist frame = new ConditionChecklist();
-                    frame.setResizable(false);
-                    frame.setLocation(pos);
-                    frame.setVisible(true);             
-                    this.dispose();
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, "Error opening ConditionChecklist: " + e.getMessage(),"Navigation Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        
-            case "Return" -> {
-                try {
-                    // Update button text BEFORE navigating
-                    vehicle1Button.setText("Completed");
-            
-                    // Navigate to ReturnVehicle
-                    Point pos = this.getLocation();
-                    ReturnVehicle frame = new ReturnVehicle();
-                    frame.setResizable(false);
-                    frame.setLocation(pos);
-                    frame.setVisible(true);             
-                    this.dispose();
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, "Error opening ReturnVehicle: " + e.getMessage(),"Navigation Error", JOptionPane.ERROR_MESSAGE);
-                }   
-            }
-        
-            case "Completed" -> JOptionPane.showMessageDialog(this, "Vehicle process completed!", "Status", JOptionPane.INFORMATION_MESSAGE);
-        
-            default -> {
-                // Handle unexpected button text (debugging helper)
-                System.out.println("Unexpected button text: '" + currentText + "'");
-                JOptionPane.showMessageDialog(this,"Unknown button state: '" + currentText + "'\nResetting to 'Pickup'", "State Error", JOptionPane.WARNING_MESSAGE);
-                vehicle1Button.setText("Pickup"); // Reset to default state
-            }
-    }
+       ConditionChecklist frame = new ConditionChecklist();
+       frame.setVisible(true);
     }//GEN-LAST:event_vehicle1ButtonActionPerformed
 
     private void vehicle2ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vehicle2ButtonActionPerformed

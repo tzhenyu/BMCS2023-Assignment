@@ -5,18 +5,21 @@
 package com.example.BMCS2023.Assignment;
 
 import java.awt.Point;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Joel
  */
 public class EditInfo extends javax.swing.JFrame {
-
+    private User currentUser;
     /**
      * Creates new form EditInfo
      */
     public EditInfo() {
         initComponents();
+        loadCurrentUserInfo(); 
+        setupShowPasswordCheckbox(); 
     }
 
     /**
@@ -33,10 +36,10 @@ public class EditInfo extends javax.swing.JFrame {
         email = new java.awt.Label();
         contactNum = new java.awt.Label();
         emergencyContactNum = new java.awt.Label();
-        editUsername = new javax.swing.JTextField();
-        editEmail = new javax.swing.JTextField();
-        editEmergencyContactNum = new javax.swing.JTextField();
-        editContactNum = new javax.swing.JTextField();
+        editInfoUsername = new javax.swing.JTextField();
+        editInfoEmail = new javax.swing.JTextField();
+        editInfoEmergencyContactNum = new javax.swing.JTextField();
+        editInfoContactNum = new javax.swing.JTextField();
         cancelButton = new javax.swing.JButton();
         confirmButton = new javax.swing.JButton();
         contactNum1 = new java.awt.Label();
@@ -60,9 +63,9 @@ public class EditInfo extends javax.swing.JFrame {
         emergencyContactNum.setPreferredSize(new java.awt.Dimension(157, 20));
         emergencyContactNum.setText("Emergency Contact Number:");
 
-        editEmergencyContactNum.addActionListener(new java.awt.event.ActionListener() {
+        editInfoEmergencyContactNum.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editEmergencyContactNumActionPerformed(evt);
+                editInfoEmergencyContactNumActionPerformed(evt);
             }
         });
 
@@ -118,15 +121,15 @@ public class EditInfo extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(editUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(editInfoUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(contactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(editContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(editInfoContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(editEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(editInfoEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(contactNum1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -134,7 +137,7 @@ public class EditInfo extends javax.swing.JFrame {
                                     .addComponent(contactNum2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(editEmergencyContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(editInfoEmergencyContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(editInfoPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(editInfoConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(editInfoShowPassCheckbox))
@@ -147,20 +150,20 @@ public class EditInfo extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(editUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editInfoUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(editEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(editInfoEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(contactNum, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(editContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(editInfoContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(emergencyContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(editEmergencyContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(editInfoEmergencyContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(editInfoPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -191,17 +194,120 @@ public class EditInfo extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
-        Point pos = this.getLocation();
-        UserProfile frame = new UserProfile();    //create an instance
-        frame.setResizable(false);          //lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);             //show the frame
-        this.dispose();                     //close current frame
+        confirmUpdate();
     }//GEN-LAST:event_confirmButtonActionPerformed
+    
+    private void loadCurrentUserInfo() {
+        currentUser = SessionManager.getCurrentUser();
+        if (currentUser != null) {
+            editInfoUsername.setText(currentUser.getUsername());
+            editInfoEmail.setText(currentUser.getEmail());
+            editInfoContactNum.setText(currentUser.getPhone());
+            editInfoEmergencyContactNum.setText(currentUser.getEmergencyContactNum());
+            editInfoPassword.setText(""); // Don't pre-fill password for security
+        }
+    }
+    
+    private boolean validateInput() {
+        if (editInfoUsername.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Username cannot be empty!");
+            return false;
+        }
+    
+        if (editInfoEmail.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Email cannot be empty!");
+            return false;
+        }
+    
+        if (editInfoContactNum.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Contact number cannot be empty!");
+            return false;
+        }
+    
+        // Validate email format
+        String email = editInfoEmail.getText().trim();
+        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid email address!");
+            return false;
+        }
+    
+        // Add password validation
+        String password = editInfoPassword.getText();
+        String confirmPassword = editInfoConfirmPassword.getText();
+    
+        if (!password.isEmpty() && !password.equals(confirmPassword)) {
+            JOptionPane.showMessageDialog(this, "Passwords do not match!");
+            return false;
+        }
+    
+        return true;
+    }
+    
+    private void confirmUpdate() {
+        if (!validateInput()) {
+        return;
+        }
 
-    private void editEmergencyContactNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editEmergencyContactNumActionPerformed
+        try {
+            // Get the current user's ID
+            String userId = currentUser.getUserId();
+    
+            // Get updated values from text fields
+            String newUsername = editInfoUsername.getText().trim();
+            String newEmail = editInfoEmail.getText().trim();
+            String newContactNum = editInfoContactNum.getText().trim();
+            String newEmergencyContact = editInfoEmergencyContactNum.getText().trim();
+            String newPassword = editInfoPassword.getText();
+    
+            // Create updated user object with same ID
+            User updatedUser = new User();
+            updatedUser.setUserId(userId); // Keep the same UserID
+            updatedUser.setUsername(newUsername);
+            updatedUser.setEmail(newEmail);
+            updatedUser.setPhone(newContactNum);
+            updatedUser.setEmergencyContactNum(newEmergencyContact);
+        
+            // Only update password if new one is provided
+            if (!newPassword.isEmpty()) {
+                updatedUser.setPassword(newPassword);
+            } else {
+                updatedUser.setPassword(currentUser.getPassword()); // Keep existing password
+            }
+        
+            // Update in database using the UserID
+            String result = DatabaseClient.updateUser(updatedUser);
+        
+            // Update the session with new user info
+            SessionManager.setCurrentUser(updatedUser);
+        
+            JOptionPane.showMessageDialog(this, 
+            "User information updated successfully!", 
+            "Success", 
+            JOptionPane.INFORMATION_MESSAGE);
+        
+            // Navigate to UserProfile after successful update
+            Point pos = this.getLocation();
+            UserProfile frame = new UserProfile();
+            frame.setResizable(false);
+            frame.setLocation(pos); 
+            frame.setVisible(true);
+            this.dispose();
+        
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, 
+            "Error updating user information: " + ex.getMessage(), 
+            "Error", 
+            JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void setupShowPasswordCheckbox() {
+        editInfoShowPassCheckbox.addActionListener(e -> {});
+    }
+    
+    private void editInfoEmergencyContactNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editInfoEmergencyContactNumActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_editEmergencyContactNumActionPerformed
+    }//GEN-LAST:event_editInfoEmergencyContactNumActionPerformed
 
     private void editInfoPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editInfoPasswordActionPerformed
         // TODO add your handling code here:
@@ -252,13 +358,13 @@ public class EditInfo extends javax.swing.JFrame {
     private java.awt.Label contactNum;
     private java.awt.Label contactNum1;
     private java.awt.Label contactNum2;
-    private javax.swing.JTextField editContactNum;
-    private javax.swing.JTextField editEmail;
-    private javax.swing.JTextField editEmergencyContactNum;
     private javax.swing.JTextField editInfoConfirmPassword;
+    private javax.swing.JTextField editInfoContactNum;
+    private javax.swing.JTextField editInfoEmail;
+    private javax.swing.JTextField editInfoEmergencyContactNum;
     private javax.swing.JTextField editInfoPassword;
     private javax.swing.JCheckBox editInfoShowPassCheckbox;
-    private javax.swing.JTextField editUsername;
+    private javax.swing.JTextField editInfoUsername;
     private java.awt.Label email;
     private java.awt.Label emergencyContactNum;
     private javax.swing.JLabel jLabel1;
