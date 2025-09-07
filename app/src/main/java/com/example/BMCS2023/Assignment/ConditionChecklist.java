@@ -4,6 +4,8 @@
  */
 package com.example.BMCS2023.Assignment;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Joel
@@ -112,8 +114,8 @@ public class ConditionChecklist extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
-        AlertDriveSafe frame = new AlertDriveSafe();    //create an instance
-        GUIClient.switchPage(this, frame);
+        JOptionPane.showMessageDialog(null, "Drive Safe!", "Happy Drive", JOptionPane.OK_OPTION);
+        
     }//GEN-LAST:event_nextButtonActionPerformed
 
     /**

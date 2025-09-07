@@ -269,11 +269,11 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="jLabel4" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jLabel3" alignment="0" min="-2" pref="123" max="-2" attributes="0"/>
+                      <Component id="dateLabel" alignment="0" max="32767" attributes="0"/>
+                      <Component id="vehicleIDLabel" alignment="0" min="-2" pref="123" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                  <Component id="vehicle1Button" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -284,11 +284,11 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                          <Component id="vehicleIDLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                          <Component id="dateLabel" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jButton1" alignment="0" min="-2" pref="45" max="-2" attributes="0"/>
+                      <Component id="vehicle1Button" alignment="0" min="-2" pref="45" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               </Group>
@@ -296,22 +296,19 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabel3">
+        <Component class="javax.swing.JLabel" name="vehicleIDLabel">
           <Properties>
             <Property name="text" type="java.lang.String" value="vehicle id"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel4">
+        <Component class="javax.swing.JLabel" name="dateLabel">
           <Properties>
             <Property name="text" type="java.lang.String" value="dd/mm/yyyy time"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="status"/>
-          </Properties>
+        <Component class="javax.swing.JButton" name="vehicle1Button">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="vehicle1ButtonActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
@@ -324,11 +321,11 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="jLabel6" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jLabel5" alignment="0" min="-2" pref="123" max="-2" attributes="0"/>
+                      <Component id="date2Label" alignment="0" max="32767" attributes="0"/>
+                      <Component id="vehicleID2Label" alignment="0" min="-2" pref="123" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="28" max="32767" attributes="0"/>
-                  <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                  <Component id="vehicle2Button" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -339,11 +336,11 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                          <Component id="vehicleID2Label" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                          <Component id="date2Label" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jButton2" alignment="0" min="-2" pref="45" max="-2" attributes="0"/>
+                      <Component id="vehicle2Button" alignment="0" min="-2" pref="45" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -351,20 +348,20 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabel5">
+        <Component class="javax.swing.JLabel" name="vehicleID2Label">
           <Properties>
             <Property name="text" type="java.lang.String" value="perodua kancil 2004"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton2">
+        <Component class="javax.swing.JButton" name="vehicle2Button">
           <Properties>
             <Property name="text" type="java.lang.String" value="ongoing"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="vehicle2ButtonActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel6">
+        <Component class="javax.swing.JLabel" name="date2Label">
           <Properties>
             <Property name="text" type="java.lang.String" value="2/8/2025 18:00"/>
           </Properties>
@@ -379,11 +376,11 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="jLabel8" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jLabel7" alignment="0" min="-2" pref="123" max="-2" attributes="0"/>
+                      <Component id="date3Label" alignment="0" max="32767" attributes="0"/>
+                      <Component id="vehicleID3Label" alignment="0" min="-2" pref="123" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                  <Component id="vehicle3Button" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -394,11 +391,11 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                          <Component id="vehicleID3Label" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                          <Component id="date3Label" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jButton3" alignment="0" min="-2" pref="45" max="-2" attributes="0"/>
+                      <Component id="vehicle3Button" alignment="0" min="-2" pref="45" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -406,20 +403,20 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabel7">
+        <Component class="javax.swing.JLabel" name="vehicleID3Label">
           <Properties>
             <Property name="text" type="java.lang.String" value="perodua kancil 2004"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton3">
+        <Component class="javax.swing.JButton" name="vehicle3Button">
           <Properties>
             <Property name="text" type="java.lang.String" value="completed"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="vehicle3ButtonActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel8">
+        <Component class="javax.swing.JLabel" name="date3Label">
           <Properties>
             <Property name="text" type="java.lang.String" value="2/8/2025 18:00"/>
           </Properties>

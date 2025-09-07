@@ -113,18 +113,15 @@ public class DatabaseClient {
     
     public static <T> String updateRecord(String tableName, int id, T record) throws Exception {
         String json = gson.toJson(record);
-
         HttpRequest request = HttpRequest.newBuilder()
-            .uri(URI.create(SUPABASE_URL + "/rest/v1/" + tableName + "?id=eq." + id))
+            .uri(URI.create(SUPABASE_URL + "/rest/v1/users?userId=eq." + user.getUserId()))  // Change id to userId
             .header("apikey", SUPABASE_API_KEY)
             .header("Authorization", "Bearer " + SUPABASE_API_KEY)
             .header("Content-Type", "application/json")
             .header("Prefer", "return=representation")
             .method("PATCH", HttpRequest.BodyPublishers.ofString(json))
             .build();
-
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         if (response.statusCode() == 200) {
             return response.body();
         } else {
