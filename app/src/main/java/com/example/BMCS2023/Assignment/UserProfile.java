@@ -6,21 +6,26 @@ package com.example.BMCS2023.Assignment;
 
 import java.awt.Point;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Joel
  */
 public class UserProfile extends javax.swing.JFrame {
-
+    private Rental currentUserRental;
     /**
      * Creates new form UserProfile
      */
     public UserProfile() {
         initComponents();
         loadUserData();
+        initializeRentalButton();
     }
     
+    private void initializeRentalButton() {
+        checkUserRental();
+    }
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -341,10 +346,88 @@ public class UserProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutButtonActionPerformed
 
     private void vehicle1ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vehicle1ButtonActionPerformed
-       ConditionChecklist frame = new ConditionChecklist();
-       frame.setVisible(true);
+        if (vehicle1Button.getText().equals("Pickup") && 
+            vehicle1Button.isVisible() && 
+            currentUserRental != null) {
+            navigateToConditionChecklist();
+        }
     }//GEN-LAST:event_vehicle1ButtonActionPerformed
+    
+    private void navigateToConditionChecklist() {
+        try {
+            Point pos = this.getLocation();
+        
+            // Create ConditionChecklist frame and pass the rental info
+            ConditionChecklist frame = new ConditionChecklist();
+            frame.setResizable(false);
+            frame.setLocation(pos);
+            frame.setVisible(true);
+            this.dispose();
+        
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, 
+            "Error opening condition checklist: " + e.getMessage(), 
+            "Error", 
+            JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private Rental findUserActiveRental(List<Rental> rentals, String userId) {
+        for (Rental rental : rentals) {
+            // Check if rental belongs to current user and is in "active" status
+            if (userId.equals(rental.getUserId()) && 
+                (rental.getStatus().equals("CONFIRMED") || 
+                rental.getStatus().equals("ACTIVE") ||
+                rental.getStatus().equals("PENDING"))) {
+                return rental;
+            }
+        }
+        return null;
+    }
+    
+    private void checkUserRental() {
+        try {
+            String currentUserId = SessionManager.getCurrentUserId();
+        
+            if (currentUserId == null) {
+                System.out.println("No user logged in");
+                hideVehicleButton();
+                return;
+            }
+        
+            List<Rental> allRentals = DatabaseClient.getRecords("rentals", Rental.class);
+            currentUserRental = findUserActiveRental(allRentals, currentUserId);
+        
+            if (currentUserRental != null) {
+                showPickupButton();
+                System.out.println("Found rental for user: " + currentUserId);
+            } else {
+                hideVehicleButton();
+                System.out.println("No active rental found for user: " + currentUserId);
+            }
+        
+        } catch (Exception e) {
+            System.err.println("Error checking user rental: " + e.getMessage());
+            hideVehicleButton();
+        }
+    }
 
+    private void showPickupButton() {
+        vehicle1Button.setText("Pickup");
+        vehicle1Button.setVisible(true);
+    }
+
+    private void hideVehicleButton() {
+        vehicle1Button.setText("");
+        vehicle1Button.setVisible(false);
+    }
+    
+    public class RentalStatus {
+        public static final String CONFIRMED = "CONFIRMED";
+        public static final String ACTIVE = "ACTIVE";
+        public static final String PENDING = "PENDING";
+    }
+    
     private void vehicle2ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vehicle2ButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_vehicle2ButtonActionPerformed

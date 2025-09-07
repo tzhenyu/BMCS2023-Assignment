@@ -114,7 +114,7 @@ public class ConditionChecklist extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
-        JOptionPane.showMessageDialog(null, "Drive Safe!", "Status", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Drive Safe!", "Happy Drive", JOptionPane.OK_OPTION);
         
     }//GEN-LAST:event_nextButtonActionPerformed
 
