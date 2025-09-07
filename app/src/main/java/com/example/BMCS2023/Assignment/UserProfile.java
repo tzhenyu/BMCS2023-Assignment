@@ -379,15 +379,33 @@ public class UserProfile extends javax.swing.JFrame {
     private void initializeRentalButton() {
     try {
         String currentUserId = SessionManager.getCurrentUserId();
-        
-        if (currentUserId != null && !currentUserId.trim().isEmpty()) {
-            updateVehicle1ButtonByUserId(currentUserId);
-            loadRentalDataToPanels();
+        if (currentUserId == null || currentUserId.isBlank()) {
+            hideVehicleButton();
+            return;
+        }
+
+        // This method is already in your file; it:
+        // - fetches rentals from Supabase via DatabaseClient.getRecords("rentals", Rental.class)
+        // - finds the user’s active/ongoing one
+        // - sets the button to Pickup/Return accordingly
+        updateVehicle1ButtonByUserId(currentUserId);  // <-- reuse your existing helper
+
+        // If an active user rental was found, currentUserRental is set internally
+        if (currentUserRental != null) {
+            // Fill the labels from the rental object
+            vehicleIDLabel.setText(currentUserRental.getVehicleId());
+            dateLabel.setText(formatDateForDisplay(currentUserRental.getStartTime().toString()));
         } else {
+            // Nothing for this user → hide the button/labels
             hideVehicleButton();
         }
+
+        // Make sure the click works
+        if (vehicle1Button.getActionListeners().length == 0) {
+            vehicle1Button.addActionListener(evt -> vehicle1ButtonActionPerformed(evt));
+        }
     } catch (Exception e) {
-        System.err.println("Error in initializeRentalButton: " + e.getMessage());
+        System.err.println("Error initializing rental button: " + e.getMessage());
         hideVehicleButton();
     }
 }
