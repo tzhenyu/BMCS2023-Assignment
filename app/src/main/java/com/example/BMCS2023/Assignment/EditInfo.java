@@ -271,9 +271,7 @@ public class EditInfo extends javax.swing.JFrame {
             }
         
             // Update in database using the UserID
-            String result = DatabaseClient.updateUser(updatedUser);
-        
-            // Update the session with new user info
+            String result = DatabaseClient.updateRecord("users", userId, updatedUser);            // Update the session with new user info
             SessionManager.setCurrentUser(updatedUser);
         
             JOptionPane.showMessageDialog(this, 

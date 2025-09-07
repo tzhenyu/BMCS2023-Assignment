@@ -364,7 +364,7 @@ public class UserProfile extends javax.swing.JFrame {
         }
     }
     
-    private Rental findUserActiveRental(List<Rental> rentals, String userId) {
+    private Rental findUserActiveRental(Rental[] rentals, String userId) {
         for (Rental rental : rentals) {
             // Check if rental belongs to current user and is in "active" status
             if (userId.equals(rental.getUserId()) && 
@@ -387,7 +387,7 @@ public class UserProfile extends javax.swing.JFrame {
                 return;
             }
         
-            List<Rental> allRentals = DatabaseClient.getRecords("rentals", Rental.class);
+            Rental[] allRentals = DatabaseClient.getRecords("rentals", Rental.class);
             currentUserRental = findUserActiveRental(allRentals, currentUserId);
         
             if (currentUserRental != null) {
