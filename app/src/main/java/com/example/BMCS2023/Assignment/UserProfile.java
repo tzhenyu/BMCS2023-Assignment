@@ -19,13 +19,11 @@ public class UserProfile extends javax.swing.JFrame {
      */
     public UserProfile() {
         initComponents();
-        loadUserData();
         initializeRentalButton();
+
     }
     
-    private void initializeRentalButton() {
-        checkUserRental();
-    }
+    
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -235,44 +233,43 @@ public class UserProfile extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(IDdisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(usernameDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(editInfoButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(backButton))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(contactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(emergencyContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(emailDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(emergencyContactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(contactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(50, 50, 50)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGap(0, 24, Short.MAX_VALUE)))
+                                .addComponent(IDdisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(usernameDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(editInfoButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 420, Short.MAX_VALUE)
+                        .addComponent(backButton)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(logoutButton)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(contactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(emergencyContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(emailDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(emergencyContactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(contactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(106, 106, 106))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -291,11 +288,11 @@ public class UserProfile extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(editInfoButton)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(emailDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -306,14 +303,18 @@ public class UserProfile extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(emergencyContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(emergencyContactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(emergencyContactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(170, 170, 170)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 182, Short.MAX_VALUE)))
                 .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(9, 9, 9))
         );
@@ -332,93 +333,270 @@ public class UserProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
-        SessionManager.logout();
-    
-        { CarMenu frame = new CarMenu(); frame.setResizable(false); frame.setLocation(this.getLocation()); frame.setVisible(true); this.dispose(); }
+        UserLoginPage frame = new UserLoginPage();    //create an instance
+        GUIClient.switchPage(this, frame);
     }//GEN-LAST:event_logoutButtonActionPerformed
 
     private void vehicle1ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vehicle1ButtonActionPerformed
-        if (vehicle1Button.getText().equals("Pickup") && 
-            vehicle1Button.isVisible() && 
-            currentUserRental != null) {
-            navigateToConditionChecklist();
+        try {
+        if (currentUserRental == null) {
+            JOptionPane.showMessageDialog(this, "No rental found for this user.");
+            return;
         }
+
+        String currentText = vehicle1Button.getText();
+        if ("Pickup".equalsIgnoreCase(currentText)) {
+            // Direct to ConditionChecklist frame
+            ConditionChecklist checklistFrame = new ConditionChecklist();
+            checklistFrame.setVisible(true);
+
+            // Update rental status in DB to "PICKED_UP"
+            currentUserRental.setStatus("PICKED_UP");
+            DatabaseClient.updateRecord("rentals", currentUserRental.getId(), currentUserRental);
+
+            // Change button text to "Return"
+            vehicle1Button.setText("Return");
+
+        } else if ("Return".equalsIgnoreCase(currentText)) {
+            // Direct to ReturnVehicle frame
+            ReturnVehicle returnFrame = new ReturnVehicle();
+            returnFrame.setVisible(true);
+
+            // Update rental status in DB to "RETURNED"
+            currentUserRental.setStatus("RETURNED");
+            DatabaseClient.updateRecord("rentals", currentUserRental.getId(), currentUserRental);
+
+            // Hide the button after return
+            hideVehicleButton();
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error handling vehicle action: " + e.getMessage());
+        e.printStackTrace();
+    }
     }//GEN-LAST:event_vehicle1ButtonActionPerformed
     
-    private void navigateToConditionChecklist() {
-        try {
-            Point pos = this.getLocation();
+    private void initializeRentalButton() {
+    try {
+        String currentUserId = SessionManager.getCurrentUserId();
         
-            // Create ConditionChecklist frame and pass the rental info
-            ConditionChecklist frame = new ConditionChecklist();
-            frame.setResizable(false);
-            frame.setLocation(pos);
-            frame.setVisible(true);
-            this.dispose();
-        
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, 
-            "Error opening condition checklist: " + e.getMessage(), 
-            "Error", 
-            JOptionPane.ERROR_MESSAGE);
+        if (currentUserId != null && !currentUserId.trim().isEmpty()) {
+            updateVehicle1ButtonByUserId(currentUserId);
+            loadRentalDataToPanels();
+        } else {
+            hideVehicleButton();
         }
+    } catch (Exception e) {
+        System.err.println("Error in initializeRentalButton: " + e.getMessage());
+        hideVehicleButton();
     }
-    
-    private Rental findUserActiveRental(Rental[] rentals, String userId) {
-        for (Rental rental : rentals) {
-            // Check if rental belongs to current user and is in "active" status
-            if (userId.equals(rental.getUserId()) && 
-                (rental.getStatus().equals("CONFIRMED") || 
-                rental.getStatus().equals("ACTIVE") ||
-                rental.getStatus().equals("PENDING"))) {
-                return rental;
-            }
+}
+
+// Fixed updateVehicle1ButtonByUserId method
+public void updateVehicle1ButtonByUserId(String userId) {
+    try {
+        if (userId == null || userId.trim().isEmpty()) {
+            hideVehicleButton();
+            return;
         }
+        
+        Rental activeRental = getActiveRentalByUserId(userId);
+        
+        if (activeRental != null) {
+            handleRentalStatus(activeRental);
+            currentUserRental = activeRental;
+        } else {
+            hideVehicleButton();
+        }
+        
+    } catch (Exception e) {
+        System.err.println("Error updating vehicle button: " + e.getMessage());
+        hideVehicleButton();
+    }
+}
+
+// Fixed getActiveRentalByUserId method
+public Rental getActiveRentalByUserId(String userId) throws Exception {
+    Rental[] allRentals = DatabaseClient.getRecords("rentals", Rental.class);
+    
+    if (allRentals == null || allRentals.length == 0) {
         return null;
     }
     
-    private void checkUserRental() {
-        try {
-            String currentUserId = SessionManager.getCurrentUserId();
-        
-            if (currentUserId == null) {
-                System.out.println("No user logged in");
-                hideVehicleButton();
-                return;
+    for (Rental rental : allRentals) {
+        // Check if userIds match
+        if (userId.equals(rental.getUserId())) {
+            String status = rental.getStatus();
+            if (status != null) {
+                status = status.toUpperCase().trim();
+                
+                // Check for active statuses
+                if (status.equals("CONFIRMED") || 
+                    status.equals("PENDING") || 
+                    status.equals("ACTIVE") || 
+                    status.equals("PICKED_UP")) {
+                    return rental;
+                }
             }
-        
-            Rental[] allRentals = DatabaseClient.getRecords("rentals", Rental.class);
-            currentUserRental = findUserActiveRental(allRentals, currentUserId);
-        
-            if (currentUserRental != null) {
-                showPickupButton();
-                System.out.println("Found rental for user: " + currentUserId);
-            } else {
-                hideVehicleButton();
-                System.out.println("No active rental found for user: " + currentUserId);
-            }
-        
-        } catch (Exception e) {
-            System.err.println("Error checking user rental: " + e.getMessage());
-            hideVehicleButton();
         }
     }
+    return null;
+}
 
-    private void showPickupButton() {
-        vehicle1Button.setText("Pickup");
-        vehicle1Button.setVisible(true);
-    }
-
-    private void hideVehicleButton() {
-        vehicle1Button.setText("");
-        vehicle1Button.setVisible(false);
+// Fixed handleRentalStatus method
+public void handleRentalStatus(Rental rental) {
+    if (rental == null || rental.getStatus() == null) {
+        hideVehicleButton();
+        return;
     }
     
-    public class RentalStatus {
-        public static final String CONFIRMED = "CONFIRMED";
-        public static final String ACTIVE = "ACTIVE";
-        public static final String PENDING = "PENDING";
+    String status = rental.getStatus().toUpperCase().trim();
+    
+    switch (status) {
+        case "CONFIRMED":
+        case "PENDING":
+            showPickupButton(rental);
+            break;
+        
+        case "ACTIVE":
+        case "PICKED_UP":
+            showReturnButton(rental);
+            break;
+        
+        default:
+            hideVehicleButton();
+            break;
     }
+}
+
+// Fixed showPickupButton method
+public void showPickupButton(Rental rental) {
+    vehicle1Button.setText("Pickup");
+    vehicle1Button.setVisible(true);
+    
+    // Set vehicle and date info
+    vehicleIDLabel.setText(rental.getVehicleId());
+    dateLabel.setText(formatDateForDisplay(rental.getStartTime().toString()));
+}
+
+// Fixed showReturnButton method
+public void showReturnButton(Rental rental) {
+    vehicle1Button.setText("Return");
+    vehicle1Button.setVisible(true);
+    
+    // Set vehicle and date info
+    vehicleIDLabel.setText(rental.getVehicleId());
+    dateLabel.setText(formatDateForDisplay(rental.getStartTime().toString()));
+}
+
+// Fixed hideVehicleButton method
+public void hideVehicleButton() {
+    vehicle1Button.setVisible(false);
+    vehicle1Button.setText("");
+    vehicleIDLabel.setText("");
+    dateLabel.setText("");
+}
+
+// Fixed formatDateForDisplay method
+public String formatDateForDisplay(String dateTime) {
+    if (dateTime == null || dateTime.isEmpty()) {
+        return "";
+    }
+    
+    try {
+        // Handle ISO format (2024-01-15T10:30:00)
+        if (dateTime.contains("T")) {
+            String[] parts = dateTime.split("T");
+            String date = parts[0];
+            String time = parts[1];
+            
+            // Extract time part (HH:MM)
+            if (time.length() >= 5) {
+                time = time.substring(0, 5);
+            }
+            
+            // Format date (assume yyyy-mm-dd, convert to dd/mm/yyyy)
+            if (date.contains("-")) {
+                String[] dateParts = date.split("-");
+                if (dateParts.length == 3) {
+                    return dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0] + " " + time;
+                }
+            }
+            
+            return date + " " + time;
+        }
+        return dateTime;
+    } catch (Exception e) {
+        return dateTime;
+    }
+}
+
+// Fixed loadRentalDataToPanels method
+public void loadRentalDataToPanels() {
+    try {
+        String currentUserId = SessionManager.getCurrentUserId();
+        if (currentUserId == null) return;
+        
+        Rental[] userRentals = getRentalsByUserId(currentUserId);
+        
+        // Clear panels 2 and 3
+        vehicleID2Label.setText("");
+        date2Label.setText("");
+        vehicle2Button.setText("");
+        vehicle2Button.setVisible(false);
+        
+        vehicleID3Label.setText("");
+        date3Label.setText("");
+        vehicle3Button.setText("");
+        vehicle3Button.setVisible(false);
+        
+        // Display completed/historical rentals in panels 2 and 3
+        int panelIndex = 2;
+        for (Rental rental : userRentals) {
+            String status = rental.getStatus();
+            if (status != null) {
+                status = status.toUpperCase().trim();
+                
+                // Skip active rentals (they're shown in panel 1)
+                if (status.equals("CONFIRMED") || status.equals("PENDING") || 
+                    status.equals("ACTIVE") || status.equals("PICKED_UP")) {
+                    continue;
+                }
+                
+                // Show completed/returned rentals
+                if (panelIndex == 2) {
+                    vehicleID2Label.setText(rental.getVehicleId());
+                    date2Label.setText(formatDateForDisplay(rental.getStartTime().toString()));
+                    vehicle2Button.setText(rental.getStatus().toLowerCase());
+                    vehicle2Button.setVisible(true);
+                    panelIndex = 3;
+                } else if (panelIndex == 3) {
+                    vehicleID3Label.setText(rental.getVehicleId());
+                    date3Label.setText(formatDateForDisplay(rental.getStartTime().toString()));
+                    vehicle3Button.setText(rental.getStatus().toLowerCase());
+                    vehicle3Button.setVisible(true);
+                    break;
+                }
+            }
+        }
+        
+    } catch (Exception e) {
+        System.err.println("Error loading rental data: " + e.getMessage());
+    }
+}
+
+// Fixed getRentalsByUserId method
+public Rental[] getRentalsByUserId(String userId) throws Exception {
+    Rental[] allRentals = DatabaseClient.getRecords("rentals", Rental.class);
+    java.util.List<Rental> userRentals = new java.util.ArrayList<>();
+    
+    for (Rental rental : allRentals) {
+        if (userId.equals(rental.getUserId())) {
+            userRentals.add(rental);
+        }
+    }
+    
+    return userRentals.toArray(new Rental[0]);
+}
     
     private void vehicle2ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vehicle2ButtonActionPerformed
         // TODO add your handling code here:
@@ -459,14 +637,4 @@ public class UserProfile extends javax.swing.JFrame {
     private javax.swing.JLabel vehicleIDLabel;
     // End of variables declaration//GEN-END:variables
 
-    private void loadUserData() {
-        User currentUser = SessionManager.getCurrentUser();
-        if (currentUser != null) {
-            usernameDisplayText.setText(currentUser.getUsername());
-            IDdisplayText.setText(currentUser.getUserId());
-            emailDisplayText.setText(currentUser.getEmail());
-            contactNumDisplayText.setText(currentUser.getPhone());
-            emergencyContactNumDisplayText.setText(currentUser.getEmergencyContactNum());
-        }
-    }
 }

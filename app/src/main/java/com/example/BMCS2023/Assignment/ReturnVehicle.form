@@ -131,6 +131,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="ratingTextField">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ratingTextFieldActionPerformed"/>
+      </Events>
     </Component>
     <Component class="java.awt.Label" name="label5">
       <Properties>
@@ -169,6 +172,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Submit"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="returnVehicleSubmitButtonActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

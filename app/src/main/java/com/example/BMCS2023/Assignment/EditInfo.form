@@ -60,10 +60,10 @@
                                   <Component id="contactNum2" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="editInfoEmergencyContactNum" min="-2" pref="120" max="-2" attributes="0"/>
-                                  <Component id="editInfoPassword" min="-2" pref="120" max="-2" attributes="0"/>
-                                  <Component id="editInfoConfirmPassword" min="-2" pref="120" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="editInfoEmergencyContactNum" pref="120" max="32767" attributes="0"/>
+                                  <Component id="editInfoPassword" max="32767" attributes="0"/>
+                                  <Component id="editInfoConfirmPassword" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Component id="editInfoShowPassCheckbox" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -78,36 +78,38 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="editInfoUsername" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="username" alignment="0" min="-2" pref="22" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="email" alignment="0" min="-2" pref="22" max="-2" attributes="0"/>
-                  <Component id="editInfoEmail" alignment="0" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="contactNum" min="-2" pref="22" max="-2" attributes="0"/>
-                  <Component id="editInfoContactNum" alignment="0" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="emergencyContactNum" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="editInfoEmergencyContactNum" alignment="0" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="editInfoUsername" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="username" alignment="0" min="-2" pref="22" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="email" alignment="0" min="-2" pref="22" max="-2" attributes="0"/>
+                          <Component id="editInfoEmail" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="contactNum" min="-2" pref="22" max="-2" attributes="0"/>
+                          <Component id="editInfoContactNum" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="emergencyContactNum" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="editInfoEmergencyContactNum" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="contactNum1" min="-2" pref="22" max="-2" attributes="0"/>
+                  </Group>
                   <Component id="editInfoPassword" min="-2" max="-2" attributes="0"/>
-                  <Component id="contactNum1" min="-2" pref="22" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="editInfoConfirmPassword" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="contactNum2" alignment="0" min="-2" pref="22" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="contactNum2" min="-2" pref="22" max="-2" attributes="0"/>
+                  <Component id="editInfoConfirmPassword" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
               <Component id="editInfoShowPassCheckbox" min="-2" max="-2" attributes="0"/>
@@ -188,16 +190,6 @@
         <Property name="text" type="java.lang.String" value="Password:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="editInfoPassword">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editInfoPasswordActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JTextField" name="editInfoConfirmPassword">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editInfoConfirmPasswordActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="java.awt.Label" name="contactNum2">
       <Properties>
         <Property name="text" type="java.lang.String" value="Confirm Password:"/>
@@ -207,6 +199,13 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Show password"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editInfoShowPassCheckboxActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="editInfoPassword">
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="editInfoConfirmPassword">
     </Component>
   </SubComponents>
 </Form>

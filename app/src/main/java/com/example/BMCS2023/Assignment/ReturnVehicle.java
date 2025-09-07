@@ -54,6 +54,12 @@ public class ReturnVehicle extends javax.swing.JFrame {
 
         label4.setText("Address:");
 
+        ratingTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ratingTextFieldActionPerformed(evt);
+            }
+        });
+
         label5.setText("/ 10");
 
         label6.setText("Feedback:");
@@ -70,6 +76,11 @@ public class ReturnVehicle extends javax.swing.JFrame {
         });
 
         returnVehicleSubmitButton.setText("Submit");
+        returnVehicleSubmitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnVehicleSubmitButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -141,6 +152,14 @@ public class ReturnVehicle extends javax.swing.JFrame {
         CarMenu frame = new CarMenu();    //create an instance
         GUIClient.switchPage(this, frame);
     }//GEN-LAST:event_backButtonActionPerformed
+
+    private void returnVehicleSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnVehicleSubmitButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_returnVehicleSubmitButtonActionPerformed
+
+    private void ratingTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ratingTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ratingTextFieldActionPerformed
 
     /**
      * @param args the command line arguments
