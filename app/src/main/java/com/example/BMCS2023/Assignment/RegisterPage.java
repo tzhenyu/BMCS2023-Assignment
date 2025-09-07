@@ -148,7 +148,7 @@ public class RegisterPage extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(107, Short.MAX_VALUE)
+                .addContainerGap(85, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -272,8 +272,36 @@ private boolean validateForm() {
             return false;
         }
         
-        if (signupEmail.getText().trim().isEmpty()) {
+        // Email Validation
+        String email = signupEmail.getText().trim();
+        if (email.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Email is required.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (!email.contains("@") || !email.endsWith(".com")) {
+            JOptionPane.showMessageDialog(this, "Invalid email address.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        // Contact Number Validation
+        String contact = signupContactNum.getText().trim();
+        if (contact.equals("+60") || contact.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Contact number is required.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (!contact.matches("\\+60\\d{9,10}")) {
+            JOptionPane.showMessageDialog(this, "Invalid contact number.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        // Emergency Contact Number Validation
+        String emergency = signupEmergencyContactNum.getText().trim();
+        if (emergency.equals("+60") || emergency.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Emergency contact number is required.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (!emergency.matches("\\+60\\d{9,10}")) {
+            JOptionPane.showMessageDialog(this, "Invalid emergency contact number.", "Validation Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         
@@ -286,17 +314,7 @@ private boolean validateForm() {
             JOptionPane.showMessageDialog(this, "Please confirm your password.", "Validation Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        
-        if (signupContactNum.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Contact number is required.", "Validation Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-        
-        if (signupEmergencyContactNum.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Emergency contact number is required.", "Validation Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-        
+
         // Check if passwords match
         String password = new String(signupPassword.getPassword());
         String confirmPassword = new String(signupConfirmPassword.getPassword());

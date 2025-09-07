@@ -119,6 +119,7 @@ public class UserProfile extends javax.swing.JFrame {
 
         dateLabel.setText("dd/mm/yyyy time");
 
+        vehicle1Button.setText("pick up");
         vehicle1Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 vehicle1ButtonActionPerformed(evt);
