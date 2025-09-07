@@ -24,9 +24,9 @@ public class ManageUserPageTest extends javax.swing.JFrame {
     public ManageUserPageTest() {
         initComponents();
         loadUserData();
-        cartable.getTableHeader().setFont(new java.awt.Font("Times New Roman", java.awt.Font.BOLD, 14));
-        cartable.getTableHeader().setBackground(Color.BLACK);
-        cartable.getTableHeader().setForeground(Color.WHITE);
+        usertable.getTableHeader().setFont(new java.awt.Font("Times New Roman", java.awt.Font.BOLD, 14));
+        usertable.getTableHeader().setBackground(Color.BLACK);
+        usertable.getTableHeader().setForeground(Color.WHITE);
         
         
         
@@ -57,7 +57,7 @@ public class ManageUserPageTest extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        cartable = new javax.swing.JTable();
+        usertable = new javax.swing.JTable();
         btnadd = new javax.swing.JButton();
         btndelete = new javax.swing.JButton();
 
@@ -152,9 +152,9 @@ public class ManageUserPageTest extends javax.swing.JFrame {
             }
         });
 
-        cartable.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        cartable.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        cartable.setModel(new javax.swing.table.DefaultTableModel(
+        usertable.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        usertable.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        usertable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -170,14 +170,14 @@ public class ManageUserPageTest extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        cartable.setGridColor(new java.awt.Color(0, 0, 0));
-        cartable.setShowGrid(true);
-        cartable.addMouseListener(new java.awt.event.MouseAdapter() {
+        usertable.setGridColor(new java.awt.Color(0, 0, 0));
+        usertable.setShowGrid(true);
+        usertable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cartableMouseClicked(evt);
+                usertableMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(cartable);
+        jScrollPane1.setViewportView(usertable);
 
         btnadd.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         btnadd.setText("Add");
@@ -271,38 +271,26 @@ public class ManageUserPageTest extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
- Point pos = ManageUserPageTest.this.getLocation(); 
-        ManageCarPageTest frame = new ManageCarPageTest();   // create CarDetailsPage instance
-        frame.setResizable(false);       // lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);          // show the new frame
-        ManageUserPageTest.this.dispose();    // close current page          // close current frame         // TODO add your handling code here:        // TODO add your handling code here:                                        
+  new ManageCarPageTest() {{ setResizable(false); setLocation(ManageUserPageTest.this.getLocation()); setVisible(true); }};
+ManageUserPageTest.this.dispose();    // close current page          // close current frame         // TODO add your handling code here:        // TODO add your handling code here:                                        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Point pos = ManageUserPageTest.this.getLocation(); 
-        ManageUserPageTest frame = new ManageUserPageTest();   // create CarDetailsPage instance
-        frame.setResizable(false);       // lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);          // show the new frame
-        ManageUserPageTest.this.dispose();    // close current page          // close current frame         // TODO add your handling code here:        // TODO add your handling code here:
+         new ManageUserPageTest() {{ setResizable(false); setLocation(ManageUserPageTest.this.getLocation()); setVisible(true); }};
+ManageUserPageTest.this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        Point pos = ManageUserPageTest.this.getLocation(); 
-        AdminDashboard frame = new AdminDashboard();   // create an instance
-        frame.setResizable(false);       // lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);          // show the frame
-        ManageUserPageTest.this.dispose();                  // close current frame         // TODO add your handling code here: 
+         new CarMenu() {{ setResizable(false); setLocation(ManageUserPageTest.this.getLocation()); setVisible(true); }};
+ManageUserPageTest.this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void cartableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartableMouseClicked
+    private void usertableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usertableMouseClicked
 
-    }//GEN-LAST:event_cartableMouseClicked
+    }//GEN-LAST:event_usertableMouseClicked
 
     private void btnaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddActionPerformed
-   DefaultTableModel model = (DefaultTableModel) cartable.getModel();
+   DefaultTableModel model = (DefaultTableModel) usertable.getModel();
 
     // --- Input dialogs ---
     String username = JOptionPane.showInputDialog(this, "Enter Username:");
@@ -344,16 +332,23 @@ public class ManageUserPageTest extends javax.swing.JFrame {
     }//GEN-LAST:event_btnaddActionPerformed
 
     private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
-DefaultTableModel model = (DefaultTableModel) cartable.getModel();
-    int row = cartable.getSelectedRow();
+     DefaultTableModel model = (DefaultTableModel) usertable.getModel();
+    int row = usertable.getSelectedRow();
 
     if (row == -1) {
         JOptionPane.showMessageDialog(this, "Please select a row to delete.");
         return;
     }
 
-    String userId = cartable.getValueAt(row, 1).toString(); // column 1 = UserID
-    int confirm = JOptionPane.showConfirmDialog(this, "Delete user " + userId + "?", "Confirm", JOptionPane.YES_NO_OPTION);
+    // Correct columns
+    String userId = usertable.getValueAt(row, 1).toString(); // UserID
+    String userName = usertable.getValueAt(row, 0).toString(); // Username
+
+    int confirm = JOptionPane.showConfirmDialog(this, 
+        "Delete user " + userName + "?", 
+        "Confirm", 
+        JOptionPane.YES_NO_OPTION);
+
     if (confirm != JOptionPane.YES_OPTION) return;
 
     try {
@@ -375,7 +370,7 @@ DefaultTableModel model = (DefaultTableModel) cartable.getModel();
         try {
             User[] users = DatabaseClient.getRecords("users", User.class);
 
-            DefaultTableModel model = (DefaultTableModel) cartable.getModel();
+            DefaultTableModel model = (DefaultTableModel) usertable.getModel();
             model.setRowCount(0); // clear old rows
 
             for (User u : users) {
@@ -399,7 +394,6 @@ DefaultTableModel model = (DefaultTableModel) cartable.getModel();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnadd;
     private javax.swing.JButton btndelete;
-    private javax.swing.JTable cartable;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -416,6 +410,7 @@ DefaultTableModel model = (DefaultTableModel) cartable.getModel();
     private java.awt.Menu menu1;
     private java.awt.Menu menu2;
     private java.awt.MenuBar menuBar1;
+    private javax.swing.JTable usertable;
     // End of variables declaration//GEN-END:variables
 
 }

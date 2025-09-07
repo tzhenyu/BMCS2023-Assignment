@@ -119,6 +119,11 @@ public class ManageCarPageTest extends javax.swing.JFrame {
 
         jButton3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jButton3.setText("Log Out");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -279,25 +284,17 @@ public class ManageCarPageTest extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+ new ManageCarPageTest() {{ setResizable(false); setLocation(ManageCarPageTest.this.getLocation()); setVisible(true); }};
+ManageCarPageTest.this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Point pos = ManageCarPageTest.this.getLocation(); 
-        ManageUserPageTest frame = new ManageUserPageTest();   // create CarDetailsPage instance
-        frame.setResizable(false);       // lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);          // show the new frame
-        ManageCarPageTest.this.dispose();    // close current page          // close current frame         // TODO add your handling code here:        // TODO add your handling code here:
+         new ManageUserPageTest() {{ setResizable(false); setLocation(ManageCarPageTest.this.getLocation()); setVisible(true); }};
+ManageCarPageTest.this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        Point pos = ManageCarPageTest.this.getLocation(); 
-        AdminDashboard frame = new AdminDashboard();   // create an instance
-        frame.setResizable(false);       // lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);          // show the frame
-        ManageCarPageTest.this.dispose();                  // close current frame         // TODO add your handling code here: 
+
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void cartableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartableMouseClicked
@@ -392,33 +389,47 @@ public class ManageCarPageTest extends javax.swing.JFrame {
     }//GEN-LAST:event_btnaddActionPerformed
 
     private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
-DefaultTableModel model = (DefaultTableModel) cartable.getModel();
-int row = cartable.getSelectedRow();
+                                        
+    DefaultTableModel model = (DefaultTableModel) cartable.getModel();
+    int row = cartable.getSelectedRow();
 
-if (row == -1) {
-    JOptionPane.showMessageDialog(this, "Please select a row to delete.");
-    return;
-}
-
-// get Car Plate (ID) from column index 3
-String carPlate = cartable.getValueAt(row, 4).toString();
-int confirm = JOptionPane.showConfirmDialog(this, "Delete car with plate " + carPlate + "?", "Confirm", JOptionPane.YES_NO_OPTION);
-if (confirm != JOptionPane.YES_OPTION) return;
-
-try {
-    int status = DatabaseClient.deleteById("vehicles", carPlate);
-    if (status == 204 || status == 200) {
-        JOptionPane.showMessageDialog(this, "Vehicle deleted.");
-        loadCarData(); // refresh table
-    } else {
-        JOptionPane.showMessageDialog(this, "Delete returned HTTP " + status + ". Check policies and ID.");
+    if (row == -1) {
+        JOptionPane.showMessageDialog(this, "Please select a row to delete.");
+        return;
     }
-} catch (Exception ex) {
-    ex.printStackTrace();
-    JOptionPane.showMessageDialog(this, "Error deleting vehicle: " + ex.getMessage());
-}
+
+    // get ID (primary key) from column 3
+    String carId = cartable.getValueAt(row, 3).toString();
+    // just for display
+    String carPlate = cartable.getValueAt(row, 4).toString();
+
+    int confirm = JOptionPane.showConfirmDialog(this, 
+        "Delete car with plate " + carPlate + "?", 
+        "Confirm", 
+        JOptionPane.YES_NO_OPTION);
+
+    if (confirm != JOptionPane.YES_OPTION) return;
+
+    try {
+        int status = DatabaseClient.deleteById("vehicles", carId);
+        if (status == 204 || status == 200) {
+            JOptionPane.showMessageDialog(this, "Vehicle deleted.");
+            loadCarData(); // refresh table
+        } else {
+            JOptionPane.showMessageDialog(this, "Delete returned HTTP " + status + ". Check policies and ID.");
+        }
+    } catch (Exception ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error deleting vehicle: " + ex.getMessage());
+    }
 
     }//GEN-LAST:event_btndeleteActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+      new CarMenu() {{ setResizable(false); setLocation(ManageCarPageTest.this.getLocation()); setVisible(true); }};
+ManageCarPageTest.this.dispose();
+
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     /**

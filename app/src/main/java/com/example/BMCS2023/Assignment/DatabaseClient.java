@@ -197,6 +197,28 @@ public static <T> T getRecordById(String tableName, String id, Class<T> clazz) t
     JsonArray arr = JsonParser.parseString(response.body()).getAsJsonArray();
     return arr.size() > 0 ? arr.get(0).getAsJsonObject() : null;
 }
+    
+public static Feedback[] getFeedbackByVehicleId(String vehicleId) throws Exception {
+    String encoded = URLEncoder.encode(vehicleId, StandardCharsets.UTF_8);
+
+    HttpRequest request = HttpRequest.newBuilder()
+        .uri(URI.create(SUPABASE_URL + "/rest/v1/feedback?vehicle_id=eq." + encoded + "&select=*"))
+        .header("apikey", SUPABASE_API_KEY)
+        .header("Authorization", "Bearer " + SUPABASE_API_KEY)
+        .GET()
+        .build();
+
+    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+    if (response.statusCode() >= 400) {
+        throw new RuntimeException("Supabase error: " + response.statusCode() + " - " + response.body());
+    }
+
+    String body = response.body();
+    Type arrayType = new com.google.gson.reflect.TypeToken<Feedback[]>() {}.getType();
+    return gson.fromJson(body, arrayType);
+}
+
 
 }
 
