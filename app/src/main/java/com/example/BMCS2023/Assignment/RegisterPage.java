@@ -237,7 +237,8 @@ public class RegisterPage extends javax.swing.JFrame {
             }
             
             User newUser = buildUserFromForm();
-            DatabaseClient.insertUser(newUser);
+            User[] users = new User[]{newUser};
+            DatabaseClient.insertRecords("users", users);
             JOptionPane.showMessageDialog(this, "Registration successful!");
             
             Point pos = this.getLocation();
@@ -317,12 +318,8 @@ private boolean validateForm() {
     }//GEN-LAST:event_signupEmergencyContactNumActionPerformed
 
     private void signupCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupCancelButtonActionPerformed
-        Point pos = this.getLocation();
         UserLoginPage frame = new UserLoginPage();
-        frame.setResizable(false);
-        frame.setLocation(pos);
-        frame.setVisible(true);
-        this.dispose();
+        GUIClient.switchPage(this, frame);
     }//GEN-LAST:event_signupCancelButtonActionPerformed
 
     private void signupShowPasswordCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupShowPasswordCheckboxActionPerformed

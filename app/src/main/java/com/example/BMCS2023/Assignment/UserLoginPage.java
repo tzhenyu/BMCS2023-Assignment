@@ -5,6 +5,7 @@
 package com.example.BMCS2023.Assignment;
 
 import java.awt.Point;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,7 +38,7 @@ public class UserLoginPage extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         loginUsername = new javax.swing.JTextField();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        loginShowPasswordCheckbox = new javax.swing.JCheckBox();
         loginButton = new javax.swing.JButton();
         signupButton = new javax.swing.JButton();
         loginPassword = new javax.swing.JPasswordField();
@@ -62,10 +63,10 @@ public class UserLoginPage extends javax.swing.JFrame {
             }
         });
 
-        jCheckBox1.setText("Show password");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        loginShowPasswordCheckbox.setText("Show password");
+        loginShowPasswordCheckbox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                loginShowPasswordCheckboxActionPerformed(evt);
             }
         });
 
@@ -104,7 +105,7 @@ public class UserLoginPage extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(131, 131, 131)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jCheckBox1)
+                    .addComponent(loginShowPasswordCheckbox)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -143,7 +144,7 @@ public class UserLoginPage extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(loginPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox1)
+                .addComponent(loginShowPasswordCheckbox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(signupButton)
@@ -158,21 +159,17 @@ public class UserLoginPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void adminLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminLoginButtonActionPerformed
-        Point pos = this.getLocation();
         AdminLoginPage frame = new AdminLoginPage();    //create an instance
-        frame.setResizable(false);          //lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);             //show the frame
-        this.dispose();                     //close current frame
+        GUIClient.switchPage(this, frame);
     }//GEN-LAST:event_adminLoginButtonActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        if (jCheckBox1.isSelected()) {
+    private void loginShowPasswordCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginShowPasswordCheckboxActionPerformed
+        if (loginShowPasswordCheckbox.isSelected()) {
             loginPassword.setEchoChar((char) 0); // show password
         } else {
             loginPassword.setEchoChar('*'); // hide password
         }
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    }//GEN-LAST:event_loginShowPasswordCheckboxActionPerformed
 
     private void loginUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginUsernameActionPerformed
         loginPassword.requestFocus(); // move focus to password field
@@ -193,8 +190,8 @@ public class UserLoginPage extends javax.swing.JFrame {
             return;
         }
         
-        List<User> users = DatabaseClient.getRecords("users", User.class);
-        User loggedInUser = users.stream()
+        User[] users = DatabaseClient.getRecords("users", User.class);
+        User loggedInUser = Arrays.stream(users)
             .filter(u -> u.getUsername().equals(username) && u.getPassword().equals(password))
             .findFirst()
             .orElse(null);
@@ -227,12 +224,8 @@ public class UserLoginPage extends javax.swing.JFrame {
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void signupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupButtonActionPerformed
-        Point pos = this.getLocation();
         RegisterPage frame = new RegisterPage();    //create an instance
-        frame.setResizable(false);          //lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);             //show the frame
-        this.dispose();                     //close current frame
+        GUIClient.switchPage(this, frame);
     }//GEN-LAST:event_signupButtonActionPerformed
 
     /**
@@ -273,12 +266,12 @@ public class UserLoginPage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton adminLoginButton;
     private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JButton loginButton;
     private javax.swing.JPasswordField loginPassword;
+    private javax.swing.JCheckBox loginShowPasswordCheckbox;
     private javax.swing.JTextField loginUsername;
     private javax.swing.JButton signupButton;
     // End of variables declaration//GEN-END:variables

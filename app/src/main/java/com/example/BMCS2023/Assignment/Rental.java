@@ -4,8 +4,6 @@
  */
 package com.example.BMCS2023.Assignment;
 import java.time.LocalDateTime; // Import the LocalDateTime class
-import java.time.format.DateTimeFormatter; // Import the DateTimeFormatter class
-// https://www.w3schools.com/java/java_date.asp for datetimeformat
 /**
  *
  * @author zhenyu
@@ -16,33 +14,30 @@ public class Rental {
     public enum Status {
         AVAILABLE,
         PENDING,
-        CONFIRME
+        CONFIRMED
     }
     
     private String id;
-    private User user;
-    private Vehicle vehicle;
+    private String userId;  // Changed from User object to String
+    private String vehicleId;  // Changed from Vehicle object to String
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private String pickupLocation;
-    private String returnLocation;
-    private Status status;
-    private boolean fuelStatusOnReturn;
-    //no need testdrive as we abondon already
-    //no need selectedaddons for now
+    private String status;  // Changed from Status enum to String to match DB
+    private double amount;  // Added amount field to match new DB schema
+    private String method;  // Payment method field
 
-    public Rental(String id, String userId, String vehicleId, LocalDateTime startTime, LocalDateTime endTime, String pickupLocation, String returnLocation, Status status, boolean fuelStatusOnReturn) {
+    // For database serialization - uses IDs as strings
+    public Rental(String id, String userId, String vehicleId, LocalDateTime startTime, LocalDateTime endTime, String status, String method) {
         this.id = id;
-        this.user = user;
-        this.vehicle = vehicle;
+        this.userId = userId;
+        this.vehicleId = vehicleId;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.pickupLocation = pickupLocation;
-        this.returnLocation = returnLocation;
         this.status = status;
-        this.fuelStatusOnReturn = fuelStatusOnReturn;
+        this.method = method;
     }
 
+    
     public String getId() {
         return id;
     }
@@ -51,13 +46,13 @@ public class Rental {
         this.id = id;
     }
 
-    public User getUserId() {
-        return user;
+    public String getUserId() {
+        return userId;
     }
 
 
-    public Vehicle getVehicleId() {
-        return vehicle;
+    public String getVehicleId() {
+        return vehicleId;
     }
 
 
@@ -77,38 +72,28 @@ public class Rental {
         this.endTime = endTime;
     }
 
-    public String getPickupLocation() {
-        return pickupLocation;
-    }
-
-    public void setPickupLocation(String pickupLocation) {
-        this.pickupLocation = pickupLocation;
-    }
-
-    public String getReturnLocation() {
-        return returnLocation;
-    }
-
-    public void setReturnLocation(String returnLocation) {
-        this.returnLocation = returnLocation;
-    }
-
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
-
-    public boolean isFuelStatusOnReturn() {
-        return fuelStatusOnReturn;
-    }
-
-    public void setFuelStatusOnReturn(boolean fuelStatusOnReturn) {
-        this.fuelStatusOnReturn = fuelStatusOnReturn;
+    
+    public double getAmount() {
+        return amount;
     }
     
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
     
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
     
 }

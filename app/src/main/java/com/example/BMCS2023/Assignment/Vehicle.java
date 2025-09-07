@@ -4,34 +4,41 @@
  */
 package com.example.BMCS2023.Assignment;
 
+
 /**
  *
  * @author zhenyu
  */
+
+
 public class Vehicle {
     //Variables
     public enum Status {
-        AVAILABLE,
-        RENTED,
-        RETURNED,
-        MAINTENANCE
+        available,
+        rented,
+        returned,
+        maintenance
     }
     public enum Type {
-        SUV,
-        HATCHBACK,
-        SEDAN,
-        COUPE
+        suv,
+        hatchback,
+        sedan,
+        coupe,
+        pickup
     }  
     public enum AddOn {
-        CHILD_SEAT,
-        WIFI
+        child_seat,
+        wifi,
+        none        
     }  
     public enum FuelType {
-        PETROL,
-        DIESEL,
-        ELECTRIC,
-        PICKUP
+        petrol,
+        diesel,
+        electric,
+        pickup
     }  
+
+    // Vairable are declared in all small capital to match database column name
     private String id;
     private String brand;
     private String model;
@@ -39,12 +46,13 @@ public class Vehicle {
     private Status status;
     private Type type;
     private String location;
-    private AddOn addOn;
-    private FuelType fuelType;
-    private double pricePerDay;
+    private AddOn[] addon;
+    private FuelType fueltype;
+    private String carPlate;
+    private double priceperday;
     
     // Constructors
-    public Vehicle(String id, String brand, String model, String color, Status status, Type type, String location, AddOn addOn, FuelType fuelType, double pricePerDay) {
+    public Vehicle(String id, String brand, String model, String color, Status status, Type type, String location, AddOn addOn, FuelType fuelType, double pricePerDay, String carPlate) {
         this.id = id;
         this.brand = brand;
         this.model = model;
@@ -52,9 +60,9 @@ public class Vehicle {
         this.status = status;
         this.type = type;
         this.location = location;
-        this.addOn = addOn;
-        this.fuelType = fuelType;
-        this.pricePerDay = pricePerDay;
+        this.addon = addOn != null ? new AddOn[]{addOn} : null;
+        this.fueltype = fuelType;
+        this.priceperday = pricePerDay;
     }
     
     public Vehicle(){
@@ -119,29 +127,59 @@ public class Vehicle {
     }
 
     public AddOn getAddOn() {
-        return addOn;
+        return addon != null && addon.length > 0 ? addon[0] : null;
     }
 
     public void setAddOn(AddOn addOn) {
-        this.addOn = addOn;
+        this.addon = addOn != null ? new AddOn[]{addOn} : null;
+    }
+    
+    // New methods to handle multiple addons
+    public AddOn[] getAddOns() {
+        return addon;
+    }
+    
+    public void setAddOns(AddOn[] addons) {
+        this.addon = addons;
+    }
+    
+    public String getAddOnsAsString() {
+        if (addon == null || addon.length == 0) {
+            return "No add-ons";
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < addon.length; i++) {
+            if (i > 0) sb.append(", ");
+            String addonStr = addon[i].toString().replace("_", " ");
+            addonStr = addonStr.charAt(0) + addonStr.substring(1).toLowerCase();
+            sb.append(addonStr);
+        }
+        return sb.toString();
     }
 
     public FuelType getFuelType() {
-        return fuelType;
+        return fueltype;
     }
 
     public void setFuelType(FuelType fuelType) {
-        this.fuelType = fuelType;
+        this.fueltype = fuelType;
     }
 
     public double getPricePerDay() {
-        return pricePerDay;
+        return priceperday;
     }
 
     public void setPricePerDay(double pricePerDay) {
-        this.pricePerDay = pricePerDay;
+        this.priceperday = pricePerDay;
     }
     
-    
+    public String getCarPlate(){
+             return carPlate;
+    }
 
+    public void setCarPlate(String carPlate) {
+        this.carPlate = carPlate;
+    }
+    
 }

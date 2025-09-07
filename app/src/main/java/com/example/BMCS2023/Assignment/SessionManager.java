@@ -27,5 +27,25 @@ public class SessionManager {
     public static boolean isLoggedIn() {
         return currentUser != null;
     }
+    
+    public static String getCurrentUserId() {
+        return currentUser != null ? currentUser.getUserId() : null;
+    }
+    
+    public static String getCurrentUsername() {
+        return currentUser != null ? currentUser.getUsername() : null;
+    }
+    
+    public static String getCurrentEmail() {
+        return currentUser != null ? currentUser.getEmail() : null;
+    }
+    
+    public static String getCurrentContactNumber() {
+        return currentUser != null ? currentUser.getPhone() : null;
+    }
+    
+    public static String getCurrentEmergencyContact() {
+        return currentUser != null ? currentUser.getEmergencyContactNum() : null;
+    }
 }
 

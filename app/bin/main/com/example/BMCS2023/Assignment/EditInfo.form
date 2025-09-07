@@ -41,17 +41,17 @@
                           <Group type="102" attributes="0">
                               <Component id="username" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="editUsername" min="-2" pref="120" max="-2" attributes="0"/>
+                              <Component id="editInfoUsername" min="-2" pref="120" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="contactNum" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="editContactNum" min="-2" pref="120" max="-2" attributes="0"/>
+                              <Component id="editInfoContactNum" min="-2" pref="120" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="email" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="editEmail" min="-2" pref="120" max="-2" attributes="0"/>
+                              <Component id="editInfoEmail" min="-2" pref="120" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
@@ -61,7 +61,7 @@
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="editEmergencyContactNum" min="-2" pref="120" max="-2" attributes="0"/>
+                                  <Component id="editInfoEmergencyContactNum" min="-2" pref="120" max="-2" attributes="0"/>
                                   <Component id="editInfoPassword" min="-2" pref="120" max="-2" attributes="0"/>
                                   <Component id="editInfoConfirmPassword" min="-2" pref="120" max="-2" attributes="0"/>
                               </Group>
@@ -81,23 +81,23 @@
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="editUsername" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="editInfoUsername" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="username" alignment="0" min="-2" pref="22" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="email" alignment="0" min="-2" pref="22" max="-2" attributes="0"/>
-                  <Component id="editEmail" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="editInfoEmail" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="contactNum" min="-2" pref="22" max="-2" attributes="0"/>
-                  <Component id="editContactNum" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="editInfoContactNum" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="emergencyContactNum" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="editEmergencyContactNum" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="editInfoEmergencyContactNum" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -156,16 +156,16 @@
         <Property name="text" type="java.lang.String" value="Emergency Contact Number:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="editUsername">
+    <Component class="javax.swing.JTextField" name="editInfoUsername">
     </Component>
-    <Component class="javax.swing.JTextField" name="editEmail">
+    <Component class="javax.swing.JTextField" name="editInfoEmail">
     </Component>
-    <Component class="javax.swing.JTextField" name="editEmergencyContactNum">
+    <Component class="javax.swing.JTextField" name="editInfoEmergencyContactNum">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editEmergencyContactNumActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editInfoEmergencyContactNumActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="editContactNum">
+    <Component class="javax.swing.JTextField" name="editInfoContactNum">
     </Component>
     <Component class="javax.swing.JButton" name="cancelButton">
       <Properties>

@@ -161,12 +161,8 @@ public class AdminLoginPage extends javax.swing.JFrame {
     }//GEN-LAST:event_adminLoginButtonActionPerformed
 
     private void adminCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminCancelButtonActionPerformed
-        Point pos = this.getLocation();
-        UserLoginPage frame = new UserLoginPage();
-        frame.setResizable(false);
-        frame.setLocation(pos);
-        frame.setVisible(true);
-        this.dispose();
+
+        GUIClient.switchPage(this, new UserLoginPage());
     }//GEN-LAST:event_adminCancelButtonActionPerformed
 
     /**

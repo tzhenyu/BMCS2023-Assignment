@@ -5,6 +5,9 @@
 package com.example.BMCS2023.Assignment;
 
 import java.awt.Point;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
@@ -12,12 +15,122 @@ import java.awt.Point;
  */
 public class CarMenu extends javax.swing.JFrame {
 
+    // Store vehicles for click handlers
+    private Vehicle[] availableVehicles;
+    
+    // Arrays for UI components
+    private JPanel[] carDetailPanelButtons;
+    private JLabel[] carLabels;
+    private JLabel[] priceLabels;
+    private JLabel[] ratingLabels;
+    private JLabel[] imageLabels;
+
     /**
      * Creates new form CarMenu
      */
     public CarMenu() {
         initComponents();
+        initializeArrays();
         updateUIBasedOnLogin();
+        loadVehicleData();
+    }
+    
+    private void initializeArrays() {
+        carDetailPanelButtons = new JPanel[]{
+            carDetailPanelButton1, jPanel2, jPanel3, jPanel5
+        };
+        
+        carLabels = new JLabel[]{
+            jLabel4, jLabel8, jLabel12, jLabel20
+        };
+        
+        priceLabels = new JLabel[]{
+            jLabel3, jLabel7, jLabel11, jLabel19
+        };
+        
+        ratingLabels = new JLabel[]{
+            jLabel5, jLabel9, jLabel13, jLabel21
+        };
+        
+        imageLabels = new JLabel[]{
+            jLabel2, jLabel6, jLabel10, jLabel18
+        };
+    }
+    
+    private void loadVehicleData() {
+        try {
+            Vehicle[] vehicles = DatabaseClient.getRecords("vehicles", Vehicle.class);
+            if (vehicles != null && vehicles.length > 0) {
+                // Filter only available vehicles
+                int count = 0;
+                for (Vehicle v : vehicles) {
+                    if (v.getStatus() == Vehicle.Status.available) {
+                        count++;
+                    }
+                }
+                
+                // Create array and populate with available vehicles
+                availableVehicles = new Vehicle[count];
+                int index = 0;
+                for (Vehicle v : vehicles) {
+                    if (v.getStatus() == Vehicle.Status.available) {
+                        availableVehicles[index++] = v;
+                    }
+                }
+                
+                // Populate each panel with vehicle data
+                for (int i = 0; i < carDetailPanelButtons.length; i++) {
+                    populateCarPanel(availableVehicles, i, carDetailPanelButtons[i], carLabels[i], priceLabels[i], ratingLabels[i]);
+                }
+                
+            } else {
+                // Show default message on first panel
+                carLabels[0].setText("No vehicles available");
+                priceLabels[0].setText("at the moment");
+                ratingLabels[0].setText("");
+                carDetailPanelButtons[0].setVisible(true);
+                
+                // Hide other panels
+                for (int i = 1; i < carDetailPanelButtons.length; i++) {
+                    carDetailPanelButtons[i].setVisible(false);
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Failed to load vehicle data: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    private void populateCarPanel(Vehicle[] vehicles, int index, 
+                                 JPanel panel, 
+                                 JLabel nameLabel, 
+                                 JLabel priceLabel, 
+                                 JLabel ratingLabel) {
+        if (vehicles != null && index < vehicles.length) {
+            Vehicle v = vehicles[index];
+            nameLabel.setText(v.getBrand() + " " + v.getModel());
+            priceLabel.setText("RM" + v.getPricePerDay() + "/day");
+            ratingLabel.setText("4.5/5"); // Default rating
+            panel.setVisible(true);
+        } else {
+            panel.setVisible(false);
+        }
+    }
+    
+    private void navigateToCarDetails(int vehicleIndex) {
+        if (availableVehicles != null && vehicleIndex < availableVehicles.length) {
+            Vehicle selectedVehicle = availableVehicles[vehicleIndex];
+            Point pos = this.getLocation();
+            CarDetails frame = new CarDetails(selectedVehicle);
+            frame.setResizable(false);
+            frame.setLocation(pos);
+            frame.setVisible(true);
+            this.dispose();
+        }
+    }
+    
+    public void refreshVehicleDisplay() {
+        loadVehicleData();
     }
     
     private void updateUIBasedOnLogin() {
@@ -189,6 +302,11 @@ public class CarMenu extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel2.setName(""); // NOI18N
+        jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel2MouseClicked(evt);
+            }
+        });
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/10628940.png"))); // NOI18N
         jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -234,6 +352,11 @@ public class CarMenu extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel3.setName(""); // NOI18N
+        jPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel3MouseClicked(evt);
+            }
+        });
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/10628940.png"))); // NOI18N
         jLabel10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -279,6 +402,11 @@ public class CarMenu extends javax.swing.JFrame {
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel5.setName(""); // NOI18N
+        jPanel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel5MouseClicked(evt);
+            }
+        });
 
         jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/10628940.png"))); // NOI18N
         jLabel18.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -390,14 +518,20 @@ public class CarMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_profileButtonActionPerformed
 
     private void carDetailPanelButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_carDetailPanelButton1MouseClicked
-        // TODO add your handling code here:
-        Point pos = this.getLocation(); 
-        CarDetails frame = new CarDetails();   // create an instance
-        frame.setResizable(false);       // lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);          // show the frame
-        this.dispose();                  // close current frame
+        navigateToCarDetails(0);
     }//GEN-LAST:event_carDetailPanelButton1MouseClicked
+    
+    private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {
+        navigateToCarDetails(1);
+    }
+    
+    private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {
+        navigateToCarDetails(2);
+    }
+    
+    private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {
+        navigateToCarDetails(3);
+    }
 
     /**
      * @param args the command line arguments
