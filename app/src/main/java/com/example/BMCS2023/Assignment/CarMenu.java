@@ -509,12 +509,8 @@ public class CarMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void profileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileButtonActionPerformed
-        Point pos = this.getLocation();
         UserProfile frame = new UserProfile();
-        frame.setResizable(false);
-        frame.setLocation(pos);
-        frame.setVisible(true);
-        this.dispose();
+        GUIClient.switchPage(this, frame);
     }//GEN-LAST:event_profileButtonActionPerformed
 
     private void carDetailPanelButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_carDetailPanelButton1MouseClicked
