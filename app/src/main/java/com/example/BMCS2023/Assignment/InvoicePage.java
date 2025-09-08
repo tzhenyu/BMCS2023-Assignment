@@ -15,6 +15,7 @@ public class InvoicePage extends javax.swing.JFrame {
      */
     public InvoicePage() {
         initComponents();
+        loadUserData();
     }
 
     /**
@@ -31,15 +32,16 @@ public class InvoicePage extends javax.swing.JFrame {
         email = new java.awt.Label();
         emailDisplayText = new java.awt.Label();
         usernameDisplayText = new java.awt.Label();
-        invoices = new javax.swing.JLabel();
-        backButton = new javax.swing.JButton();
+        invoice = new javax.swing.JLabel();
+        invoiceBackButton = new javax.swing.JButton();
         IDDisplayText = new java.awt.Label();
         contactNumDisplayText = new java.awt.Label();
         emergencyContactNumDisplayText = new java.awt.Label();
         contactNum = new java.awt.Label();
         username = new java.awt.Label();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        invoiceTable = new javax.swing.JTable();
+        grandTotal = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -60,15 +62,15 @@ public class InvoicePage extends javax.swing.JFrame {
         usernameDisplayText.setFont(new java.awt.Font("BIZ UDPMincho Medium", 1, 14)); // NOI18N
         usernameDisplayText.setText("username");
 
-        invoices.setBackground(new java.awt.Color(255, 255, 255));
-        invoices.setFont(new java.awt.Font("Book Antiqua", 1, 36)); // NOI18N
-        invoices.setText("INVOICES");
+        invoice.setBackground(new java.awt.Color(255, 255, 255));
+        invoice.setFont(new java.awt.Font("Book Antiqua", 1, 36)); // NOI18N
+        invoice.setText("INVOICE");
 
-        backButton.setFont(new java.awt.Font("BIZ UDPMincho Medium", 0, 18)); // NOI18N
-        backButton.setText("< Back to menu");
-        backButton.addActionListener(new java.awt.event.ActionListener() {
+        invoiceBackButton.setFont(new java.awt.Font("BIZ UDPMincho Medium", 0, 18)); // NOI18N
+        invoiceBackButton.setText("< Back to menu");
+        invoiceBackButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backButtonActionPerformed(evt);
+                invoiceBackButtonActionPerformed(evt);
             }
         });
 
@@ -87,10 +89,11 @@ public class InvoicePage extends javax.swing.JFrame {
         username.setFont(new java.awt.Font("BIZ UDPMincho Medium", 1, 14)); // NOI18N
         username.setText("Username:");
 
-        jTable1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
-        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        invoiceTable.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        invoiceTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
                 {null, null, null, null, null},
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -117,7 +120,9 @@ public class InvoicePage extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(invoiceTable);
+
+        grandTotal.setText("GRAND TOTAL:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -133,8 +138,8 @@ public class InvoicePage extends javax.swing.JFrame {
                                 .addGap(2, 2, 2)
                                 .addComponent(contactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(emergencyContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(2, 2, 2)
+                                .addComponent(emergencyContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(emergencyContactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -148,21 +153,25 @@ public class InvoicePage extends javax.swing.JFrame {
                                 .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
                                 .addComponent(usernameDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(backButton))
+                            .addComponent(invoiceBackButton))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(invoices)
+                        .addComponent(invoice)
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(32, 32, 32)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 747, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 29, Short.MAX_VALUE))
+                .addGap(0, 35, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(grandTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(163, 163, 163))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(invoices)
+                .addComponent(invoice)
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -182,20 +191,22 @@ public class InvoicePage extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(emergencyContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(emergencyContactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 143, Short.MAX_VALUE)
-                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(grandTotal)
+                .addGap(162, 162, 162)
+                .addComponent(invoiceBackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+    private void invoiceBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_invoiceBackButtonActionPerformed
         CarMenu frame = new CarMenu();    //create an instance
         GUIClient.switchPage(this, frame);
-    }//GEN-LAST:event_backButtonActionPerformed
+    }//GEN-LAST:event_invoiceBackButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -232,19 +243,31 @@ public class InvoicePage extends javax.swing.JFrame {
         });
     }
 
+    private void loadUserData() {
+        User currentUser = SessionManager.getCurrentUser();
+        if (currentUser != null) {
+            usernameDisplayText.setText(currentUser.getUsername());
+            IDDisplayText.setText(currentUser.getUserId());
+            emailDisplayText.setText(currentUser.getEmail());
+            contactNumDisplayText.setText(currentUser.getPhone());
+            emergencyContactNumDisplayText.setText(currentUser.getEmergencyContactNum());
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Label IDDisplayText;
-    private javax.swing.JButton backButton;
     private java.awt.Label contactNum;
     private java.awt.Label contactNumDisplayText;
     private java.awt.Label email;
     private java.awt.Label emailDisplayText;
     private java.awt.Label emergencyContactNum;
     private java.awt.Label emergencyContactNumDisplayText;
+    private javax.swing.JLabel grandTotal;
     private java.awt.Label id;
-    private javax.swing.JLabel invoices;
+    private javax.swing.JLabel invoice;
+    private javax.swing.JButton invoiceBackButton;
+    private javax.swing.JTable invoiceTable;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private java.awt.Label username;
     private java.awt.Label usernameDisplayText;
     // End of variables declaration//GEN-END:variables
