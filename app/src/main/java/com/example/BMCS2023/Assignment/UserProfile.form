@@ -25,23 +25,23 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="username" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="usernameDisplayText" max="32767" attributes="0"/>
-                          </Group>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="ID" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="IDdisplayText" min="-2" pref="240" max="-2" attributes="0"/>
+                              <Component id="IDdisplayText" min="-2" pref="136" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="username" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="usernameDisplayText" min="-2" pref="113" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="editInfoButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="281" max="32767" attributes="0"/>
+                      <EmptySpace pref="366" max="32767" attributes="0"/>
                       <Component id="backButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -49,29 +49,34 @@
                       <Component id="logoutButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="email" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="emergencyContactNum" alignment="0" min="-2" pref="290" max="-2" attributes="0"/>
-                          <Component id="contactNum" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                              <Component id="emergencyContactNum" max="32767" attributes="0"/>
+                              <EmptySpace min="-2" pref="121" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="emailDisplayText" min="-2" pref="136" max="-2" attributes="0"/>
-                                  <Component id="contactNumDisplayText" alignment="0" min="-2" pref="189" max="-2" attributes="0"/>
-                                  <Component id="emergencyContactNumDisplayText" min="-2" pref="214" max="-2" attributes="0"/>
+                                  <Component id="email" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="contactNum" min="-2" max="-2" attributes="0"/>
+                                  <Component id="emergencyContactNumDisplayText" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="contactNumDisplayText" alignment="0" min="-2" pref="136" max="-2" attributes="0"/>
+                                  <Component id="emailDisplayText" alignment="0" min="-2" pref="136" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="orders" min="-2" max="-2" attributes="0"/>
-                          <Component id="jPanel3" max="32767" attributes="0"/>
-                          <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jPanel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="jPanel2" alignment="1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -80,58 +85,52 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="username" min="-2" pref="22" max="-2" attributes="0"/>
-                                  <Component id="usernameDisplayText" min="-2" pref="22" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="ID" alignment="1" min="-2" pref="22" max="-2" attributes="0"/>
-                                  <Component id="IDdisplayText" alignment="1" min="-2" pref="22" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                              <Component id="backButton" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                              <Component id="editInfoButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="username" min="-2" pref="22" max="-2" attributes="0"/>
+                          <Component id="usernameDisplayText" min="-2" pref="22" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="ID" alignment="1" min="-2" pref="22" max="-2" attributes="0"/>
+                          <Component id="IDdisplayText" alignment="1" min="-2" pref="22" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                      <Component id="backButton" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                      <Component id="editInfoButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace pref="145" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="157" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
                       <Component id="email" min="-2" pref="22" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="emailDisplayText" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="contactNum" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="contactNumDisplayText" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="emergencyContactNum" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="emergencyContactNumDisplayText" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="orders" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="76" pref="76" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
-                              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                      <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="192" max="32767" attributes="0"/>
               <Component id="logoutButton" min="-2" pref="30" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
           </Group>
@@ -142,7 +141,7 @@
     <Component class="java.awt.Label" name="username">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="BIZ UDPMincho Medium" size="16" style="1"/>
+          <Font name="BIZ UDPMincho Medium" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Username:"/>
       </Properties>
@@ -150,7 +149,7 @@
     <Component class="javax.swing.JButton" name="editInfoButton">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="18" style="0"/>
+          <Font name="BIZ UDPMincho Medium" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Edit Info"/>
       </Properties>
@@ -161,7 +160,7 @@
     <Component class="java.awt.Label" name="usernameDisplayText">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="BIZ UDPMincho Medium" size="16" style="0"/>
+          <Font name="BIZ UDPMincho Medium" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="username"/>
       </Properties>
@@ -169,7 +168,7 @@
     <Component class="javax.swing.JButton" name="backButton">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="BIZ UDPMincho Medium" size="18" style="0"/>
+          <Font name="BIZ UDPMincho Medium" size="18" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="&lt; Back"/>
       </Properties>
@@ -180,7 +179,7 @@
     <Component class="java.awt.Label" name="ID">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="BIZ UDPMincho Medium" size="16" style="1"/>
+          <Font name="BIZ UDPMincho Medium" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="ID:"/>
       </Properties>
@@ -188,7 +187,7 @@
     <Component class="java.awt.Label" name="IDdisplayText">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="BIZ UDPMincho Medium" size="16" style="0"/>
+          <Font name="BIZ UDPMincho Medium" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="id"/>
       </Properties>
@@ -196,7 +195,7 @@
     <Component class="java.awt.Label" name="contactNumDisplayText">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="14" style="0"/>
+          <Font name="BIZ UDPMincho Medium" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="contact num"/>
       </Properties>
@@ -204,7 +203,7 @@
     <Component class="java.awt.Label" name="emergencyContactNumDisplayText">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="14" style="0"/>
+          <Font name="BIZ UDPMincho Medium" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="emergency contact num"/>
       </Properties>
@@ -212,7 +211,7 @@
     <Component class="java.awt.Label" name="contactNum">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="16" style="0"/>
+          <Font name="BIZ UDPMincho Medium" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="CONTACT NUMBER:"/>
       </Properties>
@@ -220,7 +219,7 @@
     <Component class="java.awt.Label" name="emergencyContactNum">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="16" style="0"/>
+          <Font name="BIZ UDPMincho Medium" size="14" style="1"/>
         </Property>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[115, 10]"/>
@@ -234,7 +233,7 @@
     <Component class="javax.swing.JButton" name="logoutButton">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="BIZ UDPMincho Medium" size="16" style="0"/>
+          <Font name="BIZ UDPMincho Medium" size="18" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="X Logout"/>
       </Properties>
@@ -245,7 +244,7 @@
     <Component class="java.awt.Label" name="email">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="16" style="0"/>
+          <Font name="BIZ UDPMincho Medium" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="EMAIL:"/>
       </Properties>
@@ -253,61 +252,47 @@
     <Component class="java.awt.Label" name="emailDisplayText">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="14" style="0"/>
+          <Font name="BIZ UDPMincho Medium" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="email"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="orders">
+    <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Book Antiqua" size="18" style="1"/>
+          <Font name="BIZ UDPMincho Medium" size="18" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="ORDERS"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JPanel" name="jPanel1">
-<<<<<<< HEAD
-      <Properties>
-        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-          <Color id="Hand Cursor"/>
-        </Property>
-      </Properties>
-=======
->>>>>>> 9797aef1b6cfa70536db304c146ca2b8cb42f5c3
-      <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanel1MouseClicked"/>
-      </Events>
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="vehicleIDLabel1" max="32767" attributes="0"/>
-                      <Component id="dateLabel1" pref="177" max="32767" attributes="0"/>
+                      <Component id="dateLabel1" pref="149" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="statusButton1" min="-2" pref="107" max="-2" attributes="0"/>
+                  <EmptySpace pref="40" max="32767" attributes="0"/>
+                  <Component id="statusButton1" min="-2" pref="109" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="statusButton1" min="-2" pref="45" max="-2" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="vehicleIDLabel1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="dateLabel1" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <Component id="statusButton1" alignment="0" min="-2" pref="45" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               </Group>
@@ -318,7 +303,7 @@
         <Component class="javax.swing.JLabel" name="vehicleIDLabel1">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="0"/>
+              <Font name="BIZ UDMincho Medium" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="vehicle id"/>
           </Properties>
@@ -326,7 +311,7 @@
         <Component class="javax.swing.JLabel" name="dateLabel1">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="0"/>
+              <Font name="BIZ UDMincho Medium" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="dd/mm/yyyy time"/>
           </Properties>
@@ -334,9 +319,9 @@
         <Component class="javax.swing.JButton" name="statusButton1">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="0"/>
+              <Font name="BIZ UDPMincho Medium" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="PICKUP"/>
+            <Property name="text" type="java.lang.String" value="status"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="statusButton1ActionPerformed"/>
@@ -351,12 +336,12 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="dateLabel2" min="-2" pref="142" max="-2" attributes="0"/>
-                      <Component id="vehicleIDLabel2" min="-2" pref="150" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="vehicleIDLabel2" max="32767" attributes="0"/>
+                      <Component id="dateLabel2" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="statusButton2" min="-2" pref="106" max="-2" attributes="0"/>
+                  <EmptySpace pref="43" max="32767" attributes="0"/>
+                  <Component id="statusButton2" min="-2" pref="116" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -382,7 +367,7 @@
         <Component class="javax.swing.JLabel" name="vehicleIDLabel2">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="0"/>
+              <Font name="BIZ UDMincho Medium" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="perodua kancil 2004"/>
           </Properties>
@@ -390,9 +375,9 @@
         <Component class="javax.swing.JButton" name="statusButton2">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="0"/>
+              <Font name="BIZ UDPMincho Medium" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="RETURN"/>
+            <Property name="text" type="java.lang.String" value="ongoing"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="statusButton2ActionPerformed"/>
@@ -401,7 +386,7 @@
         <Component class="javax.swing.JLabel" name="dateLabel2">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="0"/>
+              <Font name="BIZ UDMincho Medium" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="2/8/2025 18:00"/>
           </Properties>
@@ -415,12 +400,12 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="dateLabel3" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="vehicleIDLabel3" max="32767" attributes="0"/>
+                      <Component id="dateLabel3" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="statusButton3" min="-2" pref="109" max="-2" attributes="0"/>
+                  <EmptySpace pref="34" max="32767" attributes="0"/>
+                  <Component id="statusButton3" min="-2" pref="117" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -428,14 +413,14 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="statusButton3" min="-2" pref="45" max="-2" attributes="0"/>
-                      <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
                           <Component id="vehicleIDLabel3" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="dateLabel3" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <Component id="statusButton3" alignment="0" min="-2" pref="45" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -446,7 +431,7 @@
         <Component class="javax.swing.JLabel" name="vehicleIDLabel3">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="0"/>
+              <Font name="BIZ UDMincho Medium" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="perodua kancil 2004"/>
           </Properties>
@@ -454,9 +439,9 @@
         <Component class="javax.swing.JButton" name="statusButton3">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="0"/>
+              <Font name="BIZ UDPMincho Medium" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="COMPLETED"/>
+            <Property name="text" type="java.lang.String" value="completed"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="statusButton3ActionPerformed"/>
@@ -465,7 +450,7 @@
         <Component class="javax.swing.JLabel" name="dateLabel3">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="0"/>
+              <Font name="BIZ UDMincho Medium" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="2/8/2025 18:00"/>
           </Properties>

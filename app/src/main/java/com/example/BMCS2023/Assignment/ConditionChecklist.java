@@ -20,6 +20,14 @@ public class ConditionChecklist extends javax.swing.JFrame {
     public ConditionChecklist(String rentalId) {
         this.rentalId = rentalId;
         initComponents();
+        
+        // Add item listeners to all checkboxes
+        tyresCheckBox.addItemListener(e -> checkOthersCheckbox());
+        windowsCheckBox.addItemListener(e -> checkOthersCheckbox());
+        backLightCheckBox.addItemListener(e -> checkOthersCheckbox());
+        seatsCheckBox.addItemListener(e -> checkOthersCheckbox());
+        mirrorCheckBox.addItemListener(e -> checkOthersCheckbox());
+        headLightCheckBox.addItemListener(e -> checkOthersCheckbox());
     }
 
     /**
@@ -35,10 +43,11 @@ public class ConditionChecklist extends javax.swing.JFrame {
         tyresCheckBox = new javax.swing.JCheckBox();
         windowsCheckBox = new javax.swing.JCheckBox();
         othersCheckbox = new javax.swing.JCheckBox();
-        lightCheckBox = new javax.swing.JCheckBox();
+        backLightCheckBox = new javax.swing.JCheckBox();
         seatsCheckBox = new javax.swing.JCheckBox();
         mirrorCheckBox = new javax.swing.JCheckBox();
         nextButton = new javax.swing.JButton();
+        headLightCheckBox = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,10 +66,15 @@ public class ConditionChecklist extends javax.swing.JFrame {
         windowsCheckBox.setText("Windows");
 
         othersCheckbox.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        othersCheckbox.setText("Others");
+        othersCheckbox.setText("Select all");
+        othersCheckbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                othersCheckboxActionPerformed(evt);
+            }
+        });
 
-        lightCheckBox.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        lightCheckBox.setText("Headlight, Backlight");
+        backLightCheckBox.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        backLightCheckBox.setText("Backlight");
 
         seatsCheckBox.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         seatsCheckBox.setText("Seats");
@@ -68,6 +82,7 @@ public class ConditionChecklist extends javax.swing.JFrame {
         mirrorCheckBox.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         mirrorCheckBox.setText("Mirror");
 
+        nextButton.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         nextButton.setText("Next");
         nextButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -75,36 +90,36 @@ public class ConditionChecklist extends javax.swing.JFrame {
             }
         });
 
+        headLightCheckBox.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        headLightCheckBox.setText("Headlight");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(nextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(722, Short.MAX_VALUE)
-                        .addComponent(nextButton))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(222, 222, 222)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lightCheckBox)
-                            .addComponent(tyresCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(windowsCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(othersCheckbox)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(15, 15, 15)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(seatsCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(mirrorCheckBox)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(othersCheckbox)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(tyresCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                                    .addComponent(windowsCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(headLightCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(backLightCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(seatsCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(mirrorCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(299, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,17 +127,19 @@ public class ConditionChecklist extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(154, 154, 154)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(seatsCheckBox)
-                    .addComponent(tyresCheckBox))
+                    .addComponent(tyresCheckBox)
+                    .addComponent(backLightCheckBox))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(mirrorCheckBox, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(windowsCheckBox))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(othersCheckbox)
-                    .addComponent(lightCheckBox))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 257, Short.MAX_VALUE)
+                    .addComponent(windowsCheckBox)
+                    .addComponent(seatsCheckBox))
+                .addGap(16, 16, 16)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(mirrorCheckBox)
+                    .addComponent(headLightCheckBox))
+                .addGap(18, 18, 18)
+                .addComponent(othersCheckbox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 177, Short.MAX_VALUE)
                 .addComponent(nextButton)
                 .addContainerGap())
         );
@@ -131,31 +148,43 @@ public class ConditionChecklist extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
+    try {
+        // Check if all items are selected
         if (!allItemsChecked()) {
-            JOptionPane.showMessageDialog(this, "Please check all items before proceeding");
+            JOptionPane.showMessageDialog(this, 
+                "Please check all items before proceeding",
+                "Validation Error",
+                JOptionPane.WARNING_MESSAGE);
             return;
         }
+        // Show drive safe message with OK button only
 
-        JOptionPane.showMessageDialog(this, "Drive Safe!", "Happy Drive", JOptionPane.INFORMATION_MESSAGE);
-        
-        try {
-            // Update rental status to active
-            JsonObject updateData = new JsonObject();
-            updateData.addProperty("status", "active");
-            DatabaseClient.updateRecord("rentals", rentalId, updateData);
+
+        // Update rental status after OK is clicked
+        JsonObject updateData = new JsonObject();
+        updateData.addProperty("status", "ACTIVE");
+        String result = DatabaseClient.updateRecord("rentals", rentalId, updateData);
             
-            this.dispose();
-            new UserProfile().setVisible(true);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-        }
-    }//GEN-LAST:event_nextButtonActionPerformed
+        // Return to UserProfile
+        this.dispose();
+        UserProfile profile = new UserProfile();
+        profile.setLocationRelativeTo(null);
+        profile.setVisible(true);
+
+    } catch (Exception e) {
+        System.err.println("Error updating status: " + e.getMessage());
+        JOptionPane.showMessageDialog(this,
+            "Failed to update rental status: " + e.getMessage(),
+            "Error",
+            JOptionPane.ERROR_MESSAGE);
+    }
+}//GEN-LAST:event_nextButtonActionPerformed
 
     private boolean allItemsChecked() {
         return tyresCheckBox.isSelected() && 
                windowsCheckBox.isSelected() && 
                othersCheckbox.isSelected() && 
-               lightCheckBox.isSelected() && 
+               backLightCheckBox.isSelected() && 
                seatsCheckBox.isSelected() && 
                mirrorCheckBox.isSelected();
     }
@@ -164,7 +193,31 @@ public class ConditionChecklist extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tyresCheckBoxActionPerformed
 
-    /**
+    private void othersCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_othersCheckboxActionPerformed
+    boolean isSelected = othersCheckbox.isSelected();
+    
+    // Select/deselect all checkboxes
+    tyresCheckBox.setSelected(isSelected);
+    windowsCheckBox.setSelected(isSelected);
+    backLightCheckBox.setSelected(isSelected);
+    seatsCheckBox.setSelected(isSelected);
+    mirrorCheckBox.setSelected(isSelected);
+    headLightCheckBox.setSelected(isSelected);
+}//GEN-LAST:event_othersCheckboxActionPerformed
+
+// Add a method to check if any checkbox state changes
+private void checkOthersCheckbox() {
+    boolean allSelected = tyresCheckBox.isSelected() && 
+                         windowsCheckBox.isSelected() && 
+                         backLightCheckBox.isSelected() && 
+                         seatsCheckBox.isSelected() && 
+                         mirrorCheckBox.isSelected() &&
+                         headLightCheckBox.isSelected();
+    
+    othersCheckbox.setSelected(allSelected);
+}
+
+/**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -200,8 +253,9 @@ public class ConditionChecklist extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox backLightCheckBox;
+    private javax.swing.JCheckBox headLightCheckBox;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JCheckBox lightCheckBox;
     private javax.swing.JCheckBox mirrorCheckBox;
     private javax.swing.JButton nextButton;
     private javax.swing.JCheckBox othersCheckbox;
