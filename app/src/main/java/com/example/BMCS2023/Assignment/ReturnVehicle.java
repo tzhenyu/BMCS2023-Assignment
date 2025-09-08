@@ -4,17 +4,25 @@
  */
 package com.example.BMCS2023.Assignment;
 
+import com.google.gson.JsonObject;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Joel
  */
 public class ReturnVehicle extends javax.swing.JFrame {
+    private String rentalId;
 
     /**
      * Creates new form ReturnVehicle
      */
-    public ReturnVehicle() {
+    public ReturnVehicle(String rentalId) {
+        this.rentalId = rentalId;
         initComponents();
+        returnDateText.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
     }
 
     /**
@@ -154,12 +162,52 @@ public class ReturnVehicle extends javax.swing.JFrame {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void returnVehicleSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnVehicleSubmitButtonActionPerformed
-        // TODO add your handling code here:
+        String rating = ratingTextField.getText();
+        String feedback = feedbackTextField.getText();
+
+        if (!validateInput(rating, feedback)) {
+            return;
+        }
+
+        try {
+            JsonObject updateData = new JsonObject();
+            updateData.addProperty("status", "completed");
+            updateData.addProperty("rating", Integer.parseInt(rating));
+            updateData.addProperty("feedback", feedback);
+            
+            DatabaseClient.updateRecord("rentals", rentalId, updateData);
+            
+            JOptionPane.showMessageDialog(this, "Thank you for your feedback!");
+            this.dispose();
+            new UserProfile().setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
     }//GEN-LAST:event_returnVehicleSubmitButtonActionPerformed
 
     private void ratingTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ratingTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ratingTextFieldActionPerformed
+
+    private boolean validateInput(String rating, String feedback) {
+        if (rating.isEmpty() || feedback.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please provide both rating and feedback");
+            return false;
+        }
+
+        try {
+            int ratingValue = Integer.parseInt(rating);
+            if (ratingValue < 1 || ratingValue > 10) {
+                JOptionPane.showMessageDialog(this, "Rating must be between 1 and 10");
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Rating must be a number");
+            return false;
+        }
+
+        return true;
+    }
 
     /**
      * @param args the command line arguments
@@ -191,7 +239,9 @@ public class ReturnVehicle extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ReturnVehicle().setVisible(true);
+                // For testing purposes only - use a test rental ID
+                String testRentalId = "test123"; 
+                new ReturnVehicle(testRentalId).setVisible(true);
             }
         });
     }

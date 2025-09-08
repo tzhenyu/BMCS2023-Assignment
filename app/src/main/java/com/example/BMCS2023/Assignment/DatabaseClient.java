@@ -132,7 +132,28 @@ public class DatabaseClient {
         }
     }
 
-    public static <T> String updateRecord(String tableName, String id, T record) throws Exception {
+    public static <T> String updateUserRecord(String tableName, String userId, T record) throws Exception {
+        String json = gson.toJson(record);
+
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create(SUPABASE_URL + "/rest/v1/" + tableName + "?userId=eq." + userId))
+            .header("apikey", SUPABASE_API_KEY)
+            .header("Authorization", "Bearer " + SUPABASE_API_KEY)
+            .header("Content-Type", "application/json")
+            .header("Prefer", "return=representation")
+            .method("PATCH", HttpRequest.BodyPublishers.ofString(json))
+            .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        if (response.statusCode() == 200) {
+            return response.body();
+        } else {
+            throw new Exception("Failed to update record: HTTP " + response.statusCode() + " - " + response.body());
+        }
+    }
+    
+    public static <T> String updateRecord(String tableName, String id, T record)throws Exception{
         String json = gson.toJson(record);
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -152,6 +173,7 @@ public class DatabaseClient {
             throw new Exception("Failed to update record: HTTP " + response.statusCode() + " - " + response.body());
         }
     }
+    
 // Gets a single record by id. Returns null if not found.
 public static <T> T getRecordById(String tableName, String id, Class<T> clazz) throws Exception {
     // encode ID (handles UUIDs or special chars)

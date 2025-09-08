@@ -9,7 +9,6 @@ package com.example.BMCS2023.Assignment;
  * @author zhenyu
  */
 public class Person {
-    private String id; 
     protected String username;
     protected String email;
     protected String phone;
@@ -27,14 +26,6 @@ public class Person {
     }
     
         
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getUsername() {
         return username;
     }

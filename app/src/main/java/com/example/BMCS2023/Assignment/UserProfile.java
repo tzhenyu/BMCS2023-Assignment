@@ -7,20 +7,28 @@ package com.example.BMCS2023.Assignment;
 import java.awt.Point;
 import java.util.List;
 import javax.swing.JOptionPane;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 /**
  *
  * @author Joel
  */
 public class UserProfile extends javax.swing.JFrame {
-    private Rental currentUserRental;
+    private User currentUser;
+    private String currentRentalId;
+    private Rental currentUserRental;  // Add this field
+
     /**
      * Creates new form UserProfile
      */
     public UserProfile() {
+        this.currentUser = SessionManager.getCurrentUser(); // Add this line
         initComponents();
         loadUserData();
         initializeRentalButton();
+        loadStatusButton1ForCurrentUser();
     }
     
     private void initializeRentalButton() {
@@ -119,6 +127,10 @@ public class UserProfile extends javax.swing.JFrame {
         orders.setFont(new java.awt.Font("Book Antiqua", 1, 18)); // NOI18N
         orders.setText("ORDERS");
 
+<<<<<<< HEAD
+        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+=======
+>>>>>>> 9797aef1b6cfa70536db304c146ca2b8cb42f5c3
         jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel1MouseClicked(evt);
@@ -171,7 +183,7 @@ public class UserProfile extends javax.swing.JFrame {
         statusButton2.setText("RETURN");
         statusButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                statusButton2ActionPerformed(evt);
+                vehicle2ButtonActionPerformed(evt);
             }
         });
 
@@ -210,7 +222,7 @@ public class UserProfile extends javax.swing.JFrame {
         statusButton3.setText("COMPLETED");
         statusButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                statusButton3ActionPerformed(evt);
+                vehicle3ButtonActionPerformed(evt);
             }
         });
 
@@ -355,80 +367,220 @@ public class UserProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutButtonActionPerformed
 
     private void statusButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusButton1ActionPerformed
-        if (statusButton1.getText().equals("Pickup") && 
-            statusButton1.isVisible() && 
-            currentUserRental != null) {
-            navigateToConditionChecklist();
-        }
+        onStatusButton1Clicked();
     }//GEN-LAST:event_statusButton1ActionPerformed
     
-    private void navigateToConditionChecklist() {
-        try {
-            Point pos = this.getLocation();
-        
-            // Create ConditionChecklist frame and pass the rental info
-            ConditionChecklist frame = new ConditionChecklist();
-            frame.setResizable(false);
-            frame.setLocation(pos);
-            frame.setVisible(true);
-            this.dispose();
-        
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, 
-            "Error opening condition checklist: " + e.getMessage(), 
-            "Error", 
-            JOptionPane.ERROR_MESSAGE);
+    private void onStatusButton1Clicked() {
+    try {
+        String currentText = statusButton1.getText();
+
+        if ("PICKUP".equalsIgnoreCase(currentText)) {
+            ConditionChecklist checklistFrame = new ConditionChecklist(currentRentalId);
+            checklistFrame.setVisible(true);
+            this.dispose(); // Close current window
+
+        } else if ("RETURN".equalsIgnoreCase(currentText)) {
+            ReturnVehicle returnFrame = new ReturnVehicle(currentRentalId);
+            returnFrame.setVisible(true);
+            this.dispose(); // Close current window
         }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error handling action: " + e.getMessage());
+        e.printStackTrace();
     }
+}
     
-    private Rental findUserActiveRental(Rental[] rentals, String userId) {
-        for (Rental rental : rentals) {
-            // Check if rental belongs to current user and is in "active" status
-            if (userId.equals(rental.getUserId()) && 
-                (rental.getStatus().equals("CONFIRMED") || 
-                rental.getStatus().equals("ACTIVE") ||
-                rental.getStatus().equals("PENDING"))) {
-                return rental;
-            }
-        }
-        return null;
+    public String formatDateForDisplay(String dateTime) {
+    if (dateTime == null || dateTime.isEmpty()) {
+        return "";
     }
+
+    try {
+        // If the string looks like an ISO date (e.g. 2024-01-15T10:30:00)
+        if (dateTime.contains("T")) {
+            String[] parts = dateTime.split("T");
+            String date = parts[0];   // "2024-01-15"
+            String time = parts[1];   // "10:30:00"
+
+            // Take only the first 5 characters of the time → "10:30"
+            if (time.length() >= 5) {
+                time = time.substring(0, 5);
+            }
+
+            // If the date has dashes, split into yyyy-mm-dd
+            if (date.contains("-")) {
+                String[] dateParts = date.split("-");
+                if (dateParts.length == 3) {
+                    // Rearrange to dd/mm/yyyy HH:MM
+                    return dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0] + " " + time;
+                }
+            }
+
+            return date + " " + time;
+        }
+        return dateTime; // if it's not ISO, just return as-is
+    } catch (Exception e) {
+        return dateTime;
+    }
+}
+
+    public void loadStatusButton1ForCurrentUser() {
+    try {
+        // First check if current user exists
+        if (currentUser == null || currentUser.getUserId() == null) {
+            System.out.println("No current user found");
+            hideVehicleButton();
+            return;
+        }
+
+        String result = DatabaseClient.readRecords("rentals?userId=eq." + currentUser.getUserId());
+        
+        // Debug the response
+        System.out.println("Database response: " + result);
+        
+        // Check if result is empty or null
+        if (result == null || result.trim().isEmpty()) {
+            System.out.println("No rental records found");
+            hideVehicleButton();
+            return;
+        }
+
+        // Parse JSON safely
+        JsonArray rentalsArray;
+        try {
+            rentalsArray = JsonParser.parseString(result).getAsJsonArray();
+        } catch (Exception e) {
+            System.err.println("Failed to parse JSON: " + e.getMessage());
+            System.err.println("Received JSON: " + result);
+            hideVehicleButton();
+            return;
+        }
+        
+        if (rentalsArray.size() > 0) {
+            JsonObject rental = rentalsArray.get(0).getAsJsonObject();
+            
+            // Safely get values with null checks
+            if (rental.has("id")) {
+                currentRentalId = rental.get("id").getAsString();
+            }
+            
+            String status = rental.has("status") ? rental.get("status").getAsString() : "";
+            String vehicleId = rental.has("vehicleId") ? rental.get("vehicleId").getAsString() : "";
+            String startTime = rental.has("startTime") ? rental.get("startTime").getAsString() : "";
+            
+            // Update UI elements
+            vehicleIDLabel1.setText(vehicleId);
+            dateLabel1.setText(formatDateForDisplay(startTime));
+            
+            // Update button based on status
+            switch (status.toUpperCase()) {
+                case "CONFIRMED":
+                    statusButton1.setText("PICKUP");
+                    statusButton1.setEnabled(true);
+                    break;
+                case "ACTIVE":
+                    statusButton1.setText("RETURN");
+                    statusButton1.setEnabled(true);
+                    break;
+                case "COMPLETED":
+                    statusButton1.setText("COMPLETED");
+                    statusButton1.setEnabled(false);
+                    break;
+                default:
+                    hideVehicleButton();
+                    break;
+            }
+        } else {
+            hideVehicleButton();
+        }
+    } catch (Exception e) {
+        System.err.println("Error in loadStatusButton1ForCurrentUser: " + e.getMessage());
+        e.printStackTrace();
+        hideVehicleButton();
+    }
+}
     
     private void checkUserRental() {
         try {
             String currentUserId = SessionManager.getCurrentUserId();
-        
+            
             if (currentUserId == null) {
                 System.out.println("No user logged in");
                 hideVehicleButton();
                 return;
             }
-        
-            Rental[] allRentals = DatabaseClient.getRecords("rentals", Rental.class);
-            currentUserRental = findUserActiveRental(allRentals, currentUserId);
-        
-            if (currentUserRental != null) {
-                showPickupButton();
+            
+            // Use DatabaseClient.readRecords with a specific query
+            String query = "rentals?userId=eq." + currentUserId + "&order=created_at.desc";
+            String result = DatabaseClient.readRecords(query);
+            
+            JsonArray rentalsArray = JsonParser.parseString(result).getAsJsonArray();
+            
+            if (rentalsArray.size() > 0) {
+                JsonObject rental = rentalsArray.get(0).getAsJsonObject();
+                currentRentalId = rental.get("id").getAsString();
+                String status = rental.get("status").getAsString();
+                
+                // Update UI based on rental status
+                updateRentalDisplay(rental);
                 System.out.println("Found rental for user: " + currentUserId);
             } else {
                 hideVehicleButton();
                 System.out.println("No active rental found for user: " + currentUserId);
             }
-        
+            
         } catch (Exception e) {
             System.err.println("Error checking user rental: " + e.getMessage());
             hideVehicleButton();
         }
     }
 
+    private void updateRentalDisplay(JsonObject rental) {
+    try {
+        String vehicleId = rental.get("vehicleId").getAsString();
+        String startTime = rental.get("startTime").getAsString();
+        String status = rental.get("status").getAsString();
+
+        vehicleIDLabel1.setText(vehicleId);
+        dateLabel1.setText(formatDateForDisplay(startTime));
+        
+        switch (status.toUpperCase()) {
+            case "CONFIRMED":
+                statusButton1.setText("PICKUP");
+                statusButton1.setEnabled(true);
+                break;
+            case "ACTIVE":
+                statusButton1.setText("RETURN");
+                statusButton1.setEnabled(true);
+                break;
+            case "COMPLETED":
+                statusButton1.setText("COMPLETED");
+                statusButton1.setEnabled(false);
+                break;
+            default:
+                hideVehicleButton();
+                break;
+        }
+        statusButton1.setVisible(true);
+        
+    } catch (Exception e) {
+        System.err.println("Error updating rental display: " + e.getMessage());
+        hideVehicleButton();
+    }
+}
+    
     private void showPickupButton() {
+        vehicleIDLabel1.setText("VehicleID");
+            dateLabel1.setText("Date & Time");
         statusButton1.setText("Pickup");
         statusButton1.setVisible(true);
     }
 
     private void hideVehicleButton() {
-        statusButton1.setText("");
-        statusButton1.setVisible(false);
+        vehicleIDLabel1.setText("Empty");
+        dateLabel1.setText("Empty");
+        statusButton1.setText("No rental");
+        statusButton1.setVisible(true);
     }
     
     public class RentalStatus {
@@ -446,7 +598,11 @@ public class UserProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_vehicle3ButtonActionPerformed
 
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
+<<<<<<< HEAD
+        System.out.println("whats uop");
+=======
         // TODO add your handling code here:
+>>>>>>> 9797aef1b6cfa70536db304c146ca2b8cb42f5c3
     }//GEN-LAST:event_jPanel1MouseClicked
 
     private void loadUserData() {
