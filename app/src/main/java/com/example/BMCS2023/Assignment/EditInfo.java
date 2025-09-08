@@ -250,7 +250,7 @@ public class EditInfo extends javax.swing.JFrame {
     
             // Create updated user object with same ID
             User updatedUser = new User();
-            updatedUser.setUserId(userId); // Keep the same UserID
+            //updatedUser.setUserId(userId); // Keep the same UserID
             updatedUser.setUsername(newUsername);
             updatedUser.setEmail(newEmail);
             updatedUser.setPhone(newContactNum);
@@ -264,7 +264,8 @@ public class EditInfo extends javax.swing.JFrame {
             }
         
             // Update in database using the UserID
-            String result = DatabaseClient.updateRecord("users", userId, updatedUser);            // Update the session with new user info
+            System.out.println(userId);
+            String result = DatabaseClient.updateUserRecord("users", userId, updatedUser);            // Update the session with new user info
             SessionManager.setCurrentUser(updatedUser);
         
             JOptionPane.showMessageDialog(this, 

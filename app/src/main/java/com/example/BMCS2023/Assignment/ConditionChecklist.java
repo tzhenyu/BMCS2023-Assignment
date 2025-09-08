@@ -4,6 +4,7 @@
  */
 package com.example.BMCS2023.Assignment;
 
+import com.google.gson.JsonObject;
 import javax.swing.JOptionPane;
 
 /**
@@ -11,11 +12,13 @@ import javax.swing.JOptionPane;
  * @author Joel
  */
 public class ConditionChecklist extends javax.swing.JFrame {
+    final String rentalId;
 
     /**
      * Creates new form ConditionChecklist
      */
-    public ConditionChecklist() {
+    public ConditionChecklist(String rentalId) {
+        this.rentalId = rentalId;
         initComponents();
     }
 
@@ -128,9 +131,34 @@ public class ConditionChecklist extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
-        JOptionPane.showMessageDialog(null, "Drive Safe!", "Happy Drive", JOptionPane.OK_OPTION);
+        if (!allItemsChecked()) {
+            JOptionPane.showMessageDialog(this, "Please check all items before proceeding");
+            return;
+        }
+
+        JOptionPane.showMessageDialog(this, "Drive Safe!", "Happy Drive", JOptionPane.INFORMATION_MESSAGE);
         
+        try {
+            // Update rental status to active
+            JsonObject updateData = new JsonObject();
+            updateData.addProperty("status", "active");
+            DatabaseClient.updateRecord("rentals", rentalId, updateData);
+            
+            this.dispose();
+            new UserProfile().setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
     }//GEN-LAST:event_nextButtonActionPerformed
+
+    private boolean allItemsChecked() {
+        return tyresCheckBox.isSelected() && 
+               windowsCheckBox.isSelected() && 
+               othersCheckbox.isSelected() && 
+               lightCheckBox.isSelected() && 
+               seatsCheckBox.isSelected() && 
+               mirrorCheckBox.isSelected();
+    }
 
     private void tyresCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tyresCheckBoxActionPerformed
         // TODO add your handling code here:
@@ -166,7 +194,7 @@ public class ConditionChecklist extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ConditionChecklist().setVisible(true);
+                new ConditionChecklist("rentalIdPlaceholder").setVisible(true);
             }
         });
     }
