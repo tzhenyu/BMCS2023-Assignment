@@ -40,9 +40,19 @@ public class AdminLoginPage extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         adminUsername.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        adminUsername.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminUsernameActionPerformed(evt);
+            }
+        });
 
         jCheckBox1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jCheckBox1.setText("Show password");
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
 
         adminLoginButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         adminLoginButton.setText("LOGIN");
@@ -167,6 +177,10 @@ public class AdminLoginPage extends javax.swing.JFrame {
 
         GUIClient.switchPage(this, new UserLoginPage());
     }//GEN-LAST:event_adminCancelButtonActionPerformed
+
+    private void adminUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminUsernameActionPerformed
+        adminPassword.requestFocus(); // move focus to password field
+    }//GEN-LAST:event_adminUsernameActionPerformed
 
     /**
      * @param args the command line arguments
