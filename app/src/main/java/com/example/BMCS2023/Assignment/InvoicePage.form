@@ -104,19 +104,12 @@
                   <Component id="emergencyContactNum" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="emergencyContactNumDisplayText" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-<<<<<<< HEAD
-              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="200" max="-2" attributes="0"/>
-              <EmptySpace pref="141" max="32767" attributes="0"/>
-              <Component id="backButton" min="-2" pref="35" max="-2" attributes="0"/>
-=======
               <EmptySpace pref="28" max="32767" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="158" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="grandTotal" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="162" max="-2" attributes="0"/>
               <Component id="invoiceBackButton" min="-2" pref="35" max="-2" attributes="0"/>
->>>>>>> 1d84048eba7d6e2c84446b99aa61853e4912b067
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
