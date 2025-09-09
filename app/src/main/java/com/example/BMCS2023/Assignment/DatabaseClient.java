@@ -220,4 +220,19 @@ public static <T> T getRecordById(String tableName, String id, Class<T> clazz) t
     return arr.size() > 0 ? arr.get(0).getAsJsonObject() : null;
 }
 
+    /**
+     * Updates the status of a rental record in the database by ID
+     * @param rentalId The ID of the rental to update
+     * @param newStatus The new status to set (e.g., "AVAILABLE", "PENDING", "CONFIRMED", "COMPLETED")
+     * @return The response body from the update operation
+     * @throws Exception If the update fails
+     */
+    public static String updateRentalStatus(String rentalId, String newStatus) throws Exception {
+        // Create a JSON object with just the status field
+        JsonObject statusUpdate = new JsonObject();
+        statusUpdate.addProperty("status", newStatus);
+        
+        // Use the existing updateRecord method to perform the update
+        return updateRecord("rentals", rentalId, statusUpdate.toString());
+    }
 }

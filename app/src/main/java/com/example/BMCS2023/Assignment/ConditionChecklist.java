@@ -149,16 +149,25 @@ public class ConditionChecklist extends javax.swing.JFrame {
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
     try {
-        // Check if all items are selected
         if (!allItemsChecked()) {
-            JOptionPane.showMessageDialog(this, 
-                "Please check all items before proceeding",
-                "Validation Error",
-                JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please check all items before proceeding");
             return;
         }
         // Show drive safe message with OK button only
 
+<<<<<<< HEAD
+        JOptionPane.showMessageDialog(this, 
+            "Drive Safe!", 
+            "Happy Drive", 
+            JOptionPane.INFORMATION_MESSAGE);
+
+        // Update status to AVAILABLE instead of PENDING
+        String response = DatabaseClient.updateRentalStatus(rentalId, "AVAILABLE");
+        System.out.println("Update response: " + response);
+        
+        this.dispose();
+        new UserProfile().setVisible(true);
+=======
 
         // Update rental status after OK is clicked
         JsonObject updateData = new JsonObject();
@@ -170,15 +179,13 @@ public class ConditionChecklist extends javax.swing.JFrame {
         UserProfile profile = new UserProfile();
         profile.setLocationRelativeTo(null);
         profile.setVisible(true);
+>>>>>>> dde61313a1ba22e26c46f65b28f4d87ee37fafcd
 
     } catch (Exception e) {
-        System.err.println("Error updating status: " + e.getMessage());
-        JOptionPane.showMessageDialog(this,
-            "Failed to update rental status: " + e.getMessage(),
-            "Error",
-            JOptionPane.ERROR_MESSAGE);
+        System.err.println("Error: " + e.getMessage());
+        JOptionPane.showMessageDialog(this, "Failed to update status: " + e.getMessage());
     }
-}//GEN-LAST:event_nextButtonActionPerformed
+}                                          
 
     private boolean allItemsChecked() {
         return tyresCheckBox.isSelected() && 
