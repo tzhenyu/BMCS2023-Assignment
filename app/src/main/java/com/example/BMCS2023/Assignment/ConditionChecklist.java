@@ -147,7 +147,7 @@ public class ConditionChecklist extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
+    private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {
     try {
         // Check if all items are selected
         if (!allItemsChecked()) {
@@ -157,19 +157,43 @@ public class ConditionChecklist extends javax.swing.JFrame {
                 JOptionPane.WARNING_MESSAGE);
             return;
         }
-        // Show drive safe message with OK button only
 
+        // Show drive safe message
+        JOptionPane.showMessageDialog(this,
+            "Drive Safe!",
+            "Happy Drive",
+            JOptionPane.INFORMATION_MESSAGE);
 
-        // Update rental status after OK is clicked
-        JsonObject updateData = new JsonObject();
-        updateData.addProperty("status", "ACTIVE");
-        String result = DatabaseClient.updateRecord("rentals", rentalId, updateData);
+        // Update rental status
+        try {
+            // Create update data
+            JsonObject updateData = new JsonObject();
+            updateData.addProperty("status", "ACTIVE");
             
-        // Return to UserProfile
-        this.dispose();
-        UserProfile profile = new UserProfile();
-        profile.setLocationRelativeTo(null);
-        profile.setVisible(true);
+            // Debug log
+            System.out.println("Updating rental ID: " + rentalId);
+            System.out.println("Update data: " + updateData.toString());
+            
+            // Update record using rentals table (plural form)
+            String result = DatabaseClient.updateRecord("rentals", rentalId, updateData.toString());
+            
+            if (result != null) {
+                // Successfully updated
+                this.dispose();
+                UserProfile profile = new UserProfile();
+                profile.setLocationRelativeTo(null);
+                profile.setVisible(true);
+            } else {
+                throw new Exception("Failed to update rental status - no response from server");
+            }
+        } catch (Exception e) {
+            System.err.println("Database error: " + e.getMessage());
+            // Show detailed error message
+            JOptionPane.showMessageDialog(this,
+                "Database error: " + e.getMessage() + "\nRental ID: " + rentalId,
+                "Database Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
 
     } catch (Exception e) {
         System.err.println("Error updating status: " + e.getMessage());
