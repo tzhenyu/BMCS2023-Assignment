@@ -147,13 +147,15 @@ public class ConditionChecklist extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
     try {
         if (!allItemsChecked()) {
             JOptionPane.showMessageDialog(this, "Please check all items before proceeding");
             return;
         }
+        // Show drive safe message with OK button only
 
+<<<<<<< HEAD
         JOptionPane.showMessageDialog(this, 
             "Drive Safe!", 
             "Happy Drive", 
@@ -165,6 +167,19 @@ public class ConditionChecklist extends javax.swing.JFrame {
         
         this.dispose();
         new UserProfile().setVisible(true);
+=======
+
+        // Update rental status after OK is clicked
+        JsonObject updateData = new JsonObject();
+        updateData.addProperty("status", "ACTIVE");
+        String result = DatabaseClient.updateRecord("rentals", rentalId, updateData);
+            
+        // Return to UserProfile
+        this.dispose();
+        UserProfile profile = new UserProfile();
+        profile.setLocationRelativeTo(null);
+        profile.setVisible(true);
+>>>>>>> dde61313a1ba22e26c46f65b28f4d87ee37fafcd
 
     } catch (Exception e) {
         System.err.println("Error: " + e.getMessage());
