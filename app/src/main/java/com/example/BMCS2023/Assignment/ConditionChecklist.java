@@ -149,60 +149,28 @@ public class ConditionChecklist extends javax.swing.JFrame {
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {
     try {
-        // Check if all items are selected
         if (!allItemsChecked()) {
-            JOptionPane.showMessageDialog(this, 
-                "Please check all items before proceeding",
-                "Validation Error",
-                JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please check all items before proceeding");
             return;
         }
 
-        // Show drive safe message
-        JOptionPane.showMessageDialog(this,
-            "Drive Safe!",
-            "Happy Drive",
+        JOptionPane.showMessageDialog(this, 
+            "Drive Safe!", 
+            "Happy Drive", 
             JOptionPane.INFORMATION_MESSAGE);
 
-        // Update rental status
-        try {
-            // Create update data
-            JsonObject updateData = new JsonObject();
-            updateData.addProperty("status", "ACTIVE");
-            
-            // Debug log
-            System.out.println("Updating rental ID: " + rentalId);
-            System.out.println("Update data: " + updateData.toString());
-            
-            // Update record using rentals table (plural form)
-            String result = DatabaseClient.updateRecord("rentals", rentalId, updateData.toString());
-            
-            if (result != null) {
-                // Successfully updated
-                this.dispose();
-                UserProfile profile = new UserProfile();
-                profile.setLocationRelativeTo(null);
-                profile.setVisible(true);
-            } else {
-                throw new Exception("Failed to update rental status - no response from server");
-            }
-        } catch (Exception e) {
-            System.err.println("Database error: " + e.getMessage());
-            // Show detailed error message
-            JOptionPane.showMessageDialog(this,
-                "Database error: " + e.getMessage() + "\nRental ID: " + rentalId,
-                "Database Error",
-                JOptionPane.ERROR_MESSAGE);
-        }
+        // Update status to AVAILABLE instead of PENDING
+        String response = DatabaseClient.updateRentalStatus(rentalId, "AVAILABLE");
+        System.out.println("Update response: " + response);
+        
+        this.dispose();
+        new UserProfile().setVisible(true);
 
     } catch (Exception e) {
-        System.err.println("Error updating status: " + e.getMessage());
-        JOptionPane.showMessageDialog(this,
-            "Failed to update rental status: " + e.getMessage(),
-            "Error",
-            JOptionPane.ERROR_MESSAGE);
+        System.err.println("Error: " + e.getMessage());
+        JOptionPane.showMessageDialog(this, "Failed to update status: " + e.getMessage());
     }
-}//GEN-LAST:event_nextButtonActionPerformed
+}                                          
 
     private boolean allItemsChecked() {
         return tyresCheckBox.isSelected() && 

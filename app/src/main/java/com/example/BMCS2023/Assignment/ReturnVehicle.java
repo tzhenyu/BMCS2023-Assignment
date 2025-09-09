@@ -157,8 +157,21 @@ public class ReturnVehicle extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        CarMenu frame = new CarMenu();    //create an instance
-        GUIClient.switchPage(this, frame);
+        try {
+            // Update rental status to COMPLETED
+            DatabaseClient.updateRentalStatus(rentalId, "COMPLETED");
+
+            // Return to CarMenu
+            CarMenu frame = new CarMenu();
+            GUIClient.switchPage(this, frame);
+            
+        } catch (Exception e) {
+            System.err.println("Error updating status: " + e.getMessage());
+            JOptionPane.showMessageDialog(this,
+                "Error updating rental status: " + e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void returnVehicleSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnVehicleSubmitButtonActionPerformed
@@ -170,16 +183,23 @@ public class ReturnVehicle extends javax.swing.JFrame {
         }
 
         try {
+            // Update rating and feedback
             JsonObject updateData = new JsonObject();
-            updateData.addProperty("status", "completed");
             updateData.addProperty("rating", Integer.parseInt(rating));
             updateData.addProperty("feedback", feedback);
             
+            // Update the rental record with rating and feedback
             DatabaseClient.updateRecord("rentals", rentalId, updateData);
             
+            // Update the status to COMPLETED
+            DatabaseClient.updateRentalStatus(rentalId, "COMPLETED");
+            
             JOptionPane.showMessageDialog(this, "Thank you for your feedback!");
+            
+            // Direct to UserProfile page
             this.dispose();
             new UserProfile().setVisible(true);
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }

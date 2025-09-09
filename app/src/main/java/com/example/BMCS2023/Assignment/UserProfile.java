@@ -26,6 +26,7 @@ public class UserProfile extends javax.swing.JFrame {
         this.currentUser = SessionManager.getCurrentUser();
         initComponents();
         if (currentUser != null) {
+            loadUserData();  // Add this line to load user data
             IDdisplayText.setText(currentUser.getUserId());
             loadStatusButton1ForCurrentUser();
         } else {
@@ -36,9 +37,7 @@ public class UserProfile extends javax.swing.JFrame {
         }
     }
     
-    private void initializeRentalButton() {
-        checkUserRental();
-    }
+    
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -147,6 +146,11 @@ public class UserProfile extends javax.swing.JFrame {
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel1MouseClicked(evt);
+            }
+        });
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -500,9 +504,13 @@ public class UserProfile extends javax.swing.JFrame {
                 statusButton1.setText("PICKUP");
                 statusButton1.setEnabled(true);
                 break;
-            case "ACTIVE":
+            case "AVAILABLE":
                 statusButton1.setText("RETURN");
                 statusButton1.setEnabled(true);
+                break;
+            case "PENDING":
+                statusButton1.setText("PENDING");
+                statusButton1.setEnabled(false);
                 break;
             case "COMPLETED":
                 statusButton1.setText("COMPLETED");
@@ -512,82 +520,6 @@ public class UserProfile extends javax.swing.JFrame {
                 hideVehicleButton();
                 break;
         }
-        statusButton1.setVisible(true);
-    }
-
-    private void checkUserRental() {
-        try {
-            String currentUserId = SessionManager.getCurrentUserId();
-            
-            if (currentUserId == null) {
-                System.out.println("No user logged in");
-                hideVehicleButton();
-                return;
-            }
-            
-            // Use DatabaseClient.readRecords with a specific query
-            String query = "rentals?userId=eq." + currentUserId + "&order=created_at.desc";
-            String result = DatabaseClient.readRecords(query);
-            
-            JsonArray rentalsArray = JsonParser.parseString(result).getAsJsonArray();
-            
-            if (rentalsArray.size() > 0) {
-                JsonObject rental = rentalsArray.get(0).getAsJsonObject();
-                currentRentalId = rental.get("id").getAsString();
-                String status = rental.get("status").getAsString();
-                
-                // Update UI based on rental status
-                updateRentalDisplay(rental);
-                System.out.println("Found rental for user: " + currentUserId);
-            } else {
-                hideVehicleButton();
-                System.out.println("No active rental found for user: " + currentUserId);
-            }
-            
-        } catch (Exception e) {
-            System.err.println("Error checking user rental: " + e.getMessage());
-            hideVehicleButton();
-        }
-    }
-
-    private void updateRentalDisplay(JsonObject rental) {
-    try {
-        String vehicleId = rental.get("vehicleId").getAsString();
-        String startTime = rental.get("startTime").getAsString();
-        String status = rental.get("status").getAsString();
-
-        vehicleIDLabel1.setText(vehicleId);
-        dateLabel1.setText(formatDateForDisplay(startTime));
-        
-        switch (status.toUpperCase()) {
-            case "CONFIRMED":
-                statusButton1.setText("PICKUP");
-                statusButton1.setEnabled(true);
-                break;
-            case "ACTIVE":
-                statusButton1.setText("RETURN");
-                statusButton1.setEnabled(true);
-                break;
-            case "COMPLETED":
-                statusButton1.setText("COMPLETED");
-                statusButton1.setEnabled(false);
-                break;
-            default:
-                hideVehicleButton();
-                break;
-        }
-        statusButton1.setVisible(true);
-        
-    } catch (Exception e) {
-        System.err.println("Error updating rental display: " + e.getMessage());
-        hideVehicleButton();
-    }
-}
-    
-    private void showPickupButton() {
-        vehicleIDLabel1.setText("VehicleID");
-            dateLabel1.setText("Date & Time");
-        statusButton1.setText("Pickup");
         statusButton1.setVisible(true);
     }
 
@@ -599,30 +531,50 @@ public class UserProfile extends javax.swing.JFrame {
     
     public class RentalStatus {
         public static final String CONFIRMED = "CONFIRMED";
-        public static final String ACTIVE = "ACTIVE";
+        public static final String AVAILABLE = "AVAILABLE";
         public static final String PENDING = "PENDING";
     }
     
-    private void statusButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vehicle2ButtonActionPerformed
+    private void statusButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusButton2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_vehicle2ButtonActionPerformed
+    }//GEN-LAST:event_statusButton2ActionPerformed
 
-    private void statusButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vehicle3ButtonActionPerformed
+    private void statusButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusButton3ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_vehicle3ButtonActionPerformed
+    }//GEN-LAST:event_statusButton3ActionPerformed
 
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
         System.out.println("whats up");
     }//GEN-LAST:event_jPanel1MouseClicked
-
+    
     private void loadUserData() {
-        User currentUser = SessionManager.getCurrentUser();
-        if (currentUser != null) {
-            usernameDisplayText.setText(currentUser.getUsername());
-            IDdisplayText.setText(currentUser.getUserId());
-            emailDisplayText.setText(currentUser.getEmail());
-            contactNumDisplayText.setText(currentUser.getPhone());
-            emergencyContactNumDisplayText.setText(currentUser.getEmergencyContactNum());
+        try {
+            if (currentUser == null) {
+                System.err.println("Current user is null");
+                return;
+            }
+
+            // Get values from Person class fields (inherited)
+            usernameDisplayText.setText(currentUser.username != null ? currentUser.username : "");
+            emailDisplayText.setText(currentUser.email != null ? currentUser.email : "");
+            contactNumDisplayText.setText(currentUser.phone != null ? currentUser.phone : "");
+            emergencyContactNumDisplayText.setText(currentUser.getEmergencyContactNum() != null ? 
+                currentUser.getEmergencyContactNum() : "");
+
+            // Debug output
+            System.out.println("User data loaded:");
+            System.out.println("Username: " + currentUser.username);
+            System.out.println("Email: " + currentUser.email);
+            System.out.println("Phone: " + currentUser.phone);
+            System.out.println("Emergency Contact: " + currentUser.getEmergencyContactNum());
+
+        } catch (Exception e) {
+            System.err.println("Error loading user data: " + e.getMessage());
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, 
+                "Error loading user data: " + e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
         }
     }
 
