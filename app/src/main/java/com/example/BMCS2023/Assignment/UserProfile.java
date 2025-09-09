@@ -25,6 +25,8 @@ public class UserProfile extends javax.swing.JFrame {
     public UserProfile() {
         this.currentUser = SessionManager.getCurrentUser();
         initComponents();
+        loadUserData();
+        initializeRentalButton();
         if (currentUser != null) {
             IDdisplayText.setText(currentUser.getUserId());
             loadStatusButton1ForCurrentUser();
