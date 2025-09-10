@@ -127,10 +127,8 @@ public class UserProfile extends javax.swing.JFrame {
         orders.setFont(new java.awt.Font("Book Antiqua", 1, 18)); // NOI18N
         orders.setText("ORDERS");
 
-<<<<<<< HEAD
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-=======
->>>>>>> 9797aef1b6cfa70536db304c146ca2b8cb42f5c3
+
         jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel1MouseClicked(evt);
@@ -183,7 +181,6 @@ public class UserProfile extends javax.swing.JFrame {
         statusButton2.setText("RETURN");
         statusButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                vehicle2ButtonActionPerformed(evt);
             }
         });
 
@@ -222,7 +219,6 @@ public class UserProfile extends javax.swing.JFrame {
         statusButton3.setText("COMPLETED");
         statusButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                vehicle3ButtonActionPerformed(evt);
             }
         });
 
@@ -598,13 +594,9 @@ public class UserProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_vehicle3ButtonActionPerformed
 
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
-<<<<<<< HEAD
-        System.out.println("whats uop");
-=======
-        // TODO add your handling code here:
->>>>>>> 9797aef1b6cfa70536db304c146ca2b8cb42f5c3
-    }//GEN-LAST:event_jPanel1MouseClicked
 
+        System.out.println("whats uop");
+    }
     private void loadUserData() {
         User currentUser = SessionManager.getCurrentUser();
         if (currentUser != null) {
