@@ -61,7 +61,6 @@ public class ManageCarPageTest extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
         jLabel9 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -129,9 +128,6 @@ public class ManageCarPageTest extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -143,14 +139,13 @@ public class ManageCarPageTest extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
+                .addGap(30, 30, 30)
                 .addComponent(jButton1)
                 .addGap(26, 26, 26)
                 .addComponent(jButton2)
                 .addGap(29, 29, 29)
                 .addComponent(jButton3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
 
         jLabel9.setFont(new java.awt.Font("Serif", 3, 36)); // NOI18N
@@ -294,7 +289,8 @@ ManageCarPageTest.this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-
+new AdminDashboard() {{ setResizable(false); setLocation(ManageCarPageTest.this.getLocation()); setVisible(true); }};
+ManageCarPageTest.this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void cartableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartableMouseClicked
@@ -389,40 +385,42 @@ ManageCarPageTest.this.dispose();
     }//GEN-LAST:event_btnaddActionPerformed
 
     private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
-                                        
-    DefaultTableModel model = (DefaultTableModel) cartable.getModel();
-    int row = cartable.getSelectedRow();
+int row = cartable.getSelectedRow();
 
     if (row == -1) {
         JOptionPane.showMessageDialog(this, "Please select a row to delete.");
         return;
     }
 
-    // get ID (primary key) from column 3
     String carId = cartable.getValueAt(row, 3).toString();
-    // just for display
     String carPlate = cartable.getValueAt(row, 4).toString();
 
-    int confirm = JOptionPane.showConfirmDialog(this, 
-        "Delete car with plate " + carPlate + "?", 
-        "Confirm", 
-        JOptionPane.YES_NO_OPTION);
+    int confirm = JOptionPane.showConfirmDialog(
+            this,
+            "Delete car with plate " + carPlate + " and ALL its rentals?",
+            "Confirm Delete",
+            JOptionPane.YES_NO_OPTION
+    );
 
     if (confirm != JOptionPane.YES_OPTION) return;
 
     try {
-        int status = DatabaseClient.deleteById("vehicles", carId);
-        if (status == 204 || status == 200) {
-            JOptionPane.showMessageDialog(this, "Vehicle deleted.");
-            loadCarData(); // refresh table
+        // 1. delete rentals first
+        int rentalStatus = DatabaseClient.deleteById("rentals", "vehicleId", carId);
+
+        // 2. delete vehicle
+        int vehicleStatus = DatabaseClient.deleteById("vehicles", "id", carId);
+
+        if ((vehicleStatus == 200 || vehicleStatus == 204)) {
+            JOptionPane.showMessageDialog(this, "Vehicle and rentals deleted.");
+            loadCarData();
         } else {
-            JOptionPane.showMessageDialog(this, "Delete returned HTTP " + status + ". Check policies and ID.");
+            JOptionPane.showMessageDialog(this, "Delete failed. HTTP " + vehicleStatus);
         }
     } catch (Exception ex) {
         ex.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error deleting vehicle: " + ex.getMessage());
+        JOptionPane.showMessageDialog(this, "Error deleting: " + ex.getMessage());
     }
-
     }//GEN-LAST:event_btndeleteActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -477,7 +475,6 @@ ManageCarPageTest.this.dispose();
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
     private java.awt.Menu menu1;
     private java.awt.Menu menu2;
     private java.awt.MenuBar menuBar1;

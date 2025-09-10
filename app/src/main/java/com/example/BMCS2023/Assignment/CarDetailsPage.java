@@ -7,11 +7,14 @@ package com.example.BMCS2023.Assignment;
 import com.example.BMCS2023.Assignment.ManageCarPageTest;
 import com.example.BMCS2023.Assignment.DatabaseClient;
 import com.example.BMCS2023.Assignment.Vehicle;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.Color;
 import java.awt.Point;
+
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
+
 
 /**
  *
@@ -20,21 +23,24 @@ import java.util.List;
 public class CarDetailsPage extends javax.swing.JFrame {
 
         private Vehicle vehicle;
+        private String currentVehicleId; 
 
 
     public CarDetailsPage() {
         initComponents();
     }
     
-     public CarDetailsPage(String carId) {
-        initComponents();
-        loadVehicle(carId);
-        loadFeedback(carId);
-         tblFeedback.getTableHeader().setFont(new java.awt.Font("Times New Roman", java.awt.Font.BOLD, 14));
-        tblFeedback.getTableHeader().setBackground(Color.BLACK);
-        tblFeedback.getTableHeader().setForeground(Color.WHITE);
+    public CarDetailsPage(String vehicleId) {
+    initComponents();
+    this.currentVehicleId = vehicleId;
+    loadVehicle(vehicleId);
+    loadFeedback(vehicleId);
+    tblFeedback.getTableHeader().setFont(new java.awt.Font("Times New Roman", java.awt.Font.BOLD, 14));
+    tblFeedback.getTableHeader().setBackground(Color.BLACK);
+    tblFeedback.getTableHeader().setForeground(Color.WHITE);
+}
 
-    }
+
      
       private void loadVehicle(String carId) {
           
@@ -70,8 +76,26 @@ public class CarDetailsPage extends javax.swing.JFrame {
         lblFuel.setText(fuelDisplay);  // ✅ FIXED
         lblPlate.setText(v.getCarPlate());
         lblPrice.setText("RM " + v.getPricePerDay());
-        lblStatus.setText(v.getStatus() != null ? v.getStatus().toString() : "N/A");
         lblAddons.setText(v.getAddOnsAsString());
+        if (v.getStatus() != null) {
+    String status = v.getStatus().toString().trim().toLowerCase();
+    switch (status) {
+        case "available":
+            cmbStatus.setSelectedItem("Available");
+            break;
+        case "rented":
+            cmbStatus.setSelectedItem("Rented");
+            break;
+        case "maintenance":
+            cmbStatus.setSelectedItem("Maintenance");
+            break;
+        default:
+            cmbStatus.setSelectedItem("Available"); // fallback
+    }
+} else {
+    cmbStatus.setSelectedItem("Available");
+}
+
 
         // Debugging
         System.out.println("DEBUG fuelType enum = " + v.getFuelType());
@@ -87,9 +111,14 @@ private void populateFeedbackTable(List<Feedback> feedbackList) {
     // Define the table model with column names
     DefaultTableModel model = new DefaultTableModel(
         new Object[]{"User", "Rating", "Comment"}, 0
-    );
+    ) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false; // Make table cells non-editable
+        }
+    };
 
-    if (feedbackList != null) {
+    if (feedbackList != null && !feedbackList.isEmpty()) {
         for (Feedback f : feedbackList) {
             model.addRow(new Object[]{
                 f.getUserId(), 
@@ -97,10 +126,26 @@ private void populateFeedbackTable(List<Feedback> feedbackList) {
                 f.getComment()
             });
         }
+    } else {
+        // Add a message if no feedback is available
+        model.addRow(new Object[]{"No feedback available", "", ""});
     }
 
     tblFeedback.setModel(model);
+    
+    // Create a center alignment renderer
+    DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+    centerRenderer.setHorizontalAlignment(javax.swing.JLabel.CENTER);
+    
+    // Apply the center alignment to the Rating column (column index 1)
+    tblFeedback.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+    
+    // Optional: Set column widths for better appearance
+    tblFeedback.getColumnModel().getColumn(0).setPreferredWidth(100); // User column
+    tblFeedback.getColumnModel().getColumn(1).setPreferredWidth(80);  // Rating column
+    tblFeedback.getColumnModel().getColumn(2).setPreferredWidth(300); // Comment column
 }
+
 private void loadFeedback(String vehicleId) {
     new javax.swing.SwingWorker<List<Feedback>, Void>() {
         @Override
@@ -139,10 +184,8 @@ private void loadFeedback(String vehicleId) {
         jLabel4 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jSeparator1 = new javax.swing.JSeparator();
         lblModel = new javax.swing.JLabel();
         lblFuel = new javax.swing.JLabel();
         lblColor = new javax.swing.JLabel();
@@ -152,8 +195,9 @@ private void loadFeedback(String vehicleId) {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        lblStatus = new javax.swing.JLabel();
         lblPlate = new javax.swing.JLabel();
+        cmbStatus = new javax.swing.JComboBox<>();
+        btnUpdateStatus = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         lblPrice = new javax.swing.JLabel();
         lblAddons = new javax.swing.JLabel();
@@ -166,6 +210,7 @@ private void loadFeedback(String vehicleId) {
         jButton1 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblFeedback = new javax.swing.JTable();
+        jLabel6 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -209,10 +254,6 @@ private void loadFeedback(String vehicleId) {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel2.setText("Hi Admin");
-
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -252,11 +293,6 @@ private void loadFeedback(String vehicleId) {
         jLabel15.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
         jLabel15.setText("Available Status:");
 
-        lblStatus.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
-        lblStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblStatus.setText("Available Status: ");
-        lblStatus.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
         lblPlate.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
         lblPlate.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPlate.setText("CarPlate");
@@ -264,6 +300,22 @@ private void loadFeedback(String vehicleId) {
         lblPlate.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblPlateMouseClicked(evt);
+            }
+        });
+
+        cmbStatus.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
+        cmbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Available", "Rented", "Maintenance" }));
+        cmbStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbStatusActionPerformed(evt);
+            }
+        });
+
+        btnUpdateStatus.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
+        btnUpdateStatus.setText("Update");
+        btnUpdateStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateStatusActionPerformed(evt);
             }
         });
 
@@ -291,16 +343,15 @@ private void loadFeedback(String vehicleId) {
                             .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(lblFuel, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                        .addComponent(lblColor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblModel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblBrand, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE))
-                    .addComponent(lblStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE))
+                    .addComponent(lblFuel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                    .addComponent(lblColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblModel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblBrand, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                    .addComponent(cmbStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnUpdateStatus)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblPlate, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblPlate, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(140, 140, 140))
         );
         jPanel2Layout.setVerticalGroup(
@@ -308,7 +359,7 @@ private void loadFeedback(String vehicleId) {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(24, Short.MAX_VALUE)
+                        .addContainerGap(28, Short.MAX_VALUE)
                         .addComponent(lblPlate, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -328,15 +379,11 @@ private void loadFeedback(String vehicleId) {
                             .addComponent(lblFuel, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 32, Short.MAX_VALUE)
-                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel15))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel15)
+                            .addComponent(cmbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnUpdateStatus))
+                        .addGap(0, 22, Short.MAX_VALUE)))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -446,7 +493,7 @@ private void loadFeedback(String vehicleId) {
                     .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
@@ -469,20 +516,25 @@ private void loadFeedback(String vehicleId) {
                 .addGap(249, 249, 249))
         );
 
+        jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel6.setText("Hi Admin");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(331, 331, 331)
-                .addComponent(jLabel2)
-                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(733, 733, 733))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(22, 22, 22))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -490,7 +542,7 @@ private void loadFeedback(String vehicleId) {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(16, Short.MAX_VALUE))
@@ -509,17 +561,58 @@ private void loadFeedback(String vehicleId) {
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Point pos = CarDetailsPage.this.getLocation();
-        ManageCarPageTest frame = new ManageCarPageTest();   // create an instance
-        frame.setResizable(false);       // lock resizing
-        frame.setLocation(pos);
-        frame.setVisible(true);          // show the frame
-        CarDetailsPage.this.dispose();                  // close current frame         // TODO add your handling code here:        // TODO add your handling code here:   // TODO add your handling code here:
+        new ManageCarPageTest() {{ setResizable(false); setLocation(CarDetailsPage.this.getLocation()); setVisible(true); }};
+CarDetailsPage.this.dispose();                  // close current frame         // TODO add your handling code here:        // TODO add your handling code here:   // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void lblPlateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPlateMouseClicked
 
     }//GEN-LAST:event_lblPlateMouseClicked
+
+    private void btnUpdateStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateStatusActionPerformed
+ try {
+        String selectedStatus = (String) cmbStatus.getSelectedItem();
+        
+        if (currentVehicleId == null) {
+            JOptionPane.showMessageDialog(this, "No vehicle loaded.");
+            return;
+        }
+        
+        // Convert UI status to database format (lowercase)
+        String dbStatus;
+        switch(selectedStatus) {
+            case "Available":
+                dbStatus = "available";
+                break;
+            case "Rented":
+                dbStatus = "rented";
+                break;
+            case "Maintenance":
+                dbStatus = "maintenance";
+                break;
+            default:
+                dbStatus = "available";
+        }
+        
+        java.util.Map<String, Object> patch = new java.util.HashMap<>();
+        patch.put("status", dbStatus);
+
+        String response = DatabaseClient.updateRecord("vehicles", currentVehicleId, patch);
+
+        JOptionPane.showMessageDialog(this, "Car status updated successfully!");
+        System.out.println("DEBUG Update Response = " + response);
+
+        // Reload the vehicle to reflect changes
+        loadVehicle(currentVehicleId);
+    } catch (Exception ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Failed to update status: " + ex.getMessage());
+    }
+    }//GEN-LAST:event_btnUpdateStatusActionPerformed
+
+    private void cmbStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbStatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbStatusActionPerformed
 
     /**
      * @param args the command line arguments
@@ -562,6 +655,8 @@ private void loadFeedback(String vehicleId) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnUpdateStatus;
+    private javax.swing.JComboBox<String> cmbStatus;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -570,10 +665,10 @@ private void loadFeedback(String vehicleId) {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -583,7 +678,6 @@ private void loadFeedback(String vehicleId) {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblAddons;
     private javax.swing.JLabel lblBrand;
     private javax.swing.JLabel lblColor;
@@ -592,7 +686,6 @@ private void loadFeedback(String vehicleId) {
     private javax.swing.JLabel lblModel;
     private javax.swing.JLabel lblPlate;
     private javax.swing.JLabel lblPrice;
-    private javax.swing.JLabel lblStatus;
     private java.awt.Menu menu1;
     private java.awt.Menu menu2;
     private java.awt.MenuBar menuBar1;

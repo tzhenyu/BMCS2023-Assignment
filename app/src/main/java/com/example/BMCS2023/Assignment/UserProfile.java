@@ -9,13 +9,41 @@ package com.example.BMCS2023.Assignment;
  * @author Joel
  */
 public class UserProfile extends javax.swing.JFrame {
-
-    /**
-     * Creates new form UserProfile
-     */
+    private User currentUser;
+    
+    // NEW: Constructor that accepts a User object
+    public UserProfile(User user) {
+        this.currentUser = user;
+        initComponents();
+        loadUserData();
+        setTitle("User Profile - " + user.getUsername());
+    }
+    
+    // Keep existing constructor
     public UserProfile() {
         initComponents();
         loadUserData();
+    }
+    
+    private void loadUserData() {
+        if (currentUser != null) {
+            // Load from the passed User object
+            usernameDisplayText.setText(currentUser.getUsername());
+            IDdisplayText.setText(currentUser.getUserId());
+            emailDisplayText.setText(currentUser.getEmail());
+            contactNumDisplayText.setText(currentUser.getPhone());
+            emergencyContactNumDisplayText.setText(currentUser.getEmergencyContactNum());
+        } else {
+            // Original behavior
+            User sessionUser = SessionManager.getCurrentUser();
+            if (sessionUser != null) {
+                usernameDisplayText.setText(sessionUser.getUsername());
+                IDdisplayText.setText(sessionUser.getUserId());
+                emailDisplayText.setText(sessionUser.getEmail());
+                contactNumDisplayText.setText(sessionUser.getPhone());
+                emergencyContactNumDisplayText.setText(sessionUser.getEmergencyContactNum());
+            }
+        }
     }
     
     
@@ -374,14 +402,5 @@ public class UserProfile extends javax.swing.JFrame {
     private java.awt.Label usernameDisplayText;
     // End of variables declaration//GEN-END:variables
 
-    private void loadUserData() {
-        User currentUser = SessionManager.getCurrentUser();
-        if (currentUser != null) {
-            usernameDisplayText.setText(currentUser.getUsername());
-            IDdisplayText.setText(currentUser.getUserId());
-            emailDisplayText.setText(currentUser.getEmail());
-            contactNumDisplayText.setText(currentUser.getPhone());
-            emergencyContactNumDisplayText.setText(currentUser.getEmergencyContactNum());
-        }
-    }
+
 }

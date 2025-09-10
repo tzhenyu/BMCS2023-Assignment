@@ -8,6 +8,8 @@ import com.example.BMCS2023.Assignment.DatabaseClient;
 import com.example.BMCS2023.Assignment.User;
 import java.awt.Color;
 import java.awt.Point;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -17,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  * @author yanzhe
  */
 public class ManageUserPageTest extends javax.swing.JFrame {
-
+    private Map<String, User> userMap = new HashMap<>();
     /**
      * Creates new form AdminDashboard
      */
@@ -27,10 +29,48 @@ public class ManageUserPageTest extends javax.swing.JFrame {
         usertable.getTableHeader().setFont(new java.awt.Font("Times New Roman", java.awt.Font.BOLD, 14));
         usertable.getTableHeader().setBackground(Color.BLACK);
         usertable.getTableHeader().setForeground(Color.WHITE);
-        
-        
+        usertable.setDefaultEditor(Object.class, null);
+        usertable.addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            usertableMouseClicked(evt);
+        }
+    });
+        usertable.addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            if (evt.getClickCount() == 2) {  // double click
+                int selectedRow = usertable.getSelectedRow();
+                System.out.println("DEBUG: Double-click on row: " + selectedRow);
+                
+                if (selectedRow != -1) {
+                    // Get the UserID from column 1
+                    String userId = usertable.getValueAt(selectedRow, 1).toString();
+                    System.out.println("DEBUG: Looking for user ID: " + userId);
+                    
+                    // Get User from the map
+                    User selectedUser = userMap.get(userId);
+                    
+                    if (selectedUser != null) {
+                        System.out.println("DEBUG: Found user: " + selectedUser.getUsername());
+                        
+                        // Open the UserProfile
+                        UserProfile profileFrame = new UserProfile(selectedUser);
+                        profileFrame.setResizable(false);
+                        profileFrame.setLocationRelativeTo(null);
+                        profileFrame.setVisible(true);
+                        
+                    } else {
+                        System.out.println("DEBUG: User not found in map!");
+                        JOptionPane.showMessageDialog(ManageUserPageTest.this, "User not found!");
+                    }
+                }
+            }
+        }
+    });
         
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -53,7 +93,6 @@ public class ManageUserPageTest extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
         jLabel9 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -111,14 +150,16 @@ public class ManageUserPageTest extends javax.swing.JFrame {
 
         jButton3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jButton3.setText("Log Out");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -130,14 +171,13 @@ public class ManageUserPageTest extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
+                .addGap(30, 30, 30)
                 .addComponent(jButton1)
                 .addGap(26, 26, 26)
                 .addComponent(jButton2)
                 .addGap(29, 29, 29)
                 .addComponent(jButton3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
 
         jLabel9.setFont(new java.awt.Font("Serif", 3, 36)); // NOI18N
@@ -271,7 +311,7 @@ public class ManageUserPageTest extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-  new ManageCarPageTest() {{ setResizable(false); setLocation(ManageUserPageTest.this.getLocation()); setVisible(true); }};
+     new ManageCarPageTest() {{ setResizable(false); setLocation(ManageUserPageTest.this.getLocation()); setVisible(true); }};
 ManageUserPageTest.this.dispose();    // close current page          // close current frame         // TODO add your handling code here:        // TODO add your handling code here:                                        
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -281,12 +321,40 @@ ManageUserPageTest.this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-         new CarMenu() {{ setResizable(false); setLocation(ManageUserPageTest.this.getLocation()); setVisible(true); }};
+         new AdminDashboard() {{ setResizable(false); setLocation(ManageUserPageTest.this.getLocation()); setVisible(true); }};
 ManageUserPageTest.this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void usertableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usertableMouseClicked
+          if (evt.getClickCount() == 2) {  // double click
+        int selectedRow = usertable.getSelectedRow();
+        System.out.println("DEBUG: Double-click detected on row: " + selectedRow);
+        
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a user first.");
+            return;
+        }
 
+        // Get the UserID from column 1
+        String userId = usertable.getValueAt(selectedRow, 1).toString();
+        System.out.println("DEBUG: User ID: " + userId);
+        
+        // Get User from the map
+        User selectedUser = userMap.get(userId);
+        
+        if (selectedUser != null) {
+            System.out.println("DEBUG: Opening profile for: " + selectedUser.getUsername());
+            
+            // Open the UserProfile
+            UserProfile profileFrame = new UserProfile(selectedUser);
+            profileFrame.setResizable(false);
+            profileFrame.setLocationRelativeTo(this);
+            profileFrame.setVisible(true);
+            
+        } else {
+            JOptionPane.showMessageDialog(this, "User not found!");
+        }
+    }
     }//GEN-LAST:event_usertableMouseClicked
 
     private void btnaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddActionPerformed
@@ -332,61 +400,78 @@ ManageUserPageTest.this.dispose();
     }//GEN-LAST:event_btnaddActionPerformed
 
     private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
-     DefaultTableModel model = (DefaultTableModel) usertable.getModel();
-    int row = usertable.getSelectedRow();
-
-    if (row == -1) {
+int selectedRow = usertable.getSelectedRow();
+    if (selectedRow == -1) {
         JOptionPane.showMessageDialog(this, "Please select a row to delete.");
         return;
     }
 
-    // Correct columns
-    String userId = usertable.getValueAt(row, 1).toString(); // UserID
-    String userName = usertable.getValueAt(row, 0).toString(); // Username
+    // Get the userId from column 1 (not 0)
+    String userId = usertable.getValueAt(selectedRow, 1).toString();
 
-    int confirm = JOptionPane.showConfirmDialog(this, 
-        "Delete user " + userName + "?", 
-        "Confirm", 
-        JOptionPane.YES_NO_OPTION);
+    int confirm = JOptionPane.showConfirmDialog(this,
+            "Are you sure you want to delete this user?",
+            "Confirm Delete",
+            JOptionPane.YES_NO_OPTION);
 
-    if (confirm != JOptionPane.YES_OPTION) return;
+    if (confirm == JOptionPane.YES_OPTION) {
+        try {
+            // ⚠️ Make sure column name matches Supabase schema
+            int status = DatabaseClient.deleteById("users", "userId", userId);
 
-    try {
-        int status = DatabaseClient.deleteById("users", userId);
-        if (status == 204 || status == 200) {
-            JOptionPane.showMessageDialog(this, "User deleted.");
-            loadUserData(); // refresh table
-        } else {
-            JOptionPane.showMessageDialog(this, "Delete returned HTTP " + status + ". Check policies and ID.");
+            if (status == 204) {
+                JOptionPane.showMessageDialog(this, "User deleted successfully!");
+                ((DefaultTableModel) usertable.getModel()).removeRow(selectedRow);
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to delete user. Status: " + status);
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
-    } catch (Exception ex) {
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error deleting user: " + ex.getMessage());
     }
     }//GEN-LAST:event_btndeleteActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+new CarMenu() {{ setResizable(false); setLocation(ManageUserPageTest.this.getLocation()); setVisible(true); }};
+ManageUserPageTest.this.dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void loadUserData() {
-        try {
-            User[] users = DatabaseClient.getRecords("users", User.class);
 
-            DefaultTableModel model = (DefaultTableModel) usertable.getModel();
-            model.setRowCount(0); // clear old rows
-
-            for (User u : users) {
-                model.addRow(new Object[]{
-                    u.getUsername(),
-                    u.getUserId(),
-                    u.getEmail(),
-                    u.getPhone()
-                });
-}   
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error loading Users: " + ex.getMessage());
+   private void loadUserData() {
+    try {
+        User[] users = DatabaseClient.getRecords("users", User.class);
+        
+        // DEBUG: Check what users we get from database
+        System.out.println("DEBUG: Found " + users.length + " users in database");
+        
+        // Clear and populate the map
+        userMap.clear();
+        for (User user : users) {
+            System.out.println("DEBUG: Adding to map - ID: " + user.getUserId() + ", Name: " + user.getUsername());
+            userMap.put(user.getUserId(), user);
         }
-    }
 
+        DefaultTableModel model = (DefaultTableModel) usertable.getModel();
+        model.setRowCount(0); // clear old rows
+
+        for (User u : users) {
+            model.addRow(new Object[]{
+                u.getUsername(),
+                u.getUserId(),
+                u.getEmail(),
+                u.getPhone()
+            });
+        }   
+        
+        // DEBUG: Check map size after loading
+        System.out.println("DEBUG: User map now has " + userMap.size() + " entries");
+        
+    } catch (Exception ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error loading Users: " + ex.getMessage());
+    }
+}
 
 
 
@@ -406,7 +491,6 @@ ManageUserPageTest.this.dispose();
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
     private java.awt.Menu menu1;
     private java.awt.Menu menu2;
     private java.awt.MenuBar menuBar1;
