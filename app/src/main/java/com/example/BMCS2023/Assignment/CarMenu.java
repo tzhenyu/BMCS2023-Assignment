@@ -328,6 +328,11 @@ public class CarMenu extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel2.setName(""); // NOI18N
+        jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel2MouseClicked(evt);
+            }
+        });
 
         image2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/10628940.png"))); // NOI18N
         image2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -372,6 +377,11 @@ public class CarMenu extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel3.setName(""); // NOI18N
+        jPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel3MouseClicked(evt);
+            }
+        });
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/10628940.png"))); // NOI18N
         jLabel10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -416,6 +426,11 @@ public class CarMenu extends javax.swing.JFrame {
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel5.setName(""); // NOI18N
+        jPanel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel5MouseClicked(evt);
+            }
+        });
 
         image4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/10628940.png"))); // NOI18N
         image4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -463,6 +478,11 @@ public class CarMenu extends javax.swing.JFrame {
         jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel6.setName(""); // NOI18N
+        jPanel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel6MouseClicked(evt);
+            }
+        });
 
         image7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/10628940.png"))); // NOI18N
         image7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -556,6 +576,11 @@ public class CarMenu extends javax.swing.JFrame {
         jPanel7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel7.setName(""); // NOI18N
+        jPanel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel7MouseClicked(evt);
+            }
+        });
 
         image8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/10628940.png"))); // NOI18N
         image8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -600,6 +625,11 @@ public class CarMenu extends javax.swing.JFrame {
         jPanel8.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel8.setName(""); // NOI18N
+        jPanel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel8MouseClicked(evt);
+            }
+        });
 
         image6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/10628940.png"))); // NOI18N
         image6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

@@ -8,7 +8,7 @@ package com.example.BMCS2023.Assignment;
  *
  * @author zhenyu
  */
-public class Person {
+public abstract class Person {
     protected String username;
     protected String email;
     protected String phone;
