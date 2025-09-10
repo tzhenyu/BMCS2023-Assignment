@@ -404,6 +404,8 @@ public class UserProfile extends javax.swing.JFrame {
         onStatusButton1Clicked();
     }//GEN-LAST:event_statusButton1ActionPerformed
     
+    
+
     private void onStatusButton1Clicked() {
     try {
         if (currentRentalId == null) {
@@ -414,13 +416,23 @@ public class UserProfile extends javax.swing.JFrame {
         String currentText = statusButton1.getText();
         switch (currentText.toUpperCase()) {
             case "PICKUP":
+                // Update status in database
+                DatabaseClient.updateRentalStatus(currentRentalId, "AVAILABLE");
+                
+                // Navigate to condition checklist
                 new ConditionChecklist(currentRentalId).setVisible(true);
                 this.dispose();
                 break;
+                
             case "RETURN":
+                // Update status in database
+                DatabaseClient.updateRentalStatus(currentRentalId, "COMPLETED");
+                
+                // Navigate to return vehicle page
                 new ReturnVehicle(currentRentalId).setVisible(true);
                 this.dispose();
                 break;
+                
             default:
                 System.out.println("Unexpected button state: " + currentText);
                 break;
@@ -464,6 +476,8 @@ public class UserProfile extends javax.swing.JFrame {
         return dateTime;
     }
 }
+
+
 
     public void loadStatusButton1ForCurrentUser() {
         try {
@@ -532,28 +546,42 @@ public class UserProfile extends javax.swing.JFrame {
     private void updateUIElements(String vehicleId, String startTime, String status) {
         vehicleIDLabel1.setText(vehicleId);
         dateLabel1.setText(formatDateForDisplay(startTime));
-        
+    
+        // Add dynamic tooltip based on status
+        String tooltipText = "";
+    
         switch (status.toUpperCase()) {
             case "CONFIRMED":
                 statusButton1.setText("PICKUP");
                 statusButton1.setEnabled(true);
+                tooltipText = "Rental confirmed - Click to proceed with pickup";
+                jPanel1.setToolTipText("View rental details and invoice");
                 break;
             case "AVAILABLE":
                 statusButton1.setText("RETURN");
                 statusButton1.setEnabled(true);
-                break;
-            case "PENDING":
-                statusButton1.setText("PENDING");
-                statusButton1.setEnabled(false);
-                break;
-            case "COMPLETED":
-                statusButton1.setText("COMPLETED");
-                statusButton1.setEnabled(false);
-                break;
-            default:
-                hideVehicleButton();
-                break;
+                tooltipText = "Vehicle in use - Click to return";
+            jPanel1.setToolTipText("View ongoing rental details");
+            break;
+        case "PENDING":
+            statusButton1.setText("PENDING");
+            statusButton1.setEnabled(false);
+            tooltipText = "Awaiting confirmation";
+            jPanel1.setToolTipText("Rental pending confirmation");
+            break;
+        case "COMPLETED":
+            statusButton1.setText("COMPLETED");
+            statusButton1.setEnabled(false);
+            tooltipText = "Rental completed";
+            jPanel1.setToolTipText("View completed rental invoice");
+            break;
+        default:
+            hideVehicleButton();
+            break;
         }
+    
+        // Set tooltip for the status button
+        statusButton1.setToolTipText(tooltipText);
         statusButton1.setVisible(true);
     }
 
@@ -578,22 +606,21 @@ public class UserProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_statusButton3ActionPerformed
 
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
+        jPanel1.setToolTipText("Click here to view Invoice Page");
         InvoicePage frame = new InvoicePage();
         GUIClient.switchPage(this, frame);
     }//GEN-LAST:event_jPanel1MouseClicked
-<<<<<<< HEAD
-    
-=======
 
     private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
-        // TODO add your handling code here:
+        InvoicePage frame = new InvoicePage();
+        GUIClient.switchPage(this, frame);
     }//GEN-LAST:event_jPanel2MouseClicked
 
     private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
-        // TODO add your handling code here:
+        InvoicePage frame = new InvoicePage();
+        GUIClient.switchPage(this, frame);
     }//GEN-LAST:event_jPanel3MouseClicked
-
->>>>>>> dde61313a1ba22e26c46f65b28f4d87ee37fafcd
+    
     private void loadUserData() {
         try {
             if (currentUser == null) {
@@ -625,6 +652,29 @@ public class UserProfile extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Initializes the rental buttons in the UI
+     * This method sets up the initial state of rental-related buttons
+     */
+    private void initializeRentalButton() {
+        // Hide panels 2 and 3 initially as they're not used in the current implementation
+        jPanel2.setVisible(false);
+        jPanel3.setVisible(false);
+        
+        // Initialize status buttons
+        statusButton1.setVisible(false);
+        statusButton2.setVisible(false);
+        statusButton3.setVisible(false);
+        
+        // Clear initial text
+        vehicleIDLabel1.setText("");
+        vehicleIDLabel2.setText("");
+        vehicleIDLabel3.setText("");
+        dateLabel1.setText("");
+        dateLabel2.setText("");
+        dateLabel3.setText("");
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Label ID;
     private java.awt.Label IDdisplayText;
