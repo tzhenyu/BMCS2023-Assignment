@@ -154,11 +154,6 @@ public class UserProfile extends javax.swing.JFrame {
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
-        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel1MouseClicked(evt);
-            }
-        });
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -256,8 +251,8 @@ public class UserProfile extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(vehicleIDLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(dateLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
-                .addComponent(statusButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addComponent(statusButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -417,11 +412,11 @@ public class UserProfile extends javax.swing.JFrame {
         switch (currentText.toUpperCase()) {
             case "PICKUP":
                 // Update status in database
-                DatabaseClient.updateRentalStatus(currentRentalId, "AVAILABLE");
+                DatabaseClient.updateRentalStatus(currentRentalId, "PENDING");
                 
                 // Navigate to condition checklist
-                new ConditionChecklist(currentRentalId).setVisible(true);
-                this.dispose();
+                ConditionChecklist frame = new ConditionChecklist(currentRentalId);
+                GUIClient.switchPage(this, frame);
                 break;
                 
             case "RETURN":
@@ -429,9 +424,15 @@ public class UserProfile extends javax.swing.JFrame {
                 DatabaseClient.updateRentalStatus(currentRentalId, "COMPLETED");
                 
                 // Navigate to return vehicle page
-                new ReturnVehicle(currentRentalId).setVisible(true);
-                this.dispose();
+                ReturnVehicle frame2 = new ReturnVehicle(currentRentalId);
+                GUIClient.switchPage(this, frame2);
                 break;
+            
+            case "COMPLETED":
+                DatabaseClient.updateRentalStatus(currentRentalId, "AVAILABLE");
+                
+                UserProfile frame3 = new UserProfile();
+                GUIClient.switchPage(this, frame3);
                 
             default:
                 System.out.println("Unexpected button state: " + currentText);
@@ -597,23 +598,14 @@ public class UserProfile extends javax.swing.JFrame {
         public static final String PENDING = "PENDING";
     }
     
-    private void statusButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_statusButton2ActionPerformed
-
     private void statusButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_statusButton3ActionPerformed
 
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
-        jPanel1.setToolTipText("Click here to view Invoice Page");
         InvoicePage frame = new InvoicePage();
         GUIClient.switchPage(this, frame);
     }//GEN-LAST:event_jPanel1MouseClicked
-<<<<<<< HEAD
-=======
-
->>>>>>> 983bd10452f01c5027dd2e0596535969d461050b
 
     private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
         InvoicePage frame = new InvoicePage();
@@ -624,12 +616,11 @@ public class UserProfile extends javax.swing.JFrame {
         InvoicePage frame = new InvoicePage();
         GUIClient.switchPage(this, frame);
     }//GEN-LAST:event_jPanel3MouseClicked
-<<<<<<< HEAD
+
+    private void statusButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_statusButton2ActionPerformed
     
-=======
-
-
->>>>>>> 983bd10452f01c5027dd2e0596535969d461050b
     private void loadUserData() {
         try {
             if (currentUser == null) {
@@ -661,28 +652,7 @@ public class UserProfile extends javax.swing.JFrame {
         }
     }
 
-    /**
-     * Initializes the rental buttons in the UI
-     * This method sets up the initial state of rental-related buttons
-     */
-    private void initializeRentalButton() {
-        // Hide panels 2 and 3 initially as they're not used in the current implementation
-        jPanel2.setVisible(false);
-        jPanel3.setVisible(false);
-        
-        // Initialize status buttons
-        statusButton1.setVisible(false);
-        statusButton2.setVisible(false);
-        statusButton3.setVisible(false);
-        
-        // Clear initial text
-        vehicleIDLabel1.setText("");
-        vehicleIDLabel2.setText("");
-        vehicleIDLabel3.setText("");
-        dateLabel1.setText("");
-        dateLabel2.setText("");
-        dateLabel3.setText("");
-    }
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Label ID;
