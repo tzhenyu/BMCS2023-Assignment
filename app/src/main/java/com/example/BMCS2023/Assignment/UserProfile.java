@@ -26,7 +26,7 @@ public class UserProfile extends javax.swing.JFrame {
         this.currentUser = SessionManager.getCurrentUser();
         initComponents();
         loadUserData();
-        initializeRentalButton();
+
         if (currentUser != null) {
             loadUserData();  // Add this line to load user data
             IDdisplayText.setText(currentUser.getUserId());
@@ -610,6 +610,10 @@ public class UserProfile extends javax.swing.JFrame {
         InvoicePage frame = new InvoicePage();
         GUIClient.switchPage(this, frame);
     }//GEN-LAST:event_jPanel1MouseClicked
+<<<<<<< HEAD
+=======
+
+>>>>>>> 983bd10452f01c5027dd2e0596535969d461050b
 
     private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
         InvoicePage frame = new InvoicePage();
@@ -620,7 +624,12 @@ public class UserProfile extends javax.swing.JFrame {
         InvoicePage frame = new InvoicePage();
         GUIClient.switchPage(this, frame);
     }//GEN-LAST:event_jPanel3MouseClicked
+<<<<<<< HEAD
     
+=======
+
+
+>>>>>>> 983bd10452f01c5027dd2e0596535969d461050b
     private void loadUserData() {
         try {
             if (currentUser == null) {
