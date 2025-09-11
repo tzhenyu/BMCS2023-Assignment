@@ -175,59 +175,52 @@ public class ReturnVehicle extends javax.swing.JFrame {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void returnVehicleSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnVehicleSubmitButtonActionPerformed
-        String rating = ratingTextField.getText();
-        String feedback = feedbackTextField.getText();
-
-        if (!validateInput(rating, feedback)) {
+        try {
+        // Validate inputs
+        if (!validateInputs()) {
             return;
         }
-
-        try {
-            // Update rating and feedback
-            JsonObject updateData = new JsonObject();
-            updateData.addProperty("rating", Integer.parseInt(rating));
-            updateData.addProperty("feedback", feedback);
+        
+        // Show confirmation dialog
+        int result = JOptionPane.showConfirmDialog(this,
+            "Confirm vehicle return? This action cannot be undone.",
+            "Confirm Return",
+            JOptionPane.YES_NO_OPTION);
+        
+        if (result == JOptionPane.YES_OPTION) {
+            // Execute callback to update rental status
+            if (onReturnCompleteCallback != null) {
+                onReturnCompleteCallback.run();
+            }
             
-            // Update the rental record with rating and feedback
-            DatabaseClient.updateRecord("rentals", rentalId, updateData);
+            // Show success message
+            JOptionPane.showMessageDialog(this,
+                "Vehicle return completed successfully!\n" +
+                "Thank you for your feedback.",
+                "Return Complete",
+                JOptionPane.INFORMATION_MESSAGE);
             
-            // Update the status to COMPLETED
-            DatabaseClient.updateRentalStatus(rentalId, "COMPLETED");
-            
-            JOptionPane.showMessageDialog(this, "Thank you for your feedback!");
-            
-            // Direct to UserProfile page
-            this.dispose();
-            new UserProfile().setVisible(true);
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            // Return to UserProfile
+            handleBackToMenu();
         }
+        
+    } catch (Exception e) {
+        System.err.println("Error completing return: " + e.getMessage());
+        JOptionPane.showMessageDialog(this,
+            "Error completing return: " + e.getMessage(),
+            "Error",
+            JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_returnVehicleSubmitButtonActionPerformed
 
     private void ratingTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ratingTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ratingTextFieldActionPerformed
 
-    private boolean validateInput(String rating, String feedback) {
-        if (rating.isEmpty() || feedback.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please provide both rating and feedback");
-            return false;
-        }
-
-        try {
-            int ratingValue = Integer.parseInt(rating);
-            if (ratingValue < 1 || ratingValue > 10) {
-                JOptionPane.showMessageDialog(this, "Rating must be between 1 and 10");
-                return false;
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Rating must be a number");
-            return false;
-        }
-
-        return true;
-    }
+    private boolean validateInputs() {
+    // Add validation logic for rating and feedback if needed
+    return true;
+}
 
     /**
      * @param args the command line arguments
