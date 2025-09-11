@@ -127,12 +127,7 @@ public class CarMenu extends javax.swing.JFrame {
     private void navigateToCarDetails(int vehicleIndex) {
         if (availableVehicles != null && vehicleIndex < availableVehicles.length) {
             Vehicle selectedVehicle = availableVehicles[vehicleIndex];
-            Point pos = this.getLocation();
-            CarDetails frame = new CarDetails(selectedVehicle);
-            frame.setResizable(false);
-            frame.setLocation(pos);
-            frame.setVisible(true);
-            this.dispose();
+            GUIClient.switchPage(this, new CarDetails(selectedVehicle));
         }
     }
     

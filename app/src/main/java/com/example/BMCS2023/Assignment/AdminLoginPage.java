@@ -160,6 +160,9 @@ public class AdminLoginPage extends javax.swing.JFrame {
             GUIClient.switchPage(this, new AdminDashboard());
         } else {
             javax.swing.JOptionPane.showMessageDialog(this, "Invalid username or password.", "Login Failed", javax.swing.JOptionPane.ERROR_MESSAGE);
+            adminUsername.setText("");
+            adminPassword.setText("");
+        
         }
     }//GEN-LAST:event_adminLoginButtonActionPerformed
 
