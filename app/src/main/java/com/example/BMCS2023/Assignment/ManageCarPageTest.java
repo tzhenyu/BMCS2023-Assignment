@@ -4,10 +4,7 @@
  */
 package com.example.BMCS2023.Assignment;
 
-import com.example.BMCS2023.Assignment.DatabaseClient;
-import com.example.BMCS2023.Assignment.Vehicle;
 import java.awt.Color;
-import java.awt.Point;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -276,13 +273,12 @@ ManageCarPageTest.this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-         new ManageUserPageTest() {{ setResizable(false); setLocation(ManageCarPageTest.this.getLocation()); setVisible(true); }};
-ManageCarPageTest.this.dispose();
+        GUIClient.switchPage(this, new ManageUserPageTest());
+       // close current frame         // TODO add your handling code here:        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-new AdminDashboard() {{ setResizable(false); setLocation(ManageCarPageTest.this.getLocation()); setVisible(true); }};
-ManageCarPageTest.this.dispose();
+        GUIClient.switchPage(this, new AdminDashboard());             // close current frame         // TODO add your handling code here: 
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void cartableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartableMouseClicked
@@ -355,27 +351,18 @@ ManageCarPageTest.this.dispose();
         JOptionPane.showMessageDialog(this, "Car Plate can only contain letters, numbers, or dashes.");
         return;
     }
-
-    // --- Build Vehicle object ---
-    Vehicle v = new Vehicle();
-    v.setId(java.util.UUID.randomUUID().toString()); // Use Car Plate as unique ID
-    v.setBrand(brand.trim());
-    v.setModel(modelCar.trim());
-    v.setLocation(location.trim());
-    v.setCarPlate(carPlate.trim());  
-    v.setStatus(Vehicle.Status.available); // default status
-
-    try {
-        // Insert into database
-        String response = DatabaseClient.insertRecords("vehicles", new Vehicle[] { v });
-        JOptionPane.showMessageDialog(this, "Vehicle added successfully." + response);
-
-        // Reload table
+    
+    boolean addCar = new Admin().addCar(brand, modelCar, location, carPlate);
+    
+    if (addCar) {
+        JOptionPane.showMessageDialog(this, "Vehicle added successfully.");
         loadCarData();
-    } catch (Exception ex) {
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error adding vehicle: " + ex.getMessage());
+    } else {
+        JOptionPane.showMessageDialog(this, "Error adding vehicle!");
+
     }
+    
+
 
 
     }//GEN-LAST:event_btnaddActionPerformed

@@ -4,66 +4,18 @@
  */
 package com.example.BMCS2023.Assignment;
 
+import java.awt.Point;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 /**
  *
  * @author zhenyu
  */
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 public class CarMenu extends javax.swing.JFrame {
 
-    /**
-     * Creates new form CarMenu
-     */
-    public CarMenu() {
-        initComponents();
-        updateUIBasedOnLogin();
-    }
-    
-    private void updateUIBasedOnLogin() {
-    if (SessionManager.isLoggedIn()) {
-        User u = SessionManager.getCurrentUser();
-        loginButton.setVisible(false);
-        profileButton.setVisible(true);
-        loggedInLabel.setVisible(true);
-        loggedInLabel.setText("Hi, " + u.getUsername());
-    } else {
-        loginButton.setVisible(true);
-        profileButton.setVisible(false);
-        loggedInLabel.setVisible(false);
-    }
-        initializeArrays();
-        loadVehicleData();
-    }
-    
-    private void initializeArrays() {
-        carDetailPanelButtons = new JPanel[]{
-            carDetailPanelButton1, carDetailPanelButton2, carDetailPanelButton3, carDetailPanelButton4,
-            carDetailPanelButton5, carDetailPanelButton6, carDetailPanelButton7, carDetailPanelButton8
-        };
-        
-        carLabels = new JLabel[]{
-            carLabel1, carLabel2, carLabel3, carLabel4,
-            carLabel5, carLabel6, carLabel7, carLabel8
-        };
-        
-        priceLabels = new JLabel[]{
-            priceLabel1, priceLabel2, priceLabel3, priceLabel4,
-            priceLabel5, priceLabel6, priceLabel7, priceLabel8
-        };
-        
-        ratingLabels = new JLabel[]{
-            ratingLabel1, ratingLabel2, ratingLabel3, ratingLabel4,
-            ratingLabel5, ratingLabel6, ratingLabel7, ratingLabel8
-        };
-        
-        imageLabels = new JLabel[]{
-            imageLabel1, imageLabel2, imageLabel3, imageLabel4,
-            imageLabel5, imageLabel6, imageLabel7, imageLabel8
-        };
-    }
-    
     // Store vehicles for click handlers
     private Vehicle[] availableVehicles;
     
@@ -73,13 +25,44 @@ public class CarMenu extends javax.swing.JFrame {
     private JLabel[] priceLabels;
     private JLabel[] ratingLabels;
     private JLabel[] imageLabels;
+
+    /**
+     * Creates new form CarMenu
+     */
+    public CarMenu() {
+        initComponents();
+        initializeArrays();
+        updateUIBasedOnLogin();
+        loadVehicleData();
+    }
+    
+    private void initializeArrays() {
+        carDetailPanelButtons = new JPanel[]{
+            carDetailPanelButton1, jPanel2, jPanel3, jPanel5, carDetailPanelButton2, jPanel8, jPanel6, jPanel7
+        };
+        
+        carLabels = new JLabel[]{
+            name1, name2, name3, name4, name5, name6, name7, name8
+        };
+        
+        priceLabels = new JLabel[]{
+            rate1, rate2, rate3, rate4, rate5, rate6,rate7,rate8
+        };
+        
+        ratingLabels = new JLabel[]{
+            rating1, rating2, rating3, rating4, rating5, rating6, rating7, rating8
+        };
+        
+        imageLabels = new JLabel[]{
+            image1, image2, jLabel10, image4, image5, image6, image7, image8
+        };
+    }
     
     private void loadVehicleData() {
         try {
             Vehicle[] vehicles = DatabaseClient.getRecords("vehicles", Vehicle.class);
             if (vehicles != null && vehicles.length > 0) {
-                // Filter only available vehicles using traditional approach
-                // First count available vehicles
+                // Filter only available vehicles
                 int count = 0;
                 for (Vehicle v : vehicles) {
                     if (v.getStatus() == Vehicle.Status.available) {
@@ -95,9 +78,10 @@ public class CarMenu extends javax.swing.JFrame {
                         availableVehicles[index++] = v;
                     }
                 }
+                
                 // Populate each panel with vehicle data
                 for (int i = 0; i < carDetailPanelButtons.length; i++) {
-                    populateCarPanel(availableVehicles, i, carDetailPanelButtons[i], carLabels[i], priceLabels[i], ratingLabels[i]);
+                    populateCarPanel(availableVehicles, i, carDetailPanelButtons[i], carLabels[i], priceLabels[i], ratingLabels[i], imageLabels[i]);
                 }
                 
             } else {
@@ -119,19 +103,50 @@ public class CarMenu extends javax.swing.JFrame {
     }
     
     private void populateCarPanel(Vehicle[] vehicles, int index, 
-                                 javax.swing.JPanel panel, 
-                                 javax.swing.JLabel nameLabel, 
-                                 javax.swing.JLabel priceLabel, 
-                                 javax.swing.JLabel ratingLabel) {
+                                 JPanel panel, 
+                                 JLabel nameLabel, 
+                                 JLabel priceLabel, 
+                                 JLabel ratingLabel,
+                                 JLabel imageLabel) {
         if (vehicles != null && index < vehicles.length) {
             Vehicle v = vehicles[index];
             nameLabel.setText(v.getBrand() + " " + v.getModel());
-            priceLabel.setText("RM" + v.getPricePerDay() + "/hour");
-            ratingLabel.setText("4.5/5"); // Default rating
+            priceLabel.setText("RM" + v.getPricePerDay() + "/day");
+            ratingLabel.setText("★4.5/5"); // Default rating
+            if (v.getImageFileName() != null && !v.getImageFileName().isEmpty()) {
+                imageLabel.setIcon(new ImageIcon(getClass().getResource("/" + v.getImageFileName())));
+            } else {
+                imageLabel.setIcon(new ImageIcon(getClass().getResource("/10628940.png"))); // Default image
+            }
             panel.setVisible(true);
         } else {
             panel.setVisible(false);
         }
+    }
+    
+    private void navigateToCarDetails(int vehicleIndex) {
+        if (availableVehicles != null && vehicleIndex < availableVehicles.length) {
+            Vehicle selectedVehicle = availableVehicles[vehicleIndex];
+            GUIClient.switchPage(this, new CarDetails(selectedVehicle));
+        }
+    }
+    
+    public void refreshVehicleDisplay() {
+        loadVehicleData();
+    }
+    
+    private void updateUIBasedOnLogin() {
+    if (SessionManager.isLoggedIn()) {
+        User u = SessionManager.getCurrentUser();
+        loginButton.setVisible(false);
+        profileButton.setVisible(true);
+        loggedInLabel.setVisible(true);
+        loggedInLabel.setText("Hi, " + u.getUsername());
+    } else {
+        loginButton.setVisible(true);
+        profileButton.setVisible(false);
+        loggedInLabel.setVisible(false);
+    }
 }
     
     /**
@@ -139,6 +154,7 @@ public class CarMenu extends javax.swing.JFrame {
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -151,46 +167,46 @@ public class CarMenu extends javax.swing.JFrame {
         loginButton = new javax.swing.JButton();
         profileButton = new javax.swing.JButton();
         carDetailPanelButton1 = new javax.swing.JPanel();
-        priceLabel1 = new javax.swing.JLabel();
-        carLabel1 = new javax.swing.JLabel();
-        ratingLabel1 = new javax.swing.JLabel();
-        imageLabel1 = new javax.swing.JLabel();
-        carDetailPanelButton2 = new javax.swing.JPanel();
-        priceLabel2 = new javax.swing.JLabel();
-        carLabel2 = new javax.swing.JLabel();
-        ratingLabel2 = new javax.swing.JLabel();
-        imageLabel2 = new javax.swing.JLabel();
-        carDetailPanelButton3 = new javax.swing.JPanel();
-        priceLabel3 = new javax.swing.JLabel();
-        carLabel3 = new javax.swing.JLabel();
-        ratingLabel3 = new javax.swing.JLabel();
-        imageLabel3 = new javax.swing.JLabel();
-        carDetailPanelButton4 = new javax.swing.JPanel();
-        priceLabel4 = new javax.swing.JLabel();
-        carLabel4 = new javax.swing.JLabel();
-        ratingLabel4 = new javax.swing.JLabel();
-        imageLabel4 = new javax.swing.JLabel();
-        carDetailPanelButton5 = new javax.swing.JPanel();
-        priceLabel5 = new javax.swing.JLabel();
-        carLabel5 = new javax.swing.JLabel();
-        ratingLabel5 = new javax.swing.JLabel();
-        imageLabel5 = new javax.swing.JLabel();
-        carDetailPanelButton6 = new javax.swing.JPanel();
-        priceLabel6 = new javax.swing.JLabel();
-        carLabel6 = new javax.swing.JLabel();
-        ratingLabel6 = new javax.swing.JLabel();
-        imageLabel6 = new javax.swing.JLabel();
-        carDetailPanelButton7 = new javax.swing.JPanel();
-        priceLabel7 = new javax.swing.JLabel();
-        carLabel7 = new javax.swing.JLabel();
-        ratingLabel7 = new javax.swing.JLabel();
-        imageLabel7 = new javax.swing.JLabel();
-        carDetailPanelButton8 = new javax.swing.JPanel();
-        priceLabel8 = new javax.swing.JLabel();
-        carLabel8 = new javax.swing.JLabel();
-        ratingLabel8 = new javax.swing.JLabel();
-        imageLabel8 = new javax.swing.JLabel();
+        rate1 = new javax.swing.JLabel();
+        name1 = new javax.swing.JLabel();
+        rating1 = new javax.swing.JLabel();
+        image1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        image2 = new javax.swing.JLabel();
+        rate2 = new javax.swing.JLabel();
+        name2 = new javax.swing.JLabel();
+        rating2 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        rate3 = new javax.swing.JLabel();
+        name3 = new javax.swing.JLabel();
+        rating3 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        image4 = new javax.swing.JLabel();
+        rate4 = new javax.swing.JLabel();
+        name4 = new javax.swing.JLabel();
+        rating4 = new javax.swing.JLabel();
         loggedInLabel = new java.awt.Label();
+        jPanel6 = new javax.swing.JPanel();
+        image7 = new javax.swing.JLabel();
+        rate7 = new javax.swing.JLabel();
+        name7 = new javax.swing.JLabel();
+        rating7 = new javax.swing.JLabel();
+        carDetailPanelButton2 = new javax.swing.JPanel();
+        rate5 = new javax.swing.JLabel();
+        name5 = new javax.swing.JLabel();
+        rating5 = new javax.swing.JLabel();
+        image5 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        image8 = new javax.swing.JLabel();
+        rate8 = new javax.swing.JLabel();
+        name8 = new javax.swing.JLabel();
+        rating8 = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
+        image6 = new javax.swing.JLabel();
+        rate6 = new javax.swing.JLabel();
+        name6 = new javax.swing.JLabel();
+        rating6 = new javax.swing.JLabel();
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -264,46 +280,242 @@ public class CarMenu extends javax.swing.JFrame {
             }
         });
 
-        priceLabel1.setText("RM10/hour");
+        rate1.setText("RM10/hour");
 
-        carLabel1.setText("2004 Perodua Kancil");
+        name1.setText("2004 Perodua Kancil");
 
-        ratingLabel1.setText("4.5/5");
+        rating1.setText("4.5/5");
 
-        imageLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/10628940.png"))); // NOI18N
-        imageLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        image1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/10628940.png"))); // NOI18N
+        image1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout carDetailPanelButton1Layout = new javax.swing.GroupLayout(carDetailPanelButton1);
         carDetailPanelButton1.setLayout(carDetailPanelButton1Layout);
         carDetailPanelButton1Layout.setHorizontalGroup(
             carDetailPanelButton1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, carDetailPanelButton1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rate1)
+                .addGap(39, 39, 39)
+                .addComponent(rating1)
+                .addContainerGap())
             .addGroup(carDetailPanelButton1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(carDetailPanelButton1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(carDetailPanelButton1Layout.createSequentialGroup()
-                        .addComponent(imageLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, carDetailPanelButton1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(carDetailPanelButton1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, carDetailPanelButton1Layout.createSequentialGroup()
-                                .addComponent(priceLabel1)
-                                .addGap(39, 39, 39)
-                                .addComponent(ratingLabel1))
-                            .addComponent(carLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+                    .addComponent(image1)
+                    .addComponent(name1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         carDetailPanelButton1Layout.setVerticalGroup(
             carDetailPanelButton1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(carDetailPanelButton1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(imageLabel1)
+                .addComponent(image1)
                 .addGap(12, 12, 12)
-                .addComponent(carLabel1)
+                .addComponent(name1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(carDetailPanelButton1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(priceLabel1)
-                    .addComponent(ratingLabel1))
+                    .addComponent(rate1)
+                    .addComponent(rating1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel2.setName(""); // NOI18N
+        jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel2MouseClicked(evt);
+            }
+        });
+
+        image2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/10628940.png"))); // NOI18N
+        image2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        rate2.setText("RM10/hour");
+
+        name2.setText("2004 Perodua Kancil");
+
+        rating2.setText("4.5/5");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rate2)
+                .addGap(39, 39, 39)
+                .addComponent(rating2)
+                .addContainerGap())
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(image2)
+                    .addComponent(name2))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(image2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(name2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rate2)
+                    .addComponent(rating2))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel3.setName(""); // NOI18N
+        jPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel3MouseClicked(evt);
+            }
+        });
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/10628940.png"))); // NOI18N
+        jLabel10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        rate3.setText("RM10/hour");
+
+        name3.setText("2004 Perodua Kancil");
+
+        rating3.setText("4.5/5");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rate3)
+                .addGap(39, 39, 39)
+                .addComponent(rating3)
+                .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10)
+                    .addComponent(name3))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(name3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rate3)
+                    .addComponent(rating3))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel5.setName(""); // NOI18N
+        jPanel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel5MouseClicked(evt);
+            }
+        });
+
+        image4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/10628940.png"))); // NOI18N
+        image4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        rate4.setText("RM10/hour");
+
+        name4.setText("2004 Perodua Kancil");
+
+        rating4.setText("4.5/5");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rate4)
+                .addGap(39, 39, 39)
+                .addComponent(rating4)
+                .addContainerGap())
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(image4)
+                    .addComponent(name4))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(image4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(name4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rate4)
+                    .addComponent(rating4))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        loggedInLabel.setFont(new java.awt.Font("Constantia", 0, 14)); // NOI18N
+        loggedInLabel.setText("Hi, ");
+
+        jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel6.setName(""); // NOI18N
+        jPanel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel6MouseClicked(evt);
+            }
+        });
+
+        image7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/10628940.png"))); // NOI18N
+        image7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        rate7.setText("RM10/hour");
+
+        name7.setText("2004 Perodua Kancil");
+
+        rating7.setText("4.5/5");
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rate7)
+                .addGap(39, 39, 39)
+                .addComponent(rating7)
+                .addContainerGap())
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(image7)
+                    .addComponent(name7))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(image7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(name7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rate7)
+                    .addComponent(rating7))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -316,395 +528,179 @@ public class CarMenu extends javax.swing.JFrame {
             }
         });
 
-        priceLabel2.setText("RM10/hour");
+        rate5.setText("RM10/hour");
 
-        carLabel2.setText("2004 Perodua Kancil");
+        name5.setText("2004 Perodua Kancil");
 
-        ratingLabel2.setText("4.5/5");
+        rating5.setText("4.5/5");
 
-        imageLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/10628940.png"))); // NOI18N
-        imageLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        image5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/10628940.png"))); // NOI18N
+        image5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout carDetailPanelButton2Layout = new javax.swing.GroupLayout(carDetailPanelButton2);
         carDetailPanelButton2.setLayout(carDetailPanelButton2Layout);
         carDetailPanelButton2Layout.setHorizontalGroup(
             carDetailPanelButton2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, carDetailPanelButton2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rate5)
+                .addGap(39, 39, 39)
+                .addComponent(rating5)
+                .addContainerGap())
             .addGroup(carDetailPanelButton2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(carDetailPanelButton2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(carDetailPanelButton2Layout.createSequentialGroup()
-                        .addComponent(imageLabel2)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, carDetailPanelButton2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(carDetailPanelButton2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, carDetailPanelButton2Layout.createSequentialGroup()
-                                .addComponent(priceLabel2)
-                                .addGap(39, 39, 39)
-                                .addComponent(ratingLabel2))
-                            .addComponent(carLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+                    .addComponent(image5)
+                    .addComponent(name5))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         carDetailPanelButton2Layout.setVerticalGroup(
             carDetailPanelButton2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(carDetailPanelButton2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(imageLabel2)
+                .addComponent(image5)
                 .addGap(12, 12, 12)
-                .addComponent(carLabel2)
+                .addComponent(name5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(carDetailPanelButton2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(priceLabel2)
-                    .addComponent(ratingLabel2))
+                    .addComponent(rate5)
+                    .addComponent(rating5))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        carDetailPanelButton3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        carDetailPanelButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        carDetailPanelButton3.setName(""); // NOI18N
-        carDetailPanelButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+        jPanel7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel7.setName(""); // NOI18N
+        jPanel7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                carDetailPanelButton3MouseClicked(evt);
+                jPanel7MouseClicked(evt);
             }
         });
 
-        priceLabel3.setText("RM10/hour");
+        image8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/10628940.png"))); // NOI18N
+        image8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        carLabel3.setText("2004 Perodua Kancil");
+        rate8.setText("RM10/hour");
 
-        ratingLabel3.setText("4.5/5");
+        name8.setText("2004 Perodua Kancil");
 
-        imageLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/10628940.png"))); // NOI18N
-        imageLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        rating8.setText("4.5/5");
 
-        javax.swing.GroupLayout carDetailPanelButton3Layout = new javax.swing.GroupLayout(carDetailPanelButton3);
-        carDetailPanelButton3.setLayout(carDetailPanelButton3Layout);
-        carDetailPanelButton3Layout.setHorizontalGroup(
-            carDetailPanelButton3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(carDetailPanelButton3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(carDetailPanelButton3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(carDetailPanelButton3Layout.createSequentialGroup()
-                        .addComponent(imageLabel3)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, carDetailPanelButton3Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(carDetailPanelButton3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, carDetailPanelButton3Layout.createSequentialGroup()
-                                .addComponent(priceLabel3)
-                                .addGap(39, 39, 39)
-                                .addComponent(ratingLabel3))
-                            .addComponent(carLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))))
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(rate8)
+                .addGap(39, 39, 39)
+                .addComponent(rating8)
                 .addContainerGap())
-        );
-        carDetailPanelButton3Layout.setVerticalGroup(
-            carDetailPanelButton3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(carDetailPanelButton3Layout.createSequentialGroup()
+            .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(imageLabel3)
-                .addGap(12, 12, 12)
-                .addComponent(carLabel3)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(image8)
+                    .addComponent(name8))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(image8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(name8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(carDetailPanelButton3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(priceLabel3)
-                    .addComponent(ratingLabel3))
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rate8)
+                    .addComponent(rating8))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        carDetailPanelButton4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        carDetailPanelButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        carDetailPanelButton4.setName(""); // NOI18N
-        carDetailPanelButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+        jPanel8.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel8.setName(""); // NOI18N
+        jPanel8.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                carDetailPanelButton4MouseClicked(evt);
+                jPanel8MouseClicked(evt);
             }
         });
 
-        priceLabel4.setText("RM10/hour");
+        image6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/10628940.png"))); // NOI18N
+        image6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        carLabel4.setText("2004 Perodua Kancil");
+        rate6.setText("RM10/hour");
 
-        ratingLabel4.setText("4.5/5");
+        name6.setText("2004 Perodua Kancil");
 
-        imageLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/10628940.png"))); // NOI18N
-        imageLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        rating6.setText("4.5/5");
 
-        javax.swing.GroupLayout carDetailPanelButton4Layout = new javax.swing.GroupLayout(carDetailPanelButton4);
-        carDetailPanelButton4.setLayout(carDetailPanelButton4Layout);
-        carDetailPanelButton4Layout.setHorizontalGroup(
-            carDetailPanelButton4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(carDetailPanelButton4Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(carDetailPanelButton4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(carDetailPanelButton4Layout.createSequentialGroup()
-                        .addComponent(imageLabel4)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, carDetailPanelButton4Layout.createSequentialGroup()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(carDetailPanelButton4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, carDetailPanelButton4Layout.createSequentialGroup()
-                                .addComponent(priceLabel4)
-                                .addGap(39, 39, 39)
-                                .addComponent(ratingLabel4))
-                            .addComponent(carLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(rate6)
+                        .addGap(39, 39, 39)
+                        .addComponent(rating6))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(image6)
+                            .addComponent(name6))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        carDetailPanelButton4Layout.setVerticalGroup(
-            carDetailPanelButton4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(carDetailPanelButton4Layout.createSequentialGroup()
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(imageLabel4)
-                .addGap(12, 12, 12)
-                .addComponent(carLabel4)
+                .addComponent(image6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(name6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(carDetailPanelButton4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(priceLabel4)
-                    .addComponent(ratingLabel4))
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rate6)
+                    .addComponent(rating6))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        carDetailPanelButton5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        carDetailPanelButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        carDetailPanelButton5.setName(""); // NOI18N
-        carDetailPanelButton5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                carDetailPanelButton5MouseClicked(evt);
-            }
-        });
-
-        priceLabel5.setText("RM10/hour");
-
-        carLabel5.setText("2004 Perodua Kancil");
-
-        ratingLabel5.setText("4.5/5");
-
-        imageLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/10628940.png"))); // NOI18N
-        imageLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        javax.swing.GroupLayout carDetailPanelButton5Layout = new javax.swing.GroupLayout(carDetailPanelButton5);
-        carDetailPanelButton5.setLayout(carDetailPanelButton5Layout);
-        carDetailPanelButton5Layout.setHorizontalGroup(
-            carDetailPanelButton5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(carDetailPanelButton5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(carDetailPanelButton5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(carDetailPanelButton5Layout.createSequentialGroup()
-                        .addComponent(imageLabel5)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, carDetailPanelButton5Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(carDetailPanelButton5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, carDetailPanelButton5Layout.createSequentialGroup()
-                                .addComponent(priceLabel5)
-                                .addGap(39, 39, 39)
-                                .addComponent(ratingLabel5))
-                            .addComponent(carLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
-        );
-        carDetailPanelButton5Layout.setVerticalGroup(
-            carDetailPanelButton5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(carDetailPanelButton5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(imageLabel5)
-                .addGap(12, 12, 12)
-                .addComponent(carLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(carDetailPanelButton5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(priceLabel5)
-                    .addComponent(ratingLabel5))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        carDetailPanelButton6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        carDetailPanelButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        carDetailPanelButton6.setName(""); // NOI18N
-        carDetailPanelButton6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                carDetailPanelButton6MouseClicked(evt);
-            }
-        });
-
-        priceLabel6.setText("RM10/hour");
-
-        carLabel6.setText("2004 Perodua Kancil");
-
-        ratingLabel6.setText("4.5/5");
-
-        imageLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/10628940.png"))); // NOI18N
-        imageLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        javax.swing.GroupLayout carDetailPanelButton6Layout = new javax.swing.GroupLayout(carDetailPanelButton6);
-        carDetailPanelButton6.setLayout(carDetailPanelButton6Layout);
-        carDetailPanelButton6Layout.setHorizontalGroup(
-            carDetailPanelButton6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(carDetailPanelButton6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(carDetailPanelButton6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(carDetailPanelButton6Layout.createSequentialGroup()
-                        .addComponent(imageLabel6)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, carDetailPanelButton6Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(carDetailPanelButton6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, carDetailPanelButton6Layout.createSequentialGroup()
-                                .addComponent(priceLabel6)
-                                .addGap(39, 39, 39)
-                                .addComponent(ratingLabel6))
-                            .addComponent(carLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
-        );
-        carDetailPanelButton6Layout.setVerticalGroup(
-            carDetailPanelButton6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(carDetailPanelButton6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(imageLabel6)
-                .addGap(12, 12, 12)
-                .addComponent(carLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(carDetailPanelButton6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(priceLabel6)
-                    .addComponent(ratingLabel6))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        carDetailPanelButton7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        carDetailPanelButton7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        carDetailPanelButton7.setName(""); // NOI18N
-        carDetailPanelButton7.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                carDetailPanelButton7MouseClicked(evt);
-            }
-        });
-
-        priceLabel7.setText("RM10/hour");
-
-        carLabel7.setText("2004 Perodua Kancil");
-
-        ratingLabel7.setText("4.5/5");
-
-        imageLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/10628940.png"))); // NOI18N
-        imageLabel7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        javax.swing.GroupLayout carDetailPanelButton7Layout = new javax.swing.GroupLayout(carDetailPanelButton7);
-        carDetailPanelButton7.setLayout(carDetailPanelButton7Layout);
-        carDetailPanelButton7Layout.setHorizontalGroup(
-            carDetailPanelButton7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(carDetailPanelButton7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(carDetailPanelButton7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(carDetailPanelButton7Layout.createSequentialGroup()
-                        .addComponent(imageLabel7)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, carDetailPanelButton7Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(carDetailPanelButton7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, carDetailPanelButton7Layout.createSequentialGroup()
-                                .addComponent(priceLabel7)
-                                .addGap(39, 39, 39)
-                                .addComponent(ratingLabel7))
-                            .addComponent(carLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
-        );
-        carDetailPanelButton7Layout.setVerticalGroup(
-            carDetailPanelButton7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(carDetailPanelButton7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(imageLabel7)
-                .addGap(12, 12, 12)
-                .addComponent(carLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(carDetailPanelButton7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(priceLabel7)
-                    .addComponent(ratingLabel7))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        carDetailPanelButton8.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        carDetailPanelButton8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        carDetailPanelButton8.setName(""); // NOI18N
-        carDetailPanelButton8.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                carDetailPanelButton8MouseClicked(evt);
-            }
-        });
-
-        priceLabel8.setText("RM10/hour");
-
-        carLabel8.setText("2004 Perodua Kancil");
-
-        ratingLabel8.setText("4.5/5");
-
-        imageLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/10628940.png"))); // NOI18N
-        imageLabel8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        javax.swing.GroupLayout carDetailPanelButton8Layout = new javax.swing.GroupLayout(carDetailPanelButton8);
-        carDetailPanelButton8.setLayout(carDetailPanelButton8Layout);
-        carDetailPanelButton8Layout.setHorizontalGroup(
-            carDetailPanelButton8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(carDetailPanelButton8Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(carDetailPanelButton8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(carDetailPanelButton8Layout.createSequentialGroup()
-                        .addComponent(imageLabel8)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, carDetailPanelButton8Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(carDetailPanelButton8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, carDetailPanelButton8Layout.createSequentialGroup()
-                                .addComponent(priceLabel8)
-                                .addGap(39, 39, 39)
-                                .addComponent(ratingLabel8))
-                            .addComponent(carLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
-        );
-        carDetailPanelButton8Layout.setVerticalGroup(
-            carDetailPanelButton8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(carDetailPanelButton8Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(imageLabel8)
-                .addGap(12, 12, 12)
-                .addComponent(carLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(carDetailPanelButton8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(priceLabel8)
-                    .addComponent(ratingLabel8))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        loggedInLabel.setText("Hi, ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(68, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(loggedInLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(loggedInLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(loginButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(profileButton)
-                        .addGap(10, 10, 10))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(carDetailPanelButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(carDetailPanelButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(profileButton)
+                .addGap(10, 10, 10))
+            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(carDetailPanelButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(carDetailPanelButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(carDetailPanelButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(carDetailPanelButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(carDetailPanelButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(carDetailPanelButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(carDetailPanelButton8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(42, 42, 42))))
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(carDetailPanelButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -719,37 +715,34 @@ public class CarMenu extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(carDetailPanelButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(carDetailPanelButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(carDetailPanelButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(carDetailPanelButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(carDetailPanelButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(carDetailPanelButton8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(carDetailPanelButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(carDetailPanelButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(147, Short.MAX_VALUE))
+                    .addComponent(carDetailPanelButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(carDetailPanelButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(88, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-
-        GUIClient.switchPage(this, new UserLoginPage());
+        Point pos = this.getLocation();
+        UserLoginPage frame = new UserLoginPage();    //create an instance
+        frame.setResizable(false);          //lock resizing
+        frame.setLocation(pos); 
+        frame.setVisible(true);             //show the frame
+        this.dispose();                     //close current frame
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void profileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileButtonActionPerformed
-
-        GUIClient.switchPage(this, new UserProfile());
+        UserProfile frame = new UserProfile();
+        GUIClient.switchPage(this, frame);
     }//GEN-LAST:event_profileButtonActionPerformed
 
     private void carDetailPanelButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_carDetailPanelButton1MouseClicked
@@ -757,43 +750,31 @@ public class CarMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_carDetailPanelButton1MouseClicked
 
     private void carDetailPanelButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_carDetailPanelButton2MouseClicked
-        navigateToCarDetails(1);
-    }//GEN-LAST:event_carDetailPanelButton2MouseClicked
-
-    private void carDetailPanelButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_carDetailPanelButton3MouseClicked
-        navigateToCarDetails(2);
-    }//GEN-LAST:event_carDetailPanelButton3MouseClicked
-
-    private void carDetailPanelButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_carDetailPanelButton4MouseClicked
-        navigateToCarDetails(3);
-    }//GEN-LAST:event_carDetailPanelButton4MouseClicked
-
-    private void carDetailPanelButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_carDetailPanelButton5MouseClicked
         navigateToCarDetails(4);
-    }//GEN-LAST:event_carDetailPanelButton5MouseClicked
-
-    private void carDetailPanelButton6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_carDetailPanelButton6MouseClicked
-        navigateToCarDetails(5);
-    }//GEN-LAST:event_carDetailPanelButton6MouseClicked
-
-    private void carDetailPanelButton7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_carDetailPanelButton7MouseClicked
-        navigateToCarDetails(6);
-    }//GEN-LAST:event_carDetailPanelButton7MouseClicked
-
-    private void carDetailPanelButton8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_carDetailPanelButton8MouseClicked
-        navigateToCarDetails(7);
-    }//GEN-LAST:event_carDetailPanelButton8MouseClicked
+    }//GEN-LAST:event_carDetailPanelButton2MouseClicked
     
-    private void navigateToCarDetails(int vehicleIndex) {
-        if (availableVehicles != null && vehicleIndex < availableVehicles.length) {
-            Vehicle selectedVehicle = availableVehicles[vehicleIndex];
-            CarDetails frame = new CarDetails(selectedVehicle);
-            GUIClient.switchPage(this, frame);
-        }
+    private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {
+        navigateToCarDetails(1);
     }
     
-    public void refreshVehicleDisplay() {
-        loadVehicleData();
+    private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {
+        navigateToCarDetails(2);
+    }
+    
+    private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {
+        navigateToCarDetails(3);
+    }
+    
+    private void jPanel8MouseClicked(java.awt.event.MouseEvent evt) {
+        navigateToCarDetails(5);
+    }
+    
+    private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {
+        navigateToCarDetails(6);
+    }
+    
+    private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {
+        navigateToCarDetails(7);
     }
 
     /**
@@ -834,52 +815,52 @@ public class CarMenu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel carDetailPanelButton1;
     private javax.swing.JPanel carDetailPanelButton2;
-    private javax.swing.JPanel carDetailPanelButton3;
-    private javax.swing.JPanel carDetailPanelButton4;
-    private javax.swing.JPanel carDetailPanelButton5;
-    private javax.swing.JPanel carDetailPanelButton6;
-    private javax.swing.JPanel carDetailPanelButton7;
-    private javax.swing.JPanel carDetailPanelButton8;
-    private javax.swing.JLabel carLabel1;
-    private javax.swing.JLabel carLabel2;
-    private javax.swing.JLabel carLabel3;
-    private javax.swing.JLabel carLabel4;
-    private javax.swing.JLabel carLabel5;
-    private javax.swing.JLabel carLabel6;
-    private javax.swing.JLabel carLabel7;
-    private javax.swing.JLabel carLabel8;
-    private javax.swing.JLabel imageLabel1;
-    private javax.swing.JLabel imageLabel2;
-    private javax.swing.JLabel imageLabel3;
-    private javax.swing.JLabel imageLabel4;
-    private javax.swing.JLabel imageLabel5;
-    private javax.swing.JLabel imageLabel6;
-    private javax.swing.JLabel imageLabel7;
-    private javax.swing.JLabel imageLabel8;
+    private javax.swing.JLabel image1;
+    private javax.swing.JLabel image2;
+    private javax.swing.JLabel image4;
+    private javax.swing.JLabel image5;
+    private javax.swing.JLabel image6;
+    private javax.swing.JLabel image7;
+    private javax.swing.JLabel image8;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JSeparator jSeparator1;
     private java.awt.Label loggedInLabel;
     private javax.swing.JButton loginButton;
-    private javax.swing.JLabel priceLabel1;
-    private javax.swing.JLabel priceLabel2;
-    private javax.swing.JLabel priceLabel3;
-    private javax.swing.JLabel priceLabel4;
-    private javax.swing.JLabel priceLabel5;
-    private javax.swing.JLabel priceLabel6;
-    private javax.swing.JLabel priceLabel7;
-    private javax.swing.JLabel priceLabel8;
+    private javax.swing.JLabel name1;
+    private javax.swing.JLabel name2;
+    private javax.swing.JLabel name3;
+    private javax.swing.JLabel name4;
+    private javax.swing.JLabel name5;
+    private javax.swing.JLabel name6;
+    private javax.swing.JLabel name7;
+    private javax.swing.JLabel name8;
     private javax.swing.JButton profileButton;
-    private javax.swing.JLabel ratingLabel1;
-    private javax.swing.JLabel ratingLabel2;
-    private javax.swing.JLabel ratingLabel3;
-    private javax.swing.JLabel ratingLabel4;
-    private javax.swing.JLabel ratingLabel5;
-    private javax.swing.JLabel ratingLabel6;
-    private javax.swing.JLabel ratingLabel7;
-    private javax.swing.JLabel ratingLabel8;
+    private javax.swing.JLabel rate1;
+    private javax.swing.JLabel rate2;
+    private javax.swing.JLabel rate3;
+    private javax.swing.JLabel rate4;
+    private javax.swing.JLabel rate5;
+    private javax.swing.JLabel rate6;
+    private javax.swing.JLabel rate7;
+    private javax.swing.JLabel rate8;
+    private javax.swing.JLabel rating1;
+    private javax.swing.JLabel rating2;
+    private javax.swing.JLabel rating3;
+    private javax.swing.JLabel rating4;
+    private javax.swing.JLabel rating5;
+    private javax.swing.JLabel rating6;
+    private javax.swing.JLabel rating7;
+    private javax.swing.JLabel rating8;
     // End of variables declaration//GEN-END:variables
 }

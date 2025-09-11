@@ -4,8 +4,6 @@
  */
 package com.example.BMCS2023.Assignment;
 
-import com.example.BMCS2023.Assignment.DatabaseClient;
-import com.example.BMCS2023.Assignment.User;
 import java.awt.Color;
 import java.awt.Point;
 import java.util.HashMap;
@@ -340,25 +338,13 @@ ManageUserPageTest.this.dispose();
     String emergency = JOptionPane.showInputDialog(this, "Enter Emergency Contact:");
     if (emergency == null || emergency.trim().isEmpty()) return;
 
-    // --- Build User object ---
-    User u = new User();
-    u.setUserId(java.util.UUID.randomUUID().toString()); 
-    u.setUsername(username.trim());
-    u.setPassword(password.trim());
-    u.setEmail(email.trim());
-    u.setPhone(phone.trim());
-    u.setEmergencyContactNum(emergency.trim());
 
-    try {
-        // Insert into database
-        String response = DatabaseClient.insertRecords("users", new User[] { u });
-        JOptionPane.showMessageDialog(this, "User added successfully. " + response);
-
-        // Reload table
+    boolean addUser = new Admin().addUser(username, password, email, phone, emergency);
+    if (addUser) {
+        JOptionPane.showMessageDialog(this, "User added successfully. ");
         loadUserData();
-    } catch (Exception ex) {
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error adding user: " + ex.getMessage());
+    } else {
+        JOptionPane.showMessageDialog(this, "Error adding user!");
     }
 
     }//GEN-LAST:event_btnaddActionPerformed

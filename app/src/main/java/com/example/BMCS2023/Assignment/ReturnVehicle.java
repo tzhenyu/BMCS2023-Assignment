@@ -4,17 +4,25 @@
  */
 package com.example.BMCS2023.Assignment;
 
+import com.google.gson.JsonObject;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Joel
  */
 public class ReturnVehicle extends javax.swing.JFrame {
+    private String rentalId;
 
     /**
      * Creates new form ReturnVehicle
      */
-    public ReturnVehicle() {
+    public ReturnVehicle(String rentalId) {
+        this.rentalId = rentalId;
         initComponents();
+        returnDateText.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
     }
 
     /**
@@ -36,8 +44,9 @@ public class ReturnVehicle extends javax.swing.JFrame {
         label5 = new java.awt.Label();
         label6 = new java.awt.Label();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        feedbackTextField = new javax.swing.JTextArea();
         backButton = new java.awt.Button();
+        returnVehicleSubmitButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,18 +62,31 @@ public class ReturnVehicle extends javax.swing.JFrame {
 
         label4.setText("Address:");
 
+        ratingTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ratingTextFieldActionPerformed(evt);
+            }
+        });
+
         label5.setText("/ 10");
 
         label6.setText("Feedback:");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        feedbackTextField.setColumns(20);
+        feedbackTextField.setRows(5);
+        jScrollPane1.setViewportView(feedbackTextField);
 
         backButton.setLabel("X  Back to menu");
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backButtonActionPerformed(evt);
+            }
+        });
+
+        returnVehicleSubmitButton.setText("Submit");
+        returnVehicleSubmitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnVehicleSubmitButtonActionPerformed(evt);
             }
         });
 
@@ -87,7 +109,9 @@ public class ReturnVehicle extends javax.swing.JFrame {
                         .addComponent(ratingTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(returnVehicleSubmitButton)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -122,7 +146,9 @@ public class ReturnVehicle extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(returnVehicleSubmitButton)
+                .addGap(15, 15, 15)
                 .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
         );
@@ -134,6 +160,54 @@ public class ReturnVehicle extends javax.swing.JFrame {
         CarMenu frame = new CarMenu();    //create an instance
         GUIClient.switchPage(this, frame);
     }//GEN-LAST:event_backButtonActionPerformed
+
+    private void returnVehicleSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnVehicleSubmitButtonActionPerformed
+        String rating = ratingTextField.getText();
+        String feedback = feedbackTextField.getText();
+
+        if (!validateInput(rating, feedback)) {
+            return;
+        }
+
+        try {
+            JsonObject updateData = new JsonObject();
+            updateData.addProperty("status", "completed");
+            updateData.addProperty("rating", Integer.parseInt(rating));
+            updateData.addProperty("feedback", feedback);
+            
+            DatabaseClient.updateRecord("rentals", rentalId, updateData);
+            
+            JOptionPane.showMessageDialog(this, "Thank you for your feedback!");
+            this.dispose();
+            new UserProfile().setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+    }//GEN-LAST:event_returnVehicleSubmitButtonActionPerformed
+
+    private void ratingTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ratingTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ratingTextFieldActionPerformed
+
+    private boolean validateInput(String rating, String feedback) {
+        if (rating.isEmpty() || feedback.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please provide both rating and feedback");
+            return false;
+        }
+
+        try {
+            int ratingValue = Integer.parseInt(rating);
+            if (ratingValue < 1 || ratingValue > 10) {
+                JOptionPane.showMessageDialog(this, "Rating must be between 1 and 10");
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Rating must be a number");
+            return false;
+        }
+
+        return true;
+    }
 
     /**
      * @param args the command line arguments
@@ -165,7 +239,9 @@ public class ReturnVehicle extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ReturnVehicle().setVisible(true);
+                // For testing purposes only - use a test rental ID
+                String testRentalId = "test123"; 
+                new ReturnVehicle(testRentalId).setVisible(true);
             }
         });
     }
@@ -173,8 +249,8 @@ public class ReturnVehicle extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Label addressText;
     private java.awt.Button backButton;
+    private javax.swing.JTextArea feedbackTextField;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private java.awt.Label label1;
     private java.awt.Label label2;
     private java.awt.Label label3;
@@ -183,5 +259,6 @@ public class ReturnVehicle extends javax.swing.JFrame {
     private java.awt.Label label6;
     private javax.swing.JTextField ratingTextField;
     private java.awt.Label returnDateText;
+    private javax.swing.JButton returnVehicleSubmitButton;
     // End of variables declaration//GEN-END:variables
 }

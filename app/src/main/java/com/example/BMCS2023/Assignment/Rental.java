@@ -11,7 +11,12 @@ import java.time.LocalDateTime; // Import the LocalDateTime class
 public class Rental {
     
     
-    // Database fields only - matches PostgreSQL schema exactly
+    public enum Status {
+        AVAILABLE,
+        PENDING,
+        CONFIRMED
+    }
+    
     private String id;
     private String userId;  // Changed from User object to String
     private String vehicleId;  // Changed from Vehicle object to String
