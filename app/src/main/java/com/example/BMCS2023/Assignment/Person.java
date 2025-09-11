@@ -57,10 +57,6 @@ public abstract class Person {
     public void setPassword(String password) {
         this.password = password;
     }
-    
 
-    public void logIn() {
-        
-    }
-    
+    abstract Person logIn(String username, String password);  
 }

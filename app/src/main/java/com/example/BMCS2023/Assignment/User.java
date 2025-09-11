@@ -4,13 +4,12 @@
  */
 package com.example.BMCS2023.Assignment;
 
+import java.util.Arrays;
 /**
  *
  * @author zhenyu
  */
 public class User extends Person {
-    private String emergencyContact;
-    private String pendingVerificationPin;
     
     public boolean verifyPin(String inputPin) {
         return false;
@@ -43,6 +42,23 @@ public class User extends Person {
         this.emergencyContactNum = emergencyContactNum;
     }
     
+    @Override
+    public User logIn(String username, String password) {
+        try {
+            if (username.isEmpty() || password.isEmpty()) {
+                throw new IllegalArgumentException("Please enter both username and password.");
+            }
+            
+            User[] users = DatabaseClient.getRecords("users", User.class);
+            return Arrays.stream(users)
+                .filter(u -> u.getUsername().equals(username) && u.getPassword().equals(password))
+                .findFirst()
+                .orElse(null);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage()); // Re-throw for UI handling
+            return null;
+        }
+    }
     
     
 }

@@ -143,5 +143,24 @@ public class Admin extends Person {
             return 0.0;
         }
     }
-    
+
+    @Override
+    public Admin logIn(String username, String password) {
+        try {
+            if (username.isEmpty() || password.isEmpty()) {
+                return null;
+            }
+            if (username.equals("admin") && password.equals("admin123")) {
+                Admin admin = new Admin();
+                admin.setUsername("admin");
+                admin.setPassword("admin123");
+                return admin;
+            }
+            return null;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+     
 }
