@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.example.BMCS2023.Assignment;
-import java.awt.Point;
 
 /**
  *

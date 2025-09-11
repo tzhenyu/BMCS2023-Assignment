@@ -47,14 +47,6 @@ public class Admin extends Person {
         }
     }
     
-    public Vehicle[] loadCarData() {
-        try {
-            return DatabaseClient.getRecords("vehicles", Vehicle.class);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return new Vehicle[0];
-        }
-    }
     
     public boolean updateCarStatus(String vehicleId, Vehicle.Status newStatus) {
         try {

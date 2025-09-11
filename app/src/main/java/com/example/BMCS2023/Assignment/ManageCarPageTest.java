@@ -384,17 +384,13 @@ String carPlate = cartable.getValueAt(row, 4).toString();
 int confirm = JOptionPane.showConfirmDialog(this, "Delete car with plate " + carPlate + "?", "Confirm", JOptionPane.YES_NO_OPTION);
 if (confirm != JOptionPane.YES_OPTION) return;
 
-try {
-    int status = DatabaseClient.deleteById("vehicles", carPlate);
-    if (status == 204 || status == 200) {
-        JOptionPane.showMessageDialog(this, "Vehicle deleted.");
-        loadCarData(); // refresh table
-    } else {
-        JOptionPane.showMessageDialog(this, "Delete returned HTTP " + status + ". Check policies and ID.");
-    }
-} catch (Exception ex) {
-    ex.printStackTrace();
-    JOptionPane.showMessageDialog(this, "Error deleting vehicle: " + ex.getMessage());
+boolean deleteCar = new Admin().deleteCar(carPlate);
+
+if (deleteCar) {
+    JOptionPane.showMessageDialog(this, "Vehicle deleted.");
+    loadCarData();
+} else {
+    JOptionPane.showMessageDialog(this, "Delete returned HTTP. Check policies and ID.");
 }
 
     }//GEN-LAST:event_btndeleteActionPerformed
