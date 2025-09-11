@@ -271,18 +271,32 @@ public class CarBooking extends javax.swing.JFrame {
             // Set the calculated amount
             rental.setAmount(totalFare);
 
-            Rental[] rentals = { rental };
-            String response = DatabaseClient.insertRecords("rentals", rentals);
-            
-            // Update vehicle status to rented
-            selectedVehicle.setStatus(Vehicle.Status.rented);
-            String vehicleUpdateResponse = DatabaseClient.updateRecord("vehicles", selectedVehicle.getId(), selectedVehicle);
-            
-            System.out.println("Rental created successfully. Response: " + response);
-            System.out.println("Vehicle status updated. Response: " + vehicleUpdateResponse);
-            GUIClient.switchPage(this, new CarBookingSuccess());
+            String rentalResponse = Rental.createRental(rental);
+
+            if (rentalResponse != null && !rentalResponse.isEmpty()) {
+                String updateStatus = Rental.updateVehicleStatus(vehicleId, Vehicle.Status.rented);
+                
+                if (updateStatus != null && !updateStatus.isEmpty()) {
+                    System.out.println("Rental created successfully.");
+                    System.out.println("Vehicle status updated. Response: " + updateStatus);
+                    GUIClient.switchPage(this, new CarBookingSuccess());
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(this, 
+                        "Failed to update vehicle status.", 
+                        "Error", 
+                        javax.swing.JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, 
+                    "Failed to create rental.", 
+                    "Error", 
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+
 
             
+
+
         } catch (Exception e) {
             System.err.println("Error creating rental: " + e.getMessage());
             e.printStackTrace();
@@ -293,39 +307,41 @@ public class CarBooking extends javax.swing.JFrame {
         }
     }
         
+
+    
     public double calculateFare() {
         if (selectedVehicle == null) {
             jLabel10.setText("0.00");
-            return 0.0;  // Return 0 when no vehicle selected
+            return 0.0;
         }
         
         try {
-            // Get hour components directly
             int pickupH = (Integer) pickupHour.getValue();
             int returnH = (Integer) returnHour.getValue();
             
-            // Calculate duration in hours
-            int durationHours = returnH - pickupH;
+            LocalDateTime startTime = getSelectedDateTime(pickupH);
+            LocalDateTime endTime = getSelectedDateTime(returnH);
             
-            double dailyRate = selectedVehicle.getPricePerDay();
-            double totalFare = dailyRate * (durationHours);
+            Rental tempRental = new Rental("", "", "", startTime, endTime, "", "");
+            boolean includeBabySeat = jCheckBox1.isVisible() && jCheckBox1.isSelected();
             
-            // Add baby seat fee if checkbox is selected and visible
-            if (jCheckBox1.isVisible() && jCheckBox1.isSelected()) {
-                totalFare += 20.0; // Add RM20 for baby seat
-            }
-            
-            // Format to 2 decimal places
+            double totalFare = tempRental.calculateTotalFare(selectedVehicle, includeBabySeat);
             jLabel10.setText(String.format("RM %.2f", totalFare));
             
-            return totalFare;  // ✅ Return the calculated fare
-            
+            return totalFare;
         } catch (Exception e) {
             jLabel10.setText("Error");
             System.err.println("Error calculating fare: " + e.getMessage());
-            return 0.0;  // ✅ Return 0 on error
+            return 0.0;
         }
     }
+
+    private LocalDateTime getSelectedDateTime(int hour) {
+        int year = (Integer) jSpinner1.getValue();
+        int month = (Integer) jSpinner2.getValue();
+        int day = (Integer) jSpinner3.getValue();
+        return LocalDateTime.of(year, month, day, hour, 0);
+    }    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
