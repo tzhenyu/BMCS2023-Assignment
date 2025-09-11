@@ -25,22 +25,42 @@ public class UserProfile extends javax.swing.JFrame {
     public UserProfile() {
         this.currentUser = SessionManager.getCurrentUser();
         initComponents();
-        loadUserData();
-
+        initializeRentalButton();
+        
         if (currentUser != null) {
-            loadUserData();  // Add this line to load user data
+            loadUserData();
             IDdisplayText.setText(currentUser.getUserId());
             loadStatusButton1ForCurrentUser();
         } else {
             System.err.println("No user logged in");
             dispose();
-            // Replace Login with appropriate landing page
             new UserLoginPage().setVisible(true);
         }
     }
     
-    
-    
+    /**
+     * Initializes the rental buttons in the UI
+     * This method sets up the initial state of rental-related buttons
+     */
+    private void initializeRentalButton() {
+        // Hide panels 2 and 3 initially as they're not used in the current implementation
+        jPanel2.setVisible(false);
+        jPanel3.setVisible(false);
+        
+        // Initialize status buttons
+        statusButton1.setVisible(false);
+        statusButton2.setVisible(false);
+        statusButton3.setVisible(false);
+        
+        // Clear initial text
+        vehicleIDLabel1.setText("");
+        vehicleIDLabel2.setText("");
+        vehicleIDLabel3.setText("");
+        dateLabel1.setText("");
+        dateLabel2.setText("");
+        dateLabel3.setText("");
+    }
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -343,89 +363,112 @@ public class UserProfile extends javax.swing.JFrame {
                             .addComponent(IDdisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(editInfoButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(70, 70, 70)
-                .addComponent(jLabel1)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(emailDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22)
-                        .addComponent(contactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(contactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(editInfoButton, javax.swing.GroupLayout.DEFAULT
+
+        .addGap(70, 70, 70)
+        .addComponent(jLabel1)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(emergencyContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(emergencyContactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 219, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9))
-        );
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(emailDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22)
+                .addComponent(contactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(contactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(emergencyContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(emergencyContactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 219, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(9, 9, 9))
+    );
 
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
+    pack();
+}// </editor-fold>//GEN-END:initComponents
 
-    private void editInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editInfoButtonActionPerformed
-        EditInfo frame = new EditInfo();    //create an instance
-        GUIClient.switchPage(this, frame);
-    }//GEN-LAST:event_editInfoButtonActionPerformed
+private void editInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editInfoButtonActionPerformed
+    EditInfo frame = new EditInfo();    //create an instance
+    GUIClient.switchPage(this, frame);
+}//GEN-LAST:event_editInfoButtonActionPerformed
 
-    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        CarMenu frame = new CarMenu();    //create an instance
-        GUIClient.switchPage(this, frame);
-    }//GEN-LAST:event_backButtonActionPerformed
+private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+    CarMenu frame = new CarMenu();    //create an instance
+    GUIClient.switchPage(this, frame);
+}//GEN-LAST:event_backButtonActionPerformed
 
-    private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
-        SessionManager.logout();
+private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
+    SessionManager.logout();
     
-        { CarMenu frame = new CarMenu(); frame.setResizable(false); frame.setLocation(this.getLocation()); frame.setVisible(true); this.dispose(); }
-    }//GEN-LAST:event_logoutButtonActionPerformed
+    CarMenu frame = new CarMenu(); 
+    frame.setResizable(false); 
+    frame.setLocation(this.getLocation()); 
+    frame.setVisible(true); 
+    this.dispose();
+}//GEN-LAST:event_logoutButtonActionPerformed
 
-    private void statusButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusButton1ActionPerformed
-        onStatusButton1Clicked();
-    }//GEN-LAST:event_statusButton1ActionPerformed
-    
-    
+private void statusButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusButton1ActionPerformed
+    onStatusButton1Clicked();
+}//GEN-LAST:event_statusButton1ActionPerformed
 
-    private void onStatusButton1Clicked() {
+private void statusButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusButton2ActionPerformed
+    // TODO add your handling code here:
+}//GEN-LAST:event_statusButton2ActionPerformed
+
+private void statusButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusButton3ActionPerformed
+    // TODO add your handling code here:
+}//GEN-LAST:event_statusButton3ActionPerformed
+
+private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
+    InvoicePage frame = new InvoicePage();
+    GUIClient.switchPage(this, frame);
+}//GEN-LAST:event_jPanel1MouseClicked
+
+private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
+    InvoicePage frame = new InvoicePage();
+    GUIClient.switchPage(this, frame);
+}//GEN-LAST:event_jPanel2MouseClicked
+
+private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
+    InvoicePage frame = new InvoicePage();
+    GUIClient.switchPage(this, frame);
+}//GEN-LAST:event_jPanel3MouseClicked
+
+// ============ CUSTOM METHODS ============
+
+private void onStatusButton1Clicked() {
     try {
         if (currentRentalId == null) {
             JOptionPane.showMessageDialog(this, "No active rental found");
             return;
         }
 
-        String currentText = statusButton1.getText();
-        switch (currentText.toUpperCase()) {
+        String currentText = statusButton1.getText().toUpperCase();
+        
+        switch (currentText) {
             case "PICKUP":
-                // Update status in database
-                DatabaseClient.updateRentalStatus(currentRentalId, "AVAILABLE");
-                
-                // Navigate to condition checklist
-                new ConditionChecklist(currentRentalId).setVisible(true);
-                this.dispose();
+                handlePickupFlow();
                 break;
                 
             case "RETURN":
-                // Update status in database
-                DatabaseClient.updateRentalStatus(currentRentalId, "COMPLETED");
+                handleReturnFlow();
+                break;
                 
-                // Navigate to return vehicle page
-                new ReturnVehicle(currentRentalId).setVisible(true);
-                this.dispose();
+            case "COMPLETED":
+                handleCompletedFlow();
                 break;
                 
             default:
@@ -434,168 +477,120 @@ public class UserProfile extends javax.swing.JFrame {
         }
     } catch (Exception e) {
         System.err.println("Error in status button action: " + e.getMessage());
-        JOptionPane.showMessageDialog(this, "Error processing request: " + e.getMessage());
-    }
-}
-    
-    public String formatDateForDisplay(String dateTime) {
-    if (dateTime == null || dateTime.isEmpty()) {
-        return "";
-    }
-
-    try {
-        // If the string looks like an ISO date (e.g. 2024-01-15T10:30:00)
-        if (dateTime.contains("T")) {
-            String[] parts = dateTime.split("T");
-            String date = parts[0];   // "2024-01-15"
-            String time = parts[1];   // "10:30:00"
-
-            // Take only the first 5 characters of the time → "10:30"
-            if (time.length() >= 5) {
-                time = time.substring(0, 5);
-            }
-
-            // If the date has dashes, split into yyyy-mm-dd
-            if (date.contains("-")) {
-                String[] dateParts = date.split("-");
-                if (dateParts.length == 3) {
-                    // Rearrange to dd/mm/yyyy HH:MM
-                    return dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0] + " " + time;
-                }
-            }
-
-            return date + " " + time;
-        }
-        return dateTime; // if it's not ISO, just return as-is
-    } catch (Exception e) {
-        return dateTime;
-    }
-}
-
-
-
-    public void loadStatusButton1ForCurrentUser() {
-        try {
-        System.out.println("Loading rentals for user: " + currentUser.getUserId());
-        
-        // Query rentals for current user, ordered by start time (most recent first)
-        String query = "rentals?userId=eq." + currentUser.getUserId() + 
-                      "&select=*&order=startTime.desc&limit=1";
-        String result = DatabaseClient.readRecords(query);
-        
-        System.out.println("Database response: " + result);
-
-        if (isEmptyResult(result)) {
-            System.out.println("No rental records found");
-            hideVehicleButton();
-            return;
-        }
-
-        processRentalResponse(result);
-        
-    } catch (Exception e) {
-        System.err.println("Error loading rental data: " + e.getMessage());
-        e.printStackTrace();
-        hideVehicleButton();
         JOptionPane.showMessageDialog(this, 
-            "Error loading rental data. Please try again.", 
-            "Error", 
+            "Error processing request: " + e.getMessage(),
+            "Error",
             JOptionPane.ERROR_MESSAGE);
     }
-    }
+}
 
-    private void processRentalData(JsonObject rental) {
-        try {
-            currentRentalId = rental.has("id") ? rental.get("id").getAsString() : null;
-            String status = rental.has("status") ? rental.get("status").getAsString() : "";
-            String vehicleId = rental.has("vehicleId") ? rental.get("vehicleId").getAsString() : "";
-            String startTime = rental.has("startTime") ? rental.get("startTime").getAsString() : "";
-
-            updateUIElements(vehicleId, startTime, status);
-        } catch (Exception e) {
-            System.err.println("Error processing rental data: " + e.getMessage());
-            hideVehicleButton();
-        }
-    }
-
-    private void updateUIElements(String vehicleId, String startTime, String status) {
-        vehicleIDLabel1.setText(vehicleId);
-        dateLabel1.setText(formatDateForDisplay(startTime));
-    
-        // Add dynamic tooltip based on status
-        String tooltipText = "";
-    
-        switch (status.toUpperCase()) {
-            case "CONFIRMED":
-                statusButton1.setText("PICKUP");
-                statusButton1.setEnabled(true);
-                tooltipText = "Rental confirmed - Click to proceed with pickup";
-                jPanel1.setToolTipText("View rental details and invoice");
-                break;
-            case "AVAILABLE":
+private void handlePickupFlow() {
+    try {
+        // Navigate to condition checklist first
+        ConditionChecklist conditionFrame = new ConditionChecklist(currentRentalId);
+        
+        // Add a callback mechanism
+        conditionFrame.setOnConditionCompleteCallback(() -> {
+            try {
+                // Update rental status to AVAILABLE (vehicle is now in use)
+                updateRentalStatusInDatabase("AVAILABLE");
+                
+                // Also update the vehicle status to "rented"
+                updateVehicleStatus("rented");
+                
+                // Update button text to RETURN
                 statusButton1.setText("RETURN");
-                statusButton1.setEnabled(true);
-                tooltipText = "Vehicle in use - Click to return";
-            jPanel1.setToolTipText("View ongoing rental details");
-            break;
-        case "PENDING":
-            statusButton1.setText("PENDING");
-            statusButton1.setEnabled(false);
-            tooltipText = "Awaiting confirmation";
-            jPanel1.setToolTipText("Rental pending confirmation");
-            break;
-        case "COMPLETED":
-            statusButton1.setText("COMPLETED");
-            statusButton1.setEnabled(false);
-            tooltipText = "Rental completed";
-            jPanel1.setToolTipText("View completed rental invoice");
-            break;
-        default:
-            hideVehicleButton();
-            break;
-        }
-    
-        // Set tooltip for the status button
-        statusButton1.setToolTipText(tooltipText);
-        statusButton1.setVisible(true);
+                statusButton1.setToolTipText("Vehicle in use - Click to return");
+                
+                // Show success message
+                JOptionPane.showMessageDialog(UserProfile.this, 
+                    "Vehicle pickup completed successfully!", 
+                    "Pickup Complete", 
+                    JOptionPane.INFORMATION_MESSAGE);
+                    
+            } catch (Exception e) {
+                System.err.println("Error updating status after pickup: " + e.getMessage());
+                JOptionPane.showMessageDialog(UserProfile.this, 
+                    "Error updating rental status: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        
+        GUIClient.switchPage(this, conditionFrame);
+        
+    } catch (Exception e) {
+        System.err.println("Error in pickup flow: " + e.getMessage());
+        JOptionPane.showMessageDialog(this, 
+            "Error processing pickup: " + e.getMessage(),
+            "Error",
+            JOptionPane.ERROR_MESSAGE);
     }
+}
 
-    private void hideVehicleButton() {
-        statusButton1.setVisible(false);
-        vehicleIDLabel1.setText("");
-        dateLabel1.setText("");
+private void handleReturnFlow() {
+    try {
+        // Update status to PENDING (return process started)
+        updateRentalStatusInDatabase("PENDING");
+        
+        // Navigate to return vehicle page
+        ReturnVehicle returnFrame = new ReturnVehicle(currentRentalId);
+        
+        // Set callback for when return is completed
+        returnFrame.setOnReturnCompleteCallback(() -> {
+            try {
+                // Update status to COMPLETED
+                updateRentalStatusInDatabase("COMPLETED");
+                
+                // Also update the vehicle status back to "available"
+                updateVehicleStatus("available");
+                
+                // Refresh the user profile to show updated status
+                refreshUserProfile();
+                
+            } catch (Exception e) {
+                System.err.println("Error completing return: " + e.getMessage());
+                JOptionPane.showMessageDialog(UserProfile.this, 
+                    "Error completing return process: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        
+        GUIClient.switchPage(this, returnFrame);
+        
+    } catch (Exception e) {
+        System.err.println("Error in return flow: " + e.getMessage());
+        JOptionPane.showMessageDialog(this, 
+            "Error processing return: " + e.getMessage(),
+            "Error",
+            JOptionPane.ERROR_MESSAGE);
     }
-    
-    public class RentalStatus {
-        public static final String CONFIRMED = "CONFIRMED";
-        public static final String AVAILABLE = "AVAILABLE";
-        public static final String PENDING = "PENDING";
+}
+
+private void handleCompletedFlow() {
+    try {
+        // Show rental details or invoice
+        InvoicePage invoicePage = new InvoicePage();
+        GUIClient.switchPage(this, invoicePage);
+        
+    } catch (Exception e) {
+        System.err.println("Error viewing completed rental: " + e.getMessage());
+        JOptionPane.showMessageDialog(this, 
+            "Error accessing rental details: " + e.getMessage(),
+            "Error",
+            JOptionPane.ERROR_MESSAGE);
     }
-    
-    private void statusButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_statusButton2ActionPerformed
+}
 
-    private void statusButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_statusButton3ActionPerformed
+private void refreshUserProfile() {
+    try {
+        loadStatusButton1ForCurrentUser();
+    } catch (Exception e) {
+        System.err.println("Error refreshing user profile: " + e.getMessage());
+    }
+}
 
-    private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
-        jPanel1.setToolTipText("Click here to view Invoice Page");
-        InvoicePage frame = new InvoicePage();
-        GUIClient.switchPage(this, frame);
-    }//GEN-LAST:event_jPanel1MouseClicked
-
-    private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
-        InvoicePage frame = new InvoicePage();
-        GUIClient.switchPage(this, frame);
-    }//GEN-LAST:event_jPanel2MouseClicked
-
-    private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
-        InvoicePage frame = new InvoicePage();
-        GUIClient.switchPage(this, frame);
-    }//GEN-LAST:event_jPanel3MouseClicked
-    
 private void updateRentalStatusInDatabase(String newStatus) throws Exception {
     try {
         if (currentRentalId == null || currentRentalId.isEmpty()) {
@@ -632,87 +627,119 @@ private void updateVehicleStatus(String newStatus) throws Exception {
     }
 }
 
-    private void loadUserData() {
-        try {
-            if (currentUser == null) {
-                System.err.println("Current user is null");
-                return;
-            }
+public void loadStatusButton1ForCurrentUser() {
+    try {
+        System.out.println("Loading rentals for user: " + currentUser.getUserId());
+        
+        // Query rentals for current user, ordered by start time (most recent first)
+        String query = "rentals?userId=eq." + currentUser.getUserId() + 
+                      "&select=*&order=startTime.desc&limit=1";
+        String result = DatabaseClient.readRecords(query);
+        
+        System.out.println("Database response: " + result);
 
-            // Get values from Person class fields (inherited)
-            usernameDisplayText.setText(currentUser.username != null ? currentUser.username : "");
-            emailDisplayText.setText(currentUser.email != null ? currentUser.email : "");
-            contactNumDisplayText.setText(currentUser.phone != null ? currentUser.phone : "");
-            emergencyContactNumDisplayText.setText(currentUser.getEmergencyContactNum() != null ? 
-                currentUser.getEmergencyContactNum() : "");
-
-            // Debug output
-            System.out.println("User data loaded:");
-            System.out.println("Username: " + currentUser.username);
-            System.out.println("Email: " + currentUser.email);
-            System.out.println("Phone: " + currentUser.phone);
-            System.out.println("Emergency Contact: " + currentUser.getEmergencyContactNum());
-
-        } catch (Exception e) {
-            System.err.println("Error loading user data: " + e.getMessage());
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, 
-                "Error loading user data: " + e.getMessage(),
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
+        if (isEmptyResult(result)) {
+            System.out.println("No rental records found");
+            hideVehicleButton();
+            return;
         }
-    }
 
-    /**
-     * Initializes the rental buttons in the UI
-     * This method sets up the initial state of rental-related buttons
-     */
-    private void initializeRentalButton() {
-        // Hide panels 2 and 3 initially as they're not used in the current implementation
-        jPanel2.setVisible(false);
-        jPanel3.setVisible(false);
+        processRentalResponse(result);
         
-        // Initialize status buttons
-        statusButton1.setVisible(false);
-        statusButton2.setVisible(false);
-        statusButton3.setVisible(false);
-        
-        // Clear initial text
-        vehicleIDLabel1.setText("");
-        vehicleIDLabel2.setText("");
-        vehicleIDLabel3.setText("");
-        dateLabel1.setText("");
-        dateLabel2.setText("");
-        dateLabel3.setText("");
+    } catch (Exception e) {
+        System.err.println("Error loading rental data: " + e.getMessage());
+        e.printStackTrace();
+        hideStatusButton1();
+        JOptionPane.showMessageDialog(this, 
+            "Error loading rental data. Please try again.", 
+            "Error", 
+            JOptionPane.ERROR_MESSAGE);
     }
-    
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.Label ID;
-    private java.awt.Label IDdisplayText;
-    private javax.swing.JButton backButton;
-    private java.awt.Label contactNum;
-    private java.awt.Label contactNumDisplayText;
-    private javax.swing.JLabel dateLabel1;
-    private javax.swing.JLabel dateLabel2;
-    private javax.swing.JLabel dateLabel3;
-    private javax.swing.JButton editInfoButton;
-    private java.awt.Label email;
-    private java.awt.Label emailDisplayText;
-    private java.awt.Label emergencyContactNum;
-    private java.awt.Label emergencyContactNumDisplayText;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JButton logoutButton;
-    private javax.swing.JButton statusButton1;
-    private javax.swing.JButton statusButton2;
-    private javax.swing.JButton statusButton3;
-    private java.awt.Label username;
-    private java.awt.Label usernameDisplayText;
-    private javax.swing.JLabel vehicleIDLabel1;
-    private javax.swing.JLabel vehicleIDLabel2;
-    private javax.swing.JLabel vehicleIDLabel3;
-    // End of variables declaration//GEN-END:variables
-
 }
+
+private boolean isEmptyResult(String result) {
+    return result == null || result.trim().isEmpty() || result.equals("[]");
+}
+
+private void processRentalResponse(String result) {
+    try {
+        // Ensure proper JSON array format
+        if (!result.startsWith("[")) {
+            result = "[" + result + "]";
+        }
+        
+        JsonArray rentalsArray = JsonParser.parseString(result).getAsJsonArray();
+        
+        if (rentalsArray.size() > 0) {
+            JsonObject rental = rentalsArray.get(0).getAsJsonObject();
+            processRentalData(rental);
+        } else {
+            hideStatusButton1();
+        }
+        
+    } catch (Exception e) {
+        System.err.println("JSON parsing error: " + e.getMessage());
+        System.err.println("Problematic JSON: " + result);
+        hideStatusButton1();
+    }
+}
+
+private void processRentalData(JsonObject rental) {
+    try {
+        currentRentalId = rental.has("id") ? rental.get("id").getAsString() : null;
+        String status = rental.has("status") ? rental.get("status").getAsString() : "";
+        String vehicleId = rental.has("vehicleId") ? rental.get("vehicleId").getAsString() : "";
+        String startTime = rental.has("startTime") ? rental.get("startTime").getAsString() : "";
+
+        updateUIElements(vehicleId, startTime, status);
+    } catch (Exception e) {
+        System.err.println("Error processing rental data: " + e.getMessage());
+        hideStatusButton1();
+    }
+}
+
+private void updateUIElements(String vehicleId, String startTime, String status) {
+    vehicleIDLabel1.setText(vehicleId);
+    dateLabel1.setText(formatDateForDisplay(startTime));
+
+    // Make panel visible
+    jPanel1.setVisible(true);
+    
+    // Add dynamic tooltip based on status
+    String tooltipText = "";
+
+    switch (status.toUpperCase()) {
+        case "CONFIRMED":
+            statusButton1.setText("PICKUP");
+            statusButton1.setEnabled(true);
+            tooltipText = "Rental confirmed - Click to proceed with pickup";
+            jPanel1.setToolTipText("View rental details and proceed with pickup");
+            break;
+        case "AVAILABLE":
+            statusButton1.setText("RETURN");
+            statusButton1.setEnabled(true);
+            tooltipText = "Vehicle in use - Click to return";
+            jPanel1.setToolTipText("Vehicle is currently in use - Click to return");
+            break;
+        case "PENDING":
+            statusButton1.setText("PENDING");
+            statusButton1.setEnabled(false);
+            tooltipText = "Return process in progress";
+            jPanel1.setToolTipText("Return process is in progress");
+            break;
+        case "COMPLETED":
+            statusButton1.setText("COMPLETED");
+            statusButton1.setEnabled(true);
+            tooltipText = "Rental completed - Click to view details";
+            jPanel1.setToolTipText("Rental completed - View invoice and details");
+            break;
+        default:
+            hideStatusButton1();
+            return;
+    }
+
+    // Set tooltip for the status button
+    statusButton1.setToolTipText(tooltipText);
+    statusButton1.setVisible(true);
+}
+
