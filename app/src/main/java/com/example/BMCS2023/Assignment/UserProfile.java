@@ -4,8 +4,7 @@
  */
 package com.example.BMCS2023.Assignment;
 
-import java.awt.Point;
-import java.util.List;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
@@ -63,7 +62,7 @@ public class UserProfile extends javax.swing.JFrame {
         dateLabel3.setText("");
     }
 
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
 private void initComponents() {
 
@@ -530,46 +529,6 @@ private void handlePickupFlow() {
     }
 }
 
-private void handleReturnFlow() {
-    try {
-        // Update status to PENDING (return process started)
-        updateRentalStatusInDatabase("PENDING");
-        
-        // Navigate to return vehicle page
-        ReturnVehicle returnFrame = new ReturnVehicle(currentRentalId);
-        
-        // Set callback for when return is completed
-        returnFrame.setOnReturnCompleteCallback(() -> {
-            try {
-                // Update status to COMPLETED
-                updateRentalStatusInDatabase("COMPLETED");
-                
-                // Also update the vehicle status back to "available"
-                updateVehicleStatus("available");
-                
-                // Refresh the user profile to show updated status
-                refreshUserProfile();
-                
-            } catch (Exception e) {
-                System.err.println("Error completing return: " + e.getMessage());
-                JOptionPane.showMessageDialog(UserProfile.this, 
-                    "Error completing return process: " + e.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            }
-        });
-        
-        GUIClient.switchPage(this, returnFrame);
-        
-    } catch (Exception e) {
-        System.err.println("Error in return flow: " + e.getMessage());
-        JOptionPane.showMessageDialog(this, 
-            "Error processing return: " + e.getMessage(),
-            "Error",
-            JOptionPane.ERROR_MESSAGE);
-    }
-}
-
 private void handleCompletedFlow() {
     try {
         // Show rental details or invoice
@@ -859,6 +818,55 @@ private void setDefaultUserDisplayValues() {
     emergencyContactNumDisplayText.setText("N/A");
 }
 
+private void hideVehicleButton() {
+    hideStatusButton1(); // Reuse the existing method
+}
+
+// Update the handleReturnFlow method to properly handle the PENDING → COMPLETED transition
+private void handleReturnFlow() {
+    try {
+        // Navigate to return vehicle page without changing status immediately
+        ReturnVehicle returnFrame = new ReturnVehicle(currentRentalId);
+        
+        // Set callback for when return is completed
+        returnFrame.setOnReturnCompleteCallback(() -> {
+            try {
+                // Update status to COMPLETED
+                updateRentalStatusInDatabase("COMPLETED");
+                
+                // Also update the vehicle status back to "available"
+                updateVehicleStatus("available");
+                
+                // Show completion message with invoice instruction
+                JOptionPane.showMessageDialog(UserProfile.this,
+                    "Vehicle return completed successfully!\n" +
+                    "You can click on the rental panel to view your invoice.",
+                    "Return Complete - Invoice Available",
+                    JOptionPane.INFORMATION_MESSAGE);
+                
+                // Refresh the user profile to show updated status
+                refreshUserProfile();
+                
+            } catch (Exception e) {
+                System.err.println("Error completing return: " + e.getMessage());
+                JOptionPane.showMessageDialog(UserProfile.this, 
+                    "Error completing return process: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        
+        GUIClient.switchPage(this, returnFrame);
+        
+    } catch (Exception e) {
+        System.err.println("Error in return flow: " + e.getMessage());
+        JOptionPane.showMessageDialog(this, 
+            "Error processing return: " + e.getMessage(),
+            "Error",
+            JOptionPane.ERROR_MESSAGE);
+    }
+}
+
 /**
  * Shows rental panels based on available rental data
  * This method can be used to selectively show panels when rental data is available
@@ -951,6 +959,6 @@ private java.awt.Label usernameDisplayText;
 private javax.swing.JLabel vehicleIDLabel1;
 private javax.swing.JLabel vehicleIDLabel2;
 private javax.swing.JLabel vehicleIDLabel3;
-// End of variables declaration//GEN-END:variables
+// End of variables declaration                   
 }
 
