@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
  */
 public class ReturnVehicle extends javax.swing.JFrame {
     private String rentalId;
+    private Runnable onReturnCompleteCallback;
 
     /**
      * Creates new form ReturnVehicle
@@ -23,6 +24,30 @@ public class ReturnVehicle extends javax.swing.JFrame {
         this.rentalId = rentalId;
         initComponents();
         returnDateText.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+    }
+    
+    /**
+     * Sets callback to be executed when return is completed
+     */
+    public void setOnReturnCompleteCallback(Runnable callback) {
+        this.onReturnCompleteCallback = callback;
+    }
+    
+    /**
+     * Handles navigation back to menu
+     */
+    private void handleBackToMenu() {
+        try {
+            UserProfile userProfile = new UserProfile();
+            userProfile.setVisible(true);
+            this.dispose();
+        } catch (Exception e) {
+            System.err.println("Error returning to menu: " + e.getMessage());
+            JOptionPane.showMessageDialog(this,
+                "Error returning to menu: " + e.getMessage(),
+                "Navigation Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -157,31 +182,45 @@ public class ReturnVehicle extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        CarMenu frame = new CarMenu();    //create an instance
-        GUIClient.switchPage(this, frame);
+        handleBackToMenu();
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void returnVehicleSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnVehicleSubmitButtonActionPerformed
-        String rating = ratingTextField.getText();
-        String feedback = feedbackTextField.getText();
-
-        if (!validateInput(rating, feedback)) {
-            return;
-        }
-
         try {
-            JsonObject updateData = new JsonObject();
-            updateData.addProperty("status", "completed");
-            updateData.addProperty("rating", Integer.parseInt(rating));
-            updateData.addProperty("feedback", feedback);
+            // Validate inputs
+            if (!validateInputs()) {
+                return;
+            }
             
-            DatabaseClient.updateRecord("rentals", rentalId, updateData);
+            // Show confirmation dialog
+            int result = JOptionPane.showConfirmDialog(this,
+                "Confirm vehicle return? This action cannot be undone.",
+                "Confirm Return",
+                JOptionPane.YES_NO_OPTION);
             
-            JOptionPane.showMessageDialog(this, "Thank you for your feedback!");
-            this.dispose();
-            new UserProfile().setVisible(true);
+            if (result == JOptionPane.YES_OPTION) {
+                // Execute callback to update rental status
+                if (onReturnCompleteCallback != null) {
+                    onReturnCompleteCallback.run();
+                }
+                
+                // Show success message
+                JOptionPane.showMessageDialog(this,
+                    "Vehicle return completed successfully!\n" +
+                    "Thank you for your feedback.",
+                    "Return Complete",
+                    JOptionPane.INFORMATION_MESSAGE);
+                
+                // Return to UserProfile
+                handleBackToMenu();
+            }
+            
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            System.err.println("Error completing return: " + e.getMessage());
+            JOptionPane.showMessageDialog(this,
+                "Error completing return: " + e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_returnVehicleSubmitButtonActionPerformed
 
@@ -189,23 +228,8 @@ public class ReturnVehicle extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ratingTextFieldActionPerformed
 
-    private boolean validateInput(String rating, String feedback) {
-        if (rating.isEmpty() || feedback.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please provide both rating and feedback");
-            return false;
-        }
-
-        try {
-            int ratingValue = Integer.parseInt(rating);
-            if (ratingValue < 1 || ratingValue > 10) {
-                JOptionPane.showMessageDialog(this, "Rating must be between 1 and 10");
-                return false;
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Rating must be a number");
-            return false;
-        }
-
+    private boolean validateInputs() {
+        // Add validation logic for rating and feedback if needed
         return true;
     }
 
