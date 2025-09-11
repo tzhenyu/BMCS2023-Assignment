@@ -197,17 +197,8 @@ public class ConditionChecklist extends javax.swing.JFrame {
      * Handles navigation back to UserProfile
      */
     private void handleBackToProfile() {
-        try {
-            UserProfile userProfile = new UserProfile();
-            userProfile.setVisible(true);
-            this.dispose();
-        } catch (Exception e) {
-            System.err.println("Error returning to profile: " + e.getMessage());
-            JOptionPane.showMessageDialog(this,
-                "Error returning to profile: " + e.getMessage(),
-                "Navigation Error",
-                JOptionPane.ERROR_MESSAGE);
-        }
+        GUIClient.switchPage(this, new UserProfile());
+
     }
 
     // Variable declarations
