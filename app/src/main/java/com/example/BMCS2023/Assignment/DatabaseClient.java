@@ -166,27 +166,7 @@ public static int deleteById(String tableName, String columnName, String id) thr
             throw new Exception("Failed to update record: HTTP " + response.statusCode() + " - " + response.body());
         }
     }
-    
-    public static <T> String updateRecord(String tableName, String id, T record)throws Exception{
-        String json = gson.toJson(record);
 
-        HttpRequest request = HttpRequest.newBuilder()
-            .uri(URI.create(SUPABASE_URL + "/rest/v1/" + tableName + "?id=eq." + id))
-            .header("apikey", SUPABASE_API_KEY)
-            .header("Authorization", "Bearer " + SUPABASE_API_KEY)
-            .header("Content-Type", "application/json")
-            .header("Prefer", "return=representation")
-            .method("PATCH", HttpRequest.BodyPublishers.ofString(json))
-            .build();
-
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        
-        if (response.statusCode() == 200) {
-            return response.body();
-        } else {
-            throw new Exception("Failed to update record: HTTP " + response.statusCode() + " - " + response.body());
-        }
-    }
     
 // Gets a single record by id. Returns null if not found.
 public static <T> T getRecordById(String tableName, String id, Class<T> clazz) throws Exception {
@@ -255,6 +235,17 @@ public static Feedback[] getFeedbackByVehicleId(String vehicleId) throws Excepti
     return gson.fromJson(body, arrayType);
 }
 
+    public static int deleteById(String tableName, String id) throws Exception {
+    String encoded = URLEncoder.encode(id, StandardCharsets.UTF_8);
+    HttpRequest request = HttpRequest.newBuilder()
+        .uri(URI.create(SUPABASE_URL + "/rest/v1/" + tableName + "?id=eq." + encoded))
+        .header("apikey", SUPABASE_API_KEY)
+        .header("Authorization", "Bearer " + SUPABASE_API_KEY)
+        .DELETE()
+        .build();
 
+    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+    return response.statusCode(); // 204 expected on success
+}
 }
 

@@ -4,13 +4,6 @@
  */
 package com.example.BMCS2023.Assignment;
 
-import java.awt.Point;
-import java.util.List;
-import javax.swing.JOptionPane;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
 /**
  *
  * @author Joel
@@ -28,7 +21,6 @@ public class UserProfile extends javax.swing.JFrame {
     
     // Keep existing constructor
     public UserProfile() {
-        this.currentUser = SessionManager.getCurrentUser(); // Add this line
         initComponents();
         loadUserData();
     }
@@ -54,9 +46,6 @@ public class UserProfile extends javax.swing.JFrame {
         }
     }
     
-    private void initializeRentalButton() {
-        checkUserRental();
-    }
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -74,26 +63,25 @@ public class UserProfile extends javax.swing.JFrame {
         logoutButton = new javax.swing.JButton();
         email = new java.awt.Label();
         emailDisplayText = new java.awt.Label();
-        orders = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        vehicleIDLabel1 = new javax.swing.JLabel();
-        dateLabel1 = new javax.swing.JLabel();
-        statusButton1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        vehicleIDLabel2 = new javax.swing.JLabel();
-        statusButton2 = new javax.swing.JButton();
-        dateLabel2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        vehicleIDLabel3 = new javax.swing.JLabel();
-        statusButton3 = new javax.swing.JButton();
-        dateLabel3 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        username.setFont(new java.awt.Font("BIZ UDPMincho Medium", 1, 16)); // NOI18N
+        username.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         username.setText("Username:");
 
-        editInfoButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         editInfoButton.setText("Edit Info");
         editInfoButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,10 +89,10 @@ public class UserProfile extends javax.swing.JFrame {
             }
         });
 
-        usernameDisplayText.setFont(new java.awt.Font("BIZ UDPMincho Medium", 0, 16)); // NOI18N
+        usernameDisplayText.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         usernameDisplayText.setText("username");
 
-        backButton.setFont(new java.awt.Font("BIZ UDPMincho Medium", 0, 18)); // NOI18N
+        backButton.setFont(new java.awt.Font("BIZ UDPMincho Medium", 0, 14)); // NOI18N
         backButton.setText("< Back");
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,27 +100,27 @@ public class UserProfile extends javax.swing.JFrame {
             }
         });
 
-        ID.setFont(new java.awt.Font("BIZ UDPMincho Medium", 1, 16)); // NOI18N
+        ID.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         ID.setText("ID:");
 
-        IDdisplayText.setFont(new java.awt.Font("BIZ UDPMincho Medium", 0, 16)); // NOI18N
+        IDdisplayText.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         IDdisplayText.setText("id");
 
-        contactNumDisplayText.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        contactNumDisplayText.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         contactNumDisplayText.setText("contact num");
 
-        emergencyContactNumDisplayText.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        emergencyContactNumDisplayText.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         emergencyContactNumDisplayText.setText("emergency contact num");
 
-        contactNum.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        contactNum.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         contactNum.setText("CONTACT NUMBER:");
 
-        emergencyContactNum.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        emergencyContactNum.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         emergencyContactNum.setMinimumSize(new java.awt.Dimension(115, 10));
         emergencyContactNum.setPreferredSize(new java.awt.Dimension(157, 20));
         emergencyContactNum.setText("EMERGENCY CONTACT NUMBER:");
 
-        logoutButton.setFont(new java.awt.Font("BIZ UDPMincho Medium", 0, 16)); // NOI18N
+        logoutButton.setFont(new java.awt.Font("BIZ UDPMincho Medium", 0, 12)); // NOI18N
         logoutButton.setText("X Logout");
         logoutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -140,35 +128,23 @@ public class UserProfile extends javax.swing.JFrame {
             }
         });
 
-        email.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        email.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         email.setText("EMAIL:");
 
-        emailDisplayText.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        emailDisplayText.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         emailDisplayText.setText("email");
 
-        orders.setBackground(new java.awt.Color(255, 255, 255));
-        orders.setFont(new java.awt.Font("Book Antiqua", 1, 18)); // NOI18N
-        orders.setText("ORDERS");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel1.setText("ORDERS");
 
-        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel3.setText("vehicle id");
 
-        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel1MouseClicked(evt);
-            }
-        });
+        jLabel4.setText("dd/mm/yyyy time");
 
-        vehicleIDLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        vehicleIDLabel1.setText("vehicle id");
-
-        dateLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        dateLabel1.setText("dd/mm/yyyy time");
-
-        statusButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        statusButton1.setText("PICKUP");
-        statusButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setText("status");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                statusButton1ActionPerformed(evt);
+                
             }
         });
 
@@ -178,37 +154,36 @@ public class UserProfile extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(vehicleIDLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(dateLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(statusButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(statusButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(vehicleIDLabel1)
+                        .addContainerGap()
+                        .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dateLabel1)))
+                        .addComponent(jLabel4))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12))
         );
 
-        vehicleIDLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        vehicleIDLabel2.setText("perodua kancil 2004");
+        jLabel5.setText("perodua kancil 2004");
 
-        statusButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        statusButton2.setText("RETURN");
-        statusButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.setText("ongoing");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
+                
             }
         });
 
-        dateLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        dateLabel2.setText("2/8/2025 18:00");
+        jLabel6.setText("2/8/2025 18:00");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -216,11 +191,12 @@ public class UserProfile extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dateLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(vehicleIDLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(statusButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,25 +204,23 @@ public class UserProfile extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(vehicleIDLabel2)
+                        .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dateLabel2))
-                    .addComponent(statusButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel6))
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        vehicleIDLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        vehicleIDLabel3.setText("perodua kancil 2004");
+        jLabel7.setText("perodua kancil 2004");
 
-        statusButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        statusButton3.setText("COMPLETED");
-        statusButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButton3.setText("completed");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
             }
         });
 
-        dateLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        dateLabel3.setText("2/8/2025 18:00");
+        jLabel8.setText("2/8/2025 18:00");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -254,22 +228,23 @@ public class UserProfile extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dateLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(vehicleIDLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(statusButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jButton3)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(7, 7, 7)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(statusButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(vehicleIDLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(dateLabel3)))
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel8))
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -279,89 +254,87 @@ public class UserProfile extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(usernameDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(IDdisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(editInfoButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 264, Short.MAX_VALUE)
-                        .addComponent(backButton)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(logoutButton)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(emergencyContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(contactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(emailDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(contactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(emergencyContactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(orders)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(82, 82, 82))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(IDdisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(usernameDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(editInfoButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(backButton))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(contactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(emergencyContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(emailDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(emergencyContactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(contactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(50, 50, 50)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(0, 24, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(logoutButton)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(usernameDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, 0)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(ID, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(IDdisplayText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(editInfoButton)))
-                        .addGap(87, 87, 87)
+                            .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(usernameDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, 0)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ID, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(IDdisplayText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(editInfoButton)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(emailDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(contactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(contactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(emergencyContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(13, 13, 13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(emergencyContactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(orders)
-                                .addGap(18, 18, 18)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(76, 76, 76))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(68, 68, 68)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(26, 26, 26)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 192, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(9, 9, 9))
         );
@@ -380,256 +353,23 @@ public class UserProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
-        SessionManager.logout();
-    
-        { CarMenu frame = new CarMenu(); frame.setResizable(false); frame.setLocation(this.getLocation()); frame.setVisible(true); this.dispose(); }
+        UserLoginPage frame = new UserLoginPage();    //create an instance
+        GUIClient.switchPage(this, frame);
     }//GEN-LAST:event_logoutButtonActionPerformed
 
-    private void statusButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusButton1ActionPerformed
-        onStatusButton1Clicked();
-    }//GEN-LAST:event_statusButton1ActionPerformed
-    
-    private void onStatusButton1Clicked() {
-    try {
-        String currentText = statusButton1.getText();
+    private void testConditionChecklistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testConditionChecklistActionPerformed
 
-        if ("PICKUP".equalsIgnoreCase(currentText)) {
-            ConditionChecklist checklistFrame = new ConditionChecklist(currentRentalId);
-            checklistFrame.setVisible(true);
-            this.dispose(); // Close current window
+    }//GEN-LAST:event_testConditionChecklistActionPerformed
 
-        } else if ("RETURN".equalsIgnoreCase(currentText)) {
-            ReturnVehicle returnFrame = new ReturnVehicle(currentRentalId);
-            returnFrame.setVisible(true);
-            this.dispose(); // Close current window
-        }
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error handling action: " + e.getMessage());
-        e.printStackTrace();
-    }
-}
-    
-    public String formatDateForDisplay(String dateTime) {
-    if (dateTime == null || dateTime.isEmpty()) {
-        return "";
-    }
+    private void oilAlertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oilAlertActionPerformed
 
-    try {
-        // If the string looks like an ISO date (e.g. 2024-01-15T10:30:00)
-        if (dateTime.contains("T")) {
-            String[] parts = dateTime.split("T");
-            String date = parts[0];   // "2024-01-15"
-            String time = parts[1];   // "10:30:00"
+    }//GEN-LAST:event_oilAlertActionPerformed
 
-            // Take only the first 5 characters of the time → "10:30"
-            if (time.length() >= 5) {
-                time = time.substring(0, 5);
-            }
-
-            // If the date has dashes, split into yyyy-mm-dd
-            if (date.contains("-")) {
-                String[] dateParts = date.split("-");
-                if (dateParts.length == 3) {
-                    // Rearrange to dd/mm/yyyy HH:MM
-                    return dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0] + " " + time;
-                }
-            }
-
-            return date + " " + time;
-        }
-        return dateTime; // if it's not ISO, just return as-is
-    } catch (Exception e) {
-        return dateTime;
-    }
-}
-
-    public void loadStatusButton1ForCurrentUser() {
-    try {
-        // First check if current user exists
-        if (currentUser == null || currentUser.getUserId() == null) {
-            System.out.println("No current user found");
-            hideVehicleButton();
-            return;
-        }
-
-        String result = DatabaseClient.readRecords("rentals?userId=eq." + currentUser.getUserId());
-        
-        // Debug the response
-        System.out.println("Database response: " + result);
-        
-        // Check if result is empty or null
-        if (result == null || result.trim().isEmpty()) {
-            System.out.println("No rental records found");
-            hideVehicleButton();
-            return;
-        }
-
-        // Parse JSON safely
-        JsonArray rentalsArray;
-        try {
-            rentalsArray = JsonParser.parseString(result).getAsJsonArray();
-        } catch (Exception e) {
-            System.err.println("Failed to parse JSON: " + e.getMessage());
-            System.err.println("Received JSON: " + result);
-            hideVehicleButton();
-            return;
-        }
-        
-        if (rentalsArray.size() > 0) {
-            JsonObject rental = rentalsArray.get(0).getAsJsonObject();
-            
-            // Safely get values with null checks
-            if (rental.has("id")) {
-                currentRentalId = rental.get("id").getAsString();
-            }
-            
-            String status = rental.has("status") ? rental.get("status").getAsString() : "";
-            String vehicleId = rental.has("vehicleId") ? rental.get("vehicleId").getAsString() : "";
-            String startTime = rental.has("startTime") ? rental.get("startTime").getAsString() : "";
-            
-            // Update UI elements
-            vehicleIDLabel1.setText(vehicleId);
-            dateLabel1.setText(formatDateForDisplay(startTime));
-            
-            // Update button based on status
-            switch (status.toUpperCase()) {
-                case "CONFIRMED":
-                    statusButton1.setText("PICKUP");
-                    statusButton1.setEnabled(true);
-                    break;
-                case "ACTIVE":
-                    statusButton1.setText("RETURN");
-                    statusButton1.setEnabled(true);
-                    break;
-                case "COMPLETED":
-                    statusButton1.setText("COMPLETED");
-                    statusButton1.setEnabled(false);
-                    break;
-                default:
-                    hideVehicleButton();
-                    break;
-            }
-        } else {
-            hideVehicleButton();
-        }
-    } catch (Exception e) {
-        System.err.println("Error in loadStatusButton1ForCurrentUser: " + e.getMessage());
-        e.printStackTrace();
-        hideVehicleButton();
-    }
-}
-    
-    private void checkUserRental() {
-        try {
-            String currentUserId = SessionManager.getCurrentUserId();
-            
-            if (currentUserId == null) {
-                System.out.println("No user logged in");
-                hideVehicleButton();
-                return;
-            }
-            
-            // Use DatabaseClient.readRecords with a specific query
-            String query = "rentals?userId=eq." + currentUserId + "&order=created_at.desc";
-            String result = DatabaseClient.readRecords(query);
-            
-            JsonArray rentalsArray = JsonParser.parseString(result).getAsJsonArray();
-            
-            if (rentalsArray.size() > 0) {
-                JsonObject rental = rentalsArray.get(0).getAsJsonObject();
-                currentRentalId = rental.get("id").getAsString();
-                String status = rental.get("status").getAsString();
-                
-                // Update UI based on rental status
-                updateRentalDisplay(rental);
-                System.out.println("Found rental for user: " + currentUserId);
-            } else {
-                hideVehicleButton();
-                System.out.println("No active rental found for user: " + currentUserId);
-            }
-            
-        } catch (Exception e) {
-            System.err.println("Error checking user rental: " + e.getMessage());
-            hideVehicleButton();
-        }
-    }
-
-    private void updateRentalDisplay(JsonObject rental) {
-    try {
-        String vehicleId = rental.get("vehicleId").getAsString();
-        String startTime = rental.get("startTime").getAsString();
-        String status = rental.get("status").getAsString();
-
-        vehicleIDLabel1.setText(vehicleId);
-        dateLabel1.setText(formatDateForDisplay(startTime));
-        
-        switch (status.toUpperCase()) {
-            case "CONFIRMED":
-                statusButton1.setText("PICKUP");
-                statusButton1.setEnabled(true);
-                break;
-            case "ACTIVE":
-                statusButton1.setText("RETURN");
-                statusButton1.setEnabled(true);
-                break;
-            case "COMPLETED":
-                statusButton1.setText("COMPLETED");
-                statusButton1.setEnabled(false);
-                break;
-            default:
-                hideVehicleButton();
-                break;
-        }
-        statusButton1.setVisible(true);
-        
-    } catch (Exception e) {
-        System.err.println("Error updating rental display: " + e.getMessage());
-        hideVehicleButton();
-    }
-}
-    
-    private void showPickupButton() {
-        vehicleIDLabel1.setText("VehicleID");
-            dateLabel1.setText("Date & Time");
-        statusButton1.setText("Pickup");
-        statusButton1.setVisible(true);
-    }
-
-    private void hideVehicleButton() {
-        vehicleIDLabel1.setText("Empty");
-        dateLabel1.setText("Empty");
-        statusButton1.setText("No rental");
-        statusButton1.setVisible(true);
-    }
-    
-    public class RentalStatus {
-        public static final String CONFIRMED = "CONFIRMED";
-        public static final String ACTIVE = "ACTIVE";
-        public static final String PENDING = "PENDING";
-    }
-    
-    private void statusButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vehicle2ButtonActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_vehicle2ButtonActionPerformed
+    }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void statusButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vehicle3ButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_vehicle3ButtonActionPerformed
 
-    private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
-
-        System.out.println("whats uop");
-    }
-    private void loadUserData() {
-        User currentUser = SessionManager.getCurrentUser();
-        if (currentUser != null) {
-            usernameDisplayText.setText(currentUser.getUsername());
-            IDdisplayText.setText(currentUser.getUserId());
-            emailDisplayText.setText(currentUser.getEmail());
-            contactNumDisplayText.setText(currentUser.getPhone());
-            emergencyContactNumDisplayText.setText(currentUser.getEmergencyContactNum());
-        }
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Label ID;
@@ -637,27 +377,27 @@ public class UserProfile extends javax.swing.JFrame {
     private javax.swing.JButton backButton;
     private java.awt.Label contactNum;
     private java.awt.Label contactNumDisplayText;
-    private javax.swing.JLabel dateLabel1;
-    private javax.swing.JLabel dateLabel2;
-    private javax.swing.JLabel dateLabel3;
     private javax.swing.JButton editInfoButton;
     private java.awt.Label email;
     private java.awt.Label emailDisplayText;
     private java.awt.Label emergencyContactNum;
     private java.awt.Label emergencyContactNumDisplayText;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JButton logoutButton;
-    private javax.swing.JLabel orders;
-    private javax.swing.JButton statusButton1;
-    private javax.swing.JButton statusButton2;
-    private javax.swing.JButton statusButton3;
     private java.awt.Label username;
     private java.awt.Label usernameDisplayText;
-    private javax.swing.JLabel vehicleIDLabel1;
-    private javax.swing.JLabel vehicleIDLabel2;
-    private javax.swing.JLabel vehicleIDLabel3;
     // End of variables declaration//GEN-END:variables
 
 
