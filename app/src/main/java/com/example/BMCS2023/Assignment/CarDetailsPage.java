@@ -38,6 +38,17 @@ public class CarDetailsPage extends javax.swing.JFrame {
     tblFeedback.getTableHeader().setFont(new java.awt.Font("Times New Roman", java.awt.Font.BOLD, 14));
     tblFeedback.getTableHeader().setBackground(Color.BLACK);
     tblFeedback.getTableHeader().setForeground(Color.WHITE);
+    
+    cmbStatus.setRenderer(new javax.swing.DefaultListCellRenderer() {
+        @Override
+        public java.awt.Component getListCellRendererComponent(javax.swing.JList<?> list, Object value, 
+                int index, boolean isSelected, boolean cellHasFocus) {
+            javax.swing.JLabel label = (javax.swing.JLabel) super.getListCellRendererComponent(list, value, 
+                index, isSelected, cellHasFocus);
+            label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+            return label;
+        }
+    });
 }
 
 
@@ -390,14 +401,17 @@ private void loadFeedback(String vehicleId) {
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblPrice.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
+        lblPrice.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPrice.setText("Price Per Day");
         lblPrice.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblAddons.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
+        lblAddons.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAddons.setText("Add Ons");
         lblAddons.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblLocation.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
+        lblLocation.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblLocation.setText("Location");
         lblLocation.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -425,11 +439,10 @@ private void loadFeedback(String vehicleId) {
                     .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(lblAddons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblPrice, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE))
-                    .addComponent(lblLocation))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblAddons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblPrice, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                    .addComponent(lblLocation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -561,8 +574,17 @@ private void loadFeedback(String vehicleId) {
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new ManageCarPageTest() {{ setResizable(false); setLocation(CarDetailsPage.this.getLocation()); setVisible(true); }};
-CarDetailsPage.this.dispose();                  // close current frame         // TODO add your handling code here:        // TODO add your handling code here:   // TODO add your handling code here:
+       // Get current location first
+    Point currentLocation = this.getLocation();
+    
+    // Create and show the ManageCarPageTest
+    ManageCarPageTest manageCarPage = new ManageCarPageTest();
+    manageCarPage.setResizable(false);
+    manageCarPage.setLocation(currentLocation);
+    manageCarPage.setVisible(true);
+    
+    // Close the current CarDetailsPage
+    this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void lblPlateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPlateMouseClicked

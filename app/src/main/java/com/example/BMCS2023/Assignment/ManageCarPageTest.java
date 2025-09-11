@@ -27,14 +27,6 @@ public class ManageCarPageTest extends javax.swing.JFrame {
         cartable.getTableHeader().setFont(new java.awt.Font("Times New Roman", java.awt.Font.BOLD, 14));
         cartable.getTableHeader().setBackground(Color.BLACK);
         cartable.getTableHeader().setForeground(Color.WHITE);
-        
-        cartable.addMouseListener(new java.awt.event.MouseAdapter() {
-    @Override
-    public void mouseClicked(java.awt.event.MouseEvent evt) {
-        cartableMouseClicked(evt); // call your method
-    }
-});
-
         cartable.setDefaultEditor(Object.class, null);
 
         
@@ -309,11 +301,15 @@ ManageCarPageTest.this.dispose();
             // open details page inside try/catch so we can see errors
             try {
                 CarDetailsPage detailsPage = new CarDetailsPage(carId);
-                detailsPage.setLocationRelativeTo(this);
+                
+                // Get current location to maintain position
+                Point currentLocation = this.getLocation();
+                detailsPage.setLocation(currentLocation);
+                
                 detailsPage.setVisible(true);
 
-                // comment out dispose while debugging so main window stays visible:
-                // this.dispose();
+                // UNCOMMENT THIS LINE TO CLOSE THE CURRENT WINDOW
+                this.dispose();
             } catch (Exception ex) {
                 ex.printStackTrace();
                 javax.swing.JOptionPane.showMessageDialog(this, "Error opening details: " + ex.getMessage());
