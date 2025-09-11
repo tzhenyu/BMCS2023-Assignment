@@ -4,10 +4,7 @@
  */
 package com.example.BMCS2023.Assignment;
 
-import com.example.BMCS2023.Assignment.DatabaseClient;
-import com.example.BMCS2023.Assignment.Vehicle;
 import java.awt.Color;
-import java.awt.Point;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -283,21 +280,12 @@ public class ManageCarPageTest extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Point pos = ManageCarPageTest.this.getLocation(); 
-        ManageUserPageTest frame = new ManageUserPageTest();   // create CarDetailsPage instance
-        frame.setResizable(false);       // lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);          // show the new frame
-        ManageCarPageTest.this.dispose();    // close current page          // close current frame         // TODO add your handling code here:        // TODO add your handling code here:
+        GUIClient.switchPage(this, new ManageUserPageTest());
+       // close current frame         // TODO add your handling code here:        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        Point pos = ManageCarPageTest.this.getLocation(); 
-        AdminDashboard frame = new AdminDashboard();   // create an instance
-        frame.setResizable(false);       // lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);          // show the frame
-        ManageCarPageTest.this.dispose();                  // close current frame         // TODO add your handling code here: 
+        GUIClient.switchPage(this, new AdminDashboard());             // close current frame         // TODO add your handling code here: 
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void cartableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartableMouseClicked
@@ -366,27 +354,18 @@ public class ManageCarPageTest extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Car Plate can only contain letters, numbers, or dashes.");
         return;
     }
-
-    // --- Build Vehicle object ---
-    Vehicle v = new Vehicle();
-    v.setId(java.util.UUID.randomUUID().toString()); // Use Car Plate as unique ID
-    v.setBrand(brand.trim());
-    v.setModel(modelCar.trim());
-    v.setLocation(location.trim());
-    v.setCarPlate(carPlate.trim());  
-    v.setStatus(Vehicle.Status.available); // default status
-
-    try {
-        // Insert into database
-        String response = DatabaseClient.insertRecords("vehicles", new Vehicle[] { v });
-        JOptionPane.showMessageDialog(this, "Vehicle added successfully." + response);
-
-        // Reload table
+    
+    boolean addCar = new Admin().addCar(brand, modelCar, location, carPlate);
+    
+    if (addCar) {
+        JOptionPane.showMessageDialog(this, "Vehicle added successfully.");
         loadCarData();
-    } catch (Exception ex) {
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error adding vehicle: " + ex.getMessage());
+    } else {
+        JOptionPane.showMessageDialog(this, "Error adding vehicle!");
+
     }
+    
+
 
 
     }//GEN-LAST:event_btnaddActionPerformed

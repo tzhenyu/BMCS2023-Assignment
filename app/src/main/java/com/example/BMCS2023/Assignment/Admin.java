@@ -9,7 +9,6 @@ package com.example.BMCS2023.Assignment;
  * @author zhenyu
  */
 public class Admin extends Person {
-    private String adminId;
     
     public Admin() {
         super();
@@ -17,16 +16,8 @@ public class Admin extends Person {
     
     public Admin(String username, String email, String phone, String password) {
         super(username, email, phone, password);
-        this.adminId = java.util.UUID.randomUUID().toString();
     }
     
-    public String getAdminId() {
-        return adminId;
-    }
-    
-    public void setAdminId(String adminId) {
-        this.adminId = adminId;
-    }
     
     public boolean addCar(String brand, String model, String location, String carPlate) {
         try {
