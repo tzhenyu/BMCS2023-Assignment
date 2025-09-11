@@ -4,8 +4,6 @@
  */
 package com.example.BMCS2023.Assignment;
 
-import com.example.BMCS2023.Assignment.DatabaseClient;
-import com.example.BMCS2023.Assignment.User;
 import java.awt.Color;
 import java.awt.Point;
 import javax.swing.JOptionPane;
@@ -320,25 +318,13 @@ public class ManageUserPageTest extends javax.swing.JFrame {
     String emergency = JOptionPane.showInputDialog(this, "Enter Emergency Contact:");
     if (emergency == null || emergency.trim().isEmpty()) return;
 
-    // --- Build User object ---
-    User u = new User();
-    u.setUserId(java.util.UUID.randomUUID().toString()); 
-    u.setUsername(username.trim());
-    u.setPassword(password.trim());
-    u.setEmail(email.trim());
-    u.setPhone(phone.trim());
-    u.setEmergencyContactNum(emergency.trim());
 
-    try {
-        // Insert into database
-        String response = DatabaseClient.insertRecords("users", new User[] { u });
-        JOptionPane.showMessageDialog(this, "User added successfully. " + response);
-
-        // Reload table
+    boolean addUser = new Admin().addUser(username, password, email, phone, emergency);
+    if (addUser) {
+        JOptionPane.showMessageDialog(this, "User added successfully. ");
         loadUserData();
-    } catch (Exception ex) {
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error adding user: " + ex.getMessage());
+    } else {
+        JOptionPane.showMessageDialog(this, "Error adding user!");
     }
 
     }//GEN-LAST:event_btnaddActionPerformed
@@ -356,21 +342,14 @@ DefaultTableModel model = (DefaultTableModel) cartable.getModel();
     int confirm = JOptionPane.showConfirmDialog(this, "Delete user " + userId + "?", "Confirm", JOptionPane.YES_NO_OPTION);
     if (confirm != JOptionPane.YES_OPTION) return;
 
-    try {
-        int status = DatabaseClient.deleteById("users", userId);
-        if (status == 204 || status == 200) {
-            JOptionPane.showMessageDialog(this, "User deleted.");
-            loadUserData(); // refresh table
-        } else {
-            JOptionPane.showMessageDialog(this, "Delete returned HTTP " + status + ". Check policies and ID.");
-        }
-    } catch (Exception ex) {
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error deleting user: " + ex.getMessage());
+    boolean deleteUser = new Admin().deleteUser(userId);
+    if (deleteUser) {
+        JOptionPane.showMessageDialog(this, "User deleted successfully. ");
+        loadUserData();
+    } else {
+        JOptionPane.showMessageDialog(this, "Error deleting user!");
     }
-    }//GEN-LAST:event_btndeleteActionPerformed
-
-
+    }
     private void loadUserData() {
         try {
             User[] users = DatabaseClient.getRecords("users", User.class);

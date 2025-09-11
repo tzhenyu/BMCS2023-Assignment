@@ -47,7 +47,7 @@ public class Admin extends Person {
         }
     }
     
-    
+    // Not used yet 
     public boolean updateCarStatus(String vehicleId, Vehicle.Status newStatus) {
         try {
             Vehicle[] vehicles = DatabaseClient.getRecords("vehicles", Vehicle.class);
