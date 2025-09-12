@@ -97,40 +97,54 @@ public class DatabaseClient {
         return response.body();
     }
 
-    public static int deleteById(String tableName, String id) throws Exception {
-    String encoded = URLEncoder.encode(id, StandardCharsets.UTF_8);
+    
+public static int deleteById(String tableName, String columnName, String id) throws Exception {
+    String encodedId = URLEncoder.encode(id, StandardCharsets.UTF_8);
+    String url = SUPABASE_URL + "/rest/v1/" + tableName + "?" 
+               + columnName + "=eq." + encodedId;
+
+    System.out.println("DELETE URL = " + url);
+
     HttpRequest request = HttpRequest.newBuilder()
-        .uri(URI.create(SUPABASE_URL + "/rest/v1/" + tableName + "?id=eq." + encoded))
+        .uri(URI.create(url))
+        .DELETE()
         .header("apikey", SUPABASE_API_KEY)
         .header("Authorization", "Bearer " + SUPABASE_API_KEY)
-        .DELETE()
+        .header("Prefer", "return=minimal")
         .build();
 
     HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-    return response.statusCode(); // 204 expected on success
+
+    System.out.println("DELETE STATUS = " + response.statusCode());
+    System.out.println("DELETE BODY   = " + response.body());
+
+    return response.statusCode();
 }
 
     
-    public static <T> String updateRecord(String tableName, int id, T record) throws Exception {
-        String json = gson.toJson(record);
+    public static <T> String updateRecord(String tableName, String id, T record) throws Exception {
+    String json = gson.toJson(record);
 
-        HttpRequest request = HttpRequest.newBuilder()
-            .uri(URI.create(SUPABASE_URL + "/rest/v1/" + tableName + "?id=eq." + id))
-            .header("apikey", SUPABASE_API_KEY)
-            .header("Authorization", "Bearer " + SUPABASE_API_KEY)
-            .header("Content-Type", "application/json")
-            .header("Prefer", "return=representation")
-            .method("PATCH", HttpRequest.BodyPublishers.ofString(json))
-            .build();
+    // ✅ encode the UUID to avoid errors
+    String encodedId = URLEncoder.encode(id, StandardCharsets.UTF_8);
 
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        
-        if (response.statusCode() == 200) {
-            return response.body();
-        } else {
-            throw new Exception("Failed to update record: HTTP " + response.statusCode() + " - " + response.body());
-        }
+    HttpRequest request = HttpRequest.newBuilder()
+        .uri(URI.create(SUPABASE_URL + "/rest/v1/" + tableName + "?id=eq." + encodedId))
+        .header("apikey", SUPABASE_API_KEY)
+        .header("Authorization", "Bearer " + SUPABASE_API_KEY)
+        .header("Content-Type", "application/json")
+        .header("Prefer", "return=representation")
+        .method("PATCH", HttpRequest.BodyPublishers.ofString(json))
+        .build();
+
+    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+    if (response.statusCode() == 200) {
+        return response.body();
+    } else {
+        throw new Exception("Failed to update record: HTTP " + response.statusCode() + " - " + response.body());
     }
+}
 
     public static <T> String updateUserRecord(String tableName, String userId, T record) throws Exception {
         String json = gson.toJson(record);
@@ -152,27 +166,7 @@ public class DatabaseClient {
             throw new Exception("Failed to update record: HTTP " + response.statusCode() + " - " + response.body());
         }
     }
-    
-    public static <T> String updateRecord(String tableName, String id, T record)throws Exception{
-        String json = gson.toJson(record);
 
-        HttpRequest request = HttpRequest.newBuilder()
-            .uri(URI.create(SUPABASE_URL + "/rest/v1/" + tableName + "?id=eq." + id))
-            .header("apikey", SUPABASE_API_KEY)
-            .header("Authorization", "Bearer " + SUPABASE_API_KEY)
-            .header("Content-Type", "application/json")
-            .header("Prefer", "return=representation")
-            .method("PATCH", HttpRequest.BodyPublishers.ofString(json))
-            .build();
-
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        
-        if (response.statusCode() == 200) {
-            return response.body();
-        } else {
-            throw new Exception("Failed to update record: HTTP " + response.statusCode() + " - " + response.body());
-        }
-    }
     
 // Gets a single record by id. Returns null if not found.
 public static <T> T getRecordById(String tableName, String id, Class<T> clazz) throws Exception {
@@ -219,7 +213,7 @@ public static <T> T getRecordById(String tableName, String id, Class<T> clazz) t
     JsonArray arr = JsonParser.parseString(response.body()).getAsJsonArray();
     return arr.size() > 0 ? arr.get(0).getAsJsonObject() : null;
 }
-
+    
     // In DatabaseClient.java - Replace the existing updateRentalStatus method
 /**
  * Updates the status of a rental record in the database by ID
@@ -236,4 +230,38 @@ public static String updateRentalStatus(String rentalId, String newStatus) throw
     // Use the existing updateRecord method to perform the update
     return updateRecord("rentals", rentalId, statusUpdate);
 }
+public static Feedback[] getFeedbackByVehicleId(String vehicleId) throws Exception {
+    String encoded = URLEncoder.encode(vehicleId, StandardCharsets.UTF_8);
+
+    HttpRequest request = HttpRequest.newBuilder()
+        .uri(URI.create(SUPABASE_URL + "/rest/v1/feedback?vehicle_id=eq." + encoded + "&select=*"))
+        .header("apikey", SUPABASE_API_KEY)
+        .header("Authorization", "Bearer " + SUPABASE_API_KEY)
+        .GET()
+        .build();
+
+    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+    if (response.statusCode() >= 400) {
+        throw new RuntimeException("Supabase error: " + response.statusCode() + " - " + response.body());
+    }
+
+    String body = response.body();
+    Type arrayType = new com.google.gson.reflect.TypeToken<Feedback[]>() {}.getType();
+    return gson.fromJson(body, arrayType);
 }
+
+    public static int deleteById(String tableName, String id) throws Exception {
+    String encoded = URLEncoder.encode(id, StandardCharsets.UTF_8);
+    HttpRequest request = HttpRequest.newBuilder()
+        .uri(URI.create(SUPABASE_URL + "/rest/v1/" + tableName + "?id=eq." + encoded))
+        .header("apikey", SUPABASE_API_KEY)
+        .header("Authorization", "Bearer " + SUPABASE_API_KEY)
+        .DELETE()
+        .build();
+
+    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+    return response.statusCode(); // 204 expected on success
+}
+}
+

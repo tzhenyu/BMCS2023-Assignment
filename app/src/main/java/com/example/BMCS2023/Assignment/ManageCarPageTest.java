@@ -4,8 +4,6 @@
  */
 package com.example.BMCS2023.Assignment;
 
-import com.example.BMCS2023.Assignment.DatabaseClient;
-import com.example.BMCS2023.Assignment.Vehicle;
 import java.awt.Color;
 import java.awt.Point;
 import javax.swing.JOptionPane;
@@ -27,14 +25,6 @@ public class ManageCarPageTest extends javax.swing.JFrame {
         cartable.getTableHeader().setFont(new java.awt.Font("Times New Roman", java.awt.Font.BOLD, 14));
         cartable.getTableHeader().setBackground(Color.BLACK);
         cartable.getTableHeader().setForeground(Color.WHITE);
-        
-        cartable.addMouseListener(new java.awt.event.MouseAdapter() {
-    @Override
-    public void mouseClicked(java.awt.event.MouseEvent evt) {
-        cartableMouseClicked(evt); // call your method
-    }
-});
-
         cartable.setDefaultEditor(Object.class, null);
 
         
@@ -61,7 +51,6 @@ public class ManageCarPageTest extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
         jLabel9 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -119,14 +108,16 @@ public class ManageCarPageTest extends javax.swing.JFrame {
 
         jButton3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jButton3.setText("Log Out");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -138,14 +129,13 @@ public class ManageCarPageTest extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
+                .addGap(30, 30, 30)
                 .addComponent(jButton1)
                 .addGap(26, 26, 26)
                 .addComponent(jButton2)
                 .addGap(29, 29, 29)
                 .addComponent(jButton3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
 
         jLabel9.setFont(new java.awt.Font("Serif", 3, 36)); // NOI18N
@@ -279,25 +269,17 @@ public class ManageCarPageTest extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+ new ManageCarPageTest() {{ setResizable(false); setLocation(ManageCarPageTest.this.getLocation()); setVisible(true); }};
+ManageCarPageTest.this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Point pos = ManageCarPageTest.this.getLocation(); 
-        ManageUserPageTest frame = new ManageUserPageTest();   // create CarDetailsPage instance
-        frame.setResizable(false);       // lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);          // show the new frame
-        ManageCarPageTest.this.dispose();    // close current page          // close current frame         // TODO add your handling code here:        // TODO add your handling code here:
+        GUIClient.switchPage(this, new ManageUserPageTest());
+       // close current frame         // TODO add your handling code here:        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        Point pos = ManageCarPageTest.this.getLocation(); 
-        AdminDashboard frame = new AdminDashboard();   // create an instance
-        frame.setResizable(false);       // lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);          // show the frame
-        ManageCarPageTest.this.dispose();                  // close current frame         // TODO add your handling code here: 
+        GUIClient.switchPage(this, new AdminDashboard());             // close current frame         // TODO add your handling code here: 
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void cartableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartableMouseClicked
@@ -316,11 +298,15 @@ public class ManageCarPageTest extends javax.swing.JFrame {
             // open details page inside try/catch so we can see errors
             try {
                 CarDetailsPage detailsPage = new CarDetailsPage(carId);
-                detailsPage.setLocationRelativeTo(this);
+                
+                // Get current location to maintain position
+                Point currentLocation = this.getLocation();
+                detailsPage.setLocation(currentLocation);
+                
                 detailsPage.setVisible(true);
 
-                // comment out dispose while debugging so main window stays visible:
-                // this.dispose();
+                // UNCOMMENT THIS LINE TO CLOSE THE CURRENT WINDOW
+                this.dispose();
             } catch (Exception ex) {
                 ex.printStackTrace();
                 javax.swing.JOptionPane.showMessageDialog(this, "Error opening details: " + ex.getMessage());
@@ -366,59 +352,66 @@ public class ManageCarPageTest extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Car Plate can only contain letters, numbers, or dashes.");
         return;
     }
-
-    // --- Build Vehicle object ---
-    Vehicle v = new Vehicle();
-    v.setId(java.util.UUID.randomUUID().toString()); // Use Car Plate as unique ID
-    v.setBrand(brand.trim());
-    v.setModel(modelCar.trim());
-    v.setLocation(location.trim());
-    v.setCarPlate(carPlate.trim());  
-    v.setStatus(Vehicle.Status.available); // default status
-
-    try {
-        // Insert into database
-        String response = DatabaseClient.insertRecords("vehicles", new Vehicle[] { v });
-        JOptionPane.showMessageDialog(this, "Vehicle added successfully." + response);
-
-        // Reload table
+    
+    boolean addCar = new Admin().addCar(brand, modelCar, location, carPlate);
+    
+    if (addCar) {
+        JOptionPane.showMessageDialog(this, "Vehicle added successfully.");
         loadCarData();
-    } catch (Exception ex) {
-        ex.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error adding vehicle: " + ex.getMessage());
+    } else {
+        JOptionPane.showMessageDialog(this, "Error adding vehicle!");
+
     }
+    
+
 
 
     }//GEN-LAST:event_btnaddActionPerformed
 
     private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
-DefaultTableModel model = (DefaultTableModel) cartable.getModel();
 int row = cartable.getSelectedRow();
 
-if (row == -1) {
-    JOptionPane.showMessageDialog(this, "Please select a row to delete.");
-    return;
-}
-
-// get Car Plate (ID) from column index 3
-String carPlate = cartable.getValueAt(row, 4).toString();
-int confirm = JOptionPane.showConfirmDialog(this, "Delete car with plate " + carPlate + "?", "Confirm", JOptionPane.YES_NO_OPTION);
-if (confirm != JOptionPane.YES_OPTION) return;
-
-try {
-    int status = DatabaseClient.deleteById("vehicles", carPlate);
-    if (status == 204 || status == 200) {
-        JOptionPane.showMessageDialog(this, "Vehicle deleted.");
-        loadCarData(); // refresh table
-    } else {
-        JOptionPane.showMessageDialog(this, "Delete returned HTTP " + status + ". Check policies and ID.");
+    if (row == -1) {
+        JOptionPane.showMessageDialog(this, "Please select a row to delete.");
+        return;
     }
-} catch (Exception ex) {
-    ex.printStackTrace();
-    JOptionPane.showMessageDialog(this, "Error deleting vehicle: " + ex.getMessage());
-}
 
+    String carId = cartable.getValueAt(row, 3).toString();
+    String carPlate = cartable.getValueAt(row, 4).toString();
+
+    int confirm = JOptionPane.showConfirmDialog(
+            this,
+            "Delete car with plate " + carPlate + " and ALL its rentals?",
+            "Confirm Delete",
+            JOptionPane.YES_NO_OPTION
+    );
+
+    if (confirm != JOptionPane.YES_OPTION) return;
+
+    try {
+        // 1. delete rentals first
+        int rentalStatus = DatabaseClient.deleteById("rentals", "vehicleId", carId);
+
+        // 2. delete vehicle
+        int vehicleStatus = DatabaseClient.deleteById("vehicles", "id", carId);
+
+        if ((vehicleStatus == 200 || vehicleStatus == 204)) {
+            JOptionPane.showMessageDialog(this, "Vehicle and rentals deleted.");
+            loadCarData();
+        } else {
+            JOptionPane.showMessageDialog(this, "Delete failed. HTTP " + vehicleStatus);
+        }
+    } catch (Exception ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error deleting: " + ex.getMessage());
+    }
     }//GEN-LAST:event_btndeleteActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+      new CarMenu() {{ setResizable(false); setLocation(ManageCarPageTest.this.getLocation()); setVisible(true); }};
+ManageCarPageTest.this.dispose();
+
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     /**
@@ -466,7 +459,6 @@ try {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
     private java.awt.Menu menu1;
     private java.awt.Menu menu2;
     private java.awt.MenuBar menuBar1;

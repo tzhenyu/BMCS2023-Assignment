@@ -12,6 +12,7 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Feedback {
     private String id; 
+    @SerializedName("user_id") 
     private String userId; 
     @SerializedName("vehicle_id")
     private String vehicleId;

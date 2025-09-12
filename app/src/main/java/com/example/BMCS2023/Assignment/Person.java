@@ -8,7 +8,7 @@ package com.example.BMCS2023.Assignment;
  *
  * @author zhenyu
  */
-public class Person {
+public abstract class Person {
     protected String username;
     protected String email;
     protected String phone;
@@ -57,10 +57,6 @@ public class Person {
     public void setPassword(String password) {
         this.password = password;
     }
-    
 
-    public void logIn() {
-        
-    }
-    
+    abstract Person logIn(String username, String password);  
 }

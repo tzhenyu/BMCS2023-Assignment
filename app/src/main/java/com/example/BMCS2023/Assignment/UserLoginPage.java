@@ -4,11 +4,6 @@
  */
 package com.example.BMCS2023.Assignment;
 
-import java.awt.Point;
-import java.util.Arrays;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -185,28 +180,12 @@ public class UserLoginPage extends javax.swing.JFrame {
         String username = loginUsername.getText();
         String password = new String(loginPassword.getPassword());
 
-        if (username.isEmpty() || password.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please enter both username and password.", 
-                "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        User[] users = DatabaseClient.getRecords("users", User.class);
-        User loggedInUser = Arrays.stream(users)
-            .filter(u -> u.getUsername().equals(username) && u.getPassword().equals(password))
-            .findFirst()
-            .orElse(null);
+        User loggedInUser = new User().logIn(username, password);
 
         if (loggedInUser != null) {
             // Login successful
             SessionManager.setCurrentUser(loggedInUser);
-            
-            Point pos = this.getLocation();
-            CarMenu frame = new CarMenu();    
-            frame.setResizable(false);        
-            frame.setLocation(pos); 
-            frame.setVisible(true);           
-            this.dispose();                   
+            GUIClient.switchPage(this, new CarMenu());      
         } 
         else {
             // Login failed - username/password combination not found in database
@@ -219,7 +198,6 @@ public class UserLoginPage extends javax.swing.JFrame {
         }
 
         } catch (Exception ex) {
-            Logger.getLogger(UserLoginPage.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_loginButtonActionPerformed

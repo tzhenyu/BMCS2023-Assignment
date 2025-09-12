@@ -4,7 +4,6 @@
  */
 package com.example.BMCS2023.Assignment;
 
-import java.awt.Point;
 
 /**
  *
@@ -154,23 +153,16 @@ public class AdminLoginPage extends javax.swing.JFrame {
     private void adminLoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminLoginButtonActionPerformed
         String username = adminUsername.getText();
         String password = new String(adminPassword.getPassword());
-
-        if (username.isEmpty() || password.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Please enter both username and password.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        if (username.equals("admin") && password.equals("admin123")) { // correct credentials
-            Point pos = this.getLocation();
-            AdminDashboard frame = new AdminDashboard();
-            frame.setResizable(false);
-            frame.setLocation(pos);
-            frame.setVisible(true);
-            this.dispose();
+        
+        Admin isAdmin = new Admin().logIn(username, password);
+        if (isAdmin != null) {
+            GUIClient.switchPage(this, new AdminDashboard());
         } else {
             javax.swing.JOptionPane.showMessageDialog(this, "Invalid username or password.", "Login Failed", javax.swing.JOptionPane.ERROR_MESSAGE);
+            adminUsername.setText("");
+            adminPassword.setText("");
+        
         }
-
     }//GEN-LAST:event_adminLoginButtonActionPerformed
 
     private void adminCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminCancelButtonActionPerformed
