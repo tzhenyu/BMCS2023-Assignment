@@ -66,6 +66,10 @@ public class CarBooking extends javax.swing.JFrame {
         
         // Add change listeners to automatically update fare when time changes
         returnHour.addChangeListener(e -> calculateFare());
+        pickupHour.addChangeListener(e -> { updateReturnHourModel(); calculateFare(); });
+        
+        // Add listener to baby seat checkbox to update fare when checked/unchecked
+        jCheckBox1.addActionListener(e -> calculateFare());
         
         // When date changes, update hour spinners and calculate fare
         jSpinner1.addChangeListener(e -> { updateHourSpinners(); calculateFare(); });
@@ -76,34 +80,24 @@ public class CarBooking extends javax.swing.JFrame {
     private void updateHourSpinners() {
         if (isToday()) {
             // For today: minimum pickup is current hour + 1
-            int minPickupHour = Math.max(9, now().getHour() + 1);
-            int initialReturnHour = minPickupHour + 1;
+            int currentHour = now().getHour();
+            int minPickupHour = Math.max(9, currentHour + 1);
             
-            pickupHour.setModel(new javax.swing.SpinnerNumberModel(minPickupHour, minPickupHour, 23, 1));
-            returnHour.setModel(new javax.swing.SpinnerNumberModel(initialReturnHour, minPickupHour + 1, 23, 1));
+            // If it's too late in the day, no bookings possible for today
+            if (minPickupHour >= 23) {
+                minPickupHour = 22; // Last possible pickup
+            }
+            
+            int initialReturnHour = Math.min(minPickupHour + 1, 23);
+            int minReturnHour = Math.min(minPickupHour + 1, 23);
+            
+            pickupHour.setModel(new javax.swing.SpinnerNumberModel(minPickupHour, minPickupHour, 22, 1));
+            returnHour.setModel(new javax.swing.SpinnerNumberModel(initialReturnHour, minReturnHour, 23, 1));
         } else {
-            // For future dates: allow any hour from 9 AM to 11 PM
-            pickupHour.setModel(new javax.swing.SpinnerNumberModel(9, 9, 23, 1));
+            // For future dates: allow any hour from 9 AM to 10 PM (pickup) and 10 AM to 11 PM (return)
+            pickupHour.setModel(new javax.swing.SpinnerNumberModel(9, 9, 22, 1));
             returnHour.setModel(new javax.swing.SpinnerNumberModel(10, 10, 23, 1));
         }
-        
-        // Add listener to pickup hour to update return hour minimum
-        pickupHour.addChangeListener(e -> {
-            int currentPickupHour = (Integer) pickupHour.getValue();
-            int currentReturnHour = (Integer) returnHour.getValue();
-            int minReturnHour = currentPickupHour + 1;
-            
-            // Update return hour model with new minimum
-            if (minReturnHour <= 23) {
-                returnHour.setModel(new javax.swing.SpinnerNumberModel(
-                    Math.max(currentReturnHour, minReturnHour), 
-                    minReturnHour, 
-                    23, 
-                    1
-                ));
-            }
-            calculateFare();
-        });
     }
     
     private boolean isToday() {
@@ -131,6 +125,23 @@ public class CarBooking extends javax.swing.JFrame {
             
             // Format add-ons nicely - now handles multiple addons
             jLabel5.setText(selectedVehicle.getAddOnsAsString());
+            if (selectedVehicle.getImageFileName() != null && !selectedVehicle.getImageFileName().isEmpty()) {
+                jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/" + selectedVehicle.getImageFileName())));
+            } else {
+                jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/10628940.png")));
+            }
+            
+            // Show/hide baby seat checkbox based on vehicle's available add-ons
+            boolean hasBabySeat = false;
+            if (selectedVehicle.getAddOns() != null) {
+                for (Vehicle.AddOn addon : selectedVehicle.getAddOns()) {
+                    if (addon == Vehicle.AddOn.child_seat) {
+                        hasBabySeat = true;
+                        break;
+                    }
+                }
+            }
+            jCheckBox1.setVisible(hasBabySeat);
             
             // Calculate initial fare
             calculateFare();
@@ -260,18 +271,32 @@ public class CarBooking extends javax.swing.JFrame {
             // Set the calculated amount
             rental.setAmount(totalFare);
 
-            Rental[] rentals = { rental };
-            String response = DatabaseClient.insertRecords("rentals", rentals);
-            
-            // Update vehicle status to rented
-            selectedVehicle.setStatus(Vehicle.Status.rented);
-            String vehicleUpdateResponse = DatabaseClient.updateRecord("vehicles", selectedVehicle.getId(), selectedVehicle);
-            
-            System.out.println("Rental created successfully. Response: " + response);
-            System.out.println("Vehicle status updated. Response: " + vehicleUpdateResponse);
-            GUIClient.switchPage(this, new CarBookingSuccess());
+            String rentalResponse = Rental.createRental(rental);
+
+            if (rentalResponse != null && !rentalResponse.isEmpty()) {
+                String updateStatus = Rental.updateVehicleStatus(vehicleId, Vehicle.Status.rented);
+                
+                if (updateStatus != null && !updateStatus.isEmpty()) {
+                    System.out.println("Rental created successfully.");
+                    System.out.println("Vehicle status updated. Response: " + updateStatus);
+                    GUIClient.switchPage(this, new CarBookingSuccess());
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(this, 
+                        "Failed to update vehicle status.", 
+                        "Error", 
+                        javax.swing.JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, 
+                    "Failed to create rental.", 
+                    "Error", 
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+
 
             
+
+
         } catch (Exception e) {
             System.err.println("Error creating rental: " + e.getMessage());
             e.printStackTrace();
@@ -282,34 +307,41 @@ public class CarBooking extends javax.swing.JFrame {
         }
     }
         
+
+    
     public double calculateFare() {
         if (selectedVehicle == null) {
             jLabel10.setText("0.00");
-            return 0.0;  // Return 0 when no vehicle selected
+            return 0.0;
         }
         
         try {
-            // Get hour components directly
             int pickupH = (Integer) pickupHour.getValue();
             int returnH = (Integer) returnHour.getValue();
             
-            // Calculate duration in hours
-            int durationHours = returnH - pickupH;
+            LocalDateTime startTime = getSelectedDateTime(pickupH);
+            LocalDateTime endTime = getSelectedDateTime(returnH);
             
-            double dailyRate = selectedVehicle.getPricePerDay();
-            double totalFare = dailyRate * (durationHours);
+            Rental tempRental = new Rental("", "", "", startTime, endTime, "", "");
+            boolean includeBabySeat = jCheckBox1.isVisible() && jCheckBox1.isSelected();
             
-            // Format to 2 decimal places
-            jLabel10.setText(String.format("RM "+"%.2f",  + totalFare));
+            double totalFare = tempRental.calculateTotalFare(selectedVehicle, includeBabySeat);
+            jLabel10.setText(String.format("RM %.2f", totalFare));
             
-            return totalFare;  // ✅ Return the calculated fare
-            
+            return totalFare;
         } catch (Exception e) {
             jLabel10.setText("Error");
             System.err.println("Error calculating fare: " + e.getMessage());
-            return 0.0;  // ✅ Return 0 on error
+            return 0.0;
         }
     }
+
+    private LocalDateTime getSelectedDateTime(int hour) {
+        int year = (Integer) jSpinner1.getValue();
+        int month = (Integer) jSpinner2.getValue();
+        int day = (Integer) jSpinner3.getValue();
+        return LocalDateTime.of(year, month, day, hour, 0);
+    }    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -657,4 +689,24 @@ public class CarBooking extends javax.swing.JFrame {
     private javax.swing.JButton rentButton;
     private javax.swing.JSpinner returnHour;
     // End of variables declaration//GEN-END:variables
+
+    private void updateReturnHourModel() {
+        int currentPickupHour = (Integer) pickupHour.getValue();
+        int currentReturnHour = (Integer) returnHour.getValue();
+        int minReturnHour = currentPickupHour + 1;
+        
+        // Only update if the new minimum is valid
+        if (minReturnHour <= 23) {
+            // Ensure current return hour is at least the minimum
+            int newReturnHour = Math.max(currentReturnHour, minReturnHour);
+            
+            // Create new model with safe bounds
+            returnHour.setModel(new javax.swing.SpinnerNumberModel(
+                newReturnHour, 
+                minReturnHour, 
+                23, 
+                1
+            ));
+        }
+    }
 }

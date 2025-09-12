@@ -4,8 +4,6 @@
  */
 package com.example.BMCS2023.Assignment;
 
-import java.awt.Point;
-
 /**
  *
  * @author yanzhe
@@ -526,12 +524,8 @@ public class CarRatingReviewPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       Point pos = CarRatingReviewPage.this.getLocation(); 
-        CarDetailsPage frame = new CarDetailsPage();   // create an instance
-        frame.setResizable(false);       // lock resizing
-        frame.setLocation(pos); 
-        frame.setVisible(true);          // show the frame
-        CarRatingReviewPage.this.dispose();        // TODO add your handling code here:
+       GUIClient.switchPage(this, new CarDetailsPage());
+  // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

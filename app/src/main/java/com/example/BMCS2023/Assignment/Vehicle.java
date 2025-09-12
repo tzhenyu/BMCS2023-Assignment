@@ -50,9 +50,10 @@ public class Vehicle {
     private FuelType fueltype;
     private String carPlate;
     private double priceperday;
-    
+    private String imageFileName;
+
     // Constructors
-    public Vehicle(String id, String brand, String model, String color, Status status, Type type, String location, AddOn addOn, FuelType fuelType, double pricePerDay, String carPlate) {
+    public Vehicle(String id, String brand, String model, String color, Status status, Type type, String location, AddOn addOn, FuelType fuelType, double pricePerDay, String carPlate, String imageFileName) {
         this.id = id;
         this.brand = brand;
         this.model = model;
@@ -63,6 +64,8 @@ public class Vehicle {
         this.addon = addOn != null ? new AddOn[]{addOn} : null;
         this.fueltype = fuelType;
         this.priceperday = pricePerDay;
+        this.carPlate = carPlate;
+        this.imageFileName = imageFileName;
     }
     
     public Vehicle(){
@@ -180,6 +183,14 @@ public class Vehicle {
 
     public void setCarPlate(String carPlate) {
         this.carPlate = carPlate;
+    }
+    
+    public String getImageFileName() {
+        return imageFileName;
+    }
+
+    public void setImageFileName(String imageFileName) {
+        this.imageFileName = imageFileName;
     }
     
 }

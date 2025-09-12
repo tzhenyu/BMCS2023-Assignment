@@ -19,6 +19,16 @@ import com.google.gson.JsonParser;
  */
 public class UserProfile extends javax.swing.JFrame {
     private User currentUser;
+    
+    // NEW: Constructor that accepts a User object
+    public UserProfile(User user) {
+        this.currentUser = user;
+        initComponents();
+        loadUserData();
+        setTitle("User Profile - " + user.getUsername());
+    }
+    
+    // Keep existing constructor
     private String currentRentalId;
 
     /**
