@@ -13,6 +13,32 @@ import javax.swing.JOptionPane;
  */
 public class ConditionChecklist extends javax.swing.JFrame {
     final String rentalId;
+    private ConditionCompleteCallback conditionCompleteCallback;
+    private java.util.function.BiConsumer<String, Boolean> functionalCallback;
+    
+    // Traditional callback interface
+    public interface ConditionCompleteCallback {
+        void onConditionComplete(String rentalId, boolean success, String message);
+    }
+    
+    // Functional interface (alternative)
+    public void setOnConditionComplete(java.util.function.BiConsumer<String, Boolean> callback) {
+        this.functionalCallback = callback;
+    }
+    
+    // Traditional setter
+    public void setConditionCompleteCallback(ConditionCompleteCallback callback) {
+        this.conditionCompleteCallback = callback;
+    }
+    
+    private void notifyCallbacks(boolean success, String message) {
+        if (conditionCompleteCallback != null) {
+            conditionCompleteCallback.onConditionComplete(rentalId, success, message);
+        }
+        if (functionalCallback != null) {
+            functionalCallback.accept(rentalId, success);
+        }
+    }
 
     /**
      * Creates new form ConditionChecklist
@@ -130,26 +156,30 @@ public class ConditionChecklist extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
+    private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {
         if (!allItemsChecked()) {
             JOptionPane.showMessageDialog(this, "Please check all items before proceeding");
+            notifyCallbacks(false, "Checklist incomplete");
             return;
         }
 
-        JOptionPane.showMessageDialog(this, "Drive Safe!", "Happy Drive", JOptionPane.INFORMATION_MESSAGE);
-        
         try {
-            // Update rental status to active
             JsonObject updateData = new JsonObject();
             updateData.addProperty("status", "active");
             DatabaseClient.updateRecord("rentals", rentalId, updateData);
             
+            JOptionPane.showMessageDialog(this, "Drive Safe!", "Happy Drive", JOptionPane.INFORMATION_MESSAGE);
+            notifyCallbacks(true, "Checklist completed successfully");
+            
             this.dispose();
             new UserProfile().setVisible(true);
+            
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            String errorMsg = "Error: " + e.getMessage();
+            JOptionPane.showMessageDialog(this, errorMsg);
+            notifyCallbacks(false, errorMsg);
         }
-    }//GEN-LAST:event_nextButtonActionPerformed
+    }
 
     private boolean allItemsChecked() {
         return tyresCheckBox.isSelected() && 

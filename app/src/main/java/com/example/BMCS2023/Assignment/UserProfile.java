@@ -4,7 +4,8 @@
  */
 package com.example.BMCS2023.Assignment;
 
-
+import java.awt.Point;
+import java.util.List;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
@@ -62,7 +63,7 @@ public class UserProfile extends javax.swing.JFrame {
         dateLabel3.setText("");
     }
 
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
 private void initComponents() {
 
@@ -493,9 +494,11 @@ private void handlePickupFlow() {
         // Add a callback mechanism
         conditionFrame.setOnConditionCompleteCallback(() -> {
             try {
-                // Update rental status to PENDING (vehicle is now in use)
-                // and vehicle status to "rented"
-                updateRentalAndVehicleStatus("PENDING", "rented");
+                // Update rental status to AVAILABLE (vehicle is now in use)
+                updateRentalStatusInDatabase("AVAILABLE");
+                
+                // Also update the vehicle status to "rented"
+                updateVehicleStatus("rented");
                 
                 // Update button text to RETURN
                 statusButton1.setText("RETURN");
@@ -503,8 +506,7 @@ private void handlePickupFlow() {
                 
                 // Show success message
                 JOptionPane.showMessageDialog(UserProfile.this, 
-                    "Vehicle pickup completed successfully!\n" +
-                    "The vehicle is now in use.", 
+                    "Vehicle pickup completed successfully!", 
                     "Pickup Complete", 
                     JOptionPane.INFORMATION_MESSAGE);
                     
@@ -530,23 +532,20 @@ private void handlePickupFlow() {
 
 private void handleReturnFlow() {
     try {
+        // Update status to PENDING (return process started)
+        updateRentalStatusInDatabase("PENDING");
+        
         // Navigate to return vehicle page
         ReturnVehicle returnFrame = new ReturnVehicle(currentRentalId);
         
         // Set callback for when return is completed
         returnFrame.setOnReturnCompleteCallback(() -> {
             try {
-                // Update rental status to COMPLETED (if this status exists)
-                // If COMPLETED doesn't exist, you might need to add it to your database
-                // or use CONFIRMED to indicate completion
-                updateRentalAndVehicleStatus("COMPLETED", "available");
+                // Update status to COMPLETED
+                updateRentalStatusInDatabase("COMPLETED");
                 
-                // Show completion message with invoice instruction
-                JOptionPane.showMessageDialog(UserProfile.this,
-                    "Vehicle return completed successfully!\n" +
-                    "You can click on the rental panel to view your invoice.",
-                    "Return Complete - Invoice Available",
-                    JOptionPane.INFORMATION_MESSAGE);
+                // Also update the vehicle status back to "available"
+                updateVehicleStatus("available");
                 
                 // Refresh the user profile to show updated status
                 refreshUserProfile();
@@ -594,110 +593,39 @@ private void refreshUserProfile() {
     }
 }
 
-private void updateVehicleStatus(String newStatus) throws Exception {
-    try {
-        // Get the current rental to find the vehicle ID
-        Rental currentRental = DatabaseClient.getRecordById("rentals", currentRentalId, Rental.class);
-        if (currentRental != null && currentRental.getVehicleId() != null) {
-            
-            // Validate status input
-            String dbStatus;
-            switch(newStatus.toLowerCase()) {
-                case "available":
-                    dbStatus = "available";
-                    break;
-                case "rented":
-                    dbStatus = "rented";
-                    break;
-                case "maintenance":
-                    dbStatus = "maintenance";
-                    break;
-                default:
-                    throw new Exception("Invalid vehicle status: " + newStatus);
-            }
-            
-            // Create update patch using Map like in CarDetailsPage
-            java.util.Map<String, Object> patch = new java.util.HashMap<>();
-            patch.put("status", dbStatus);
-            
-            // Update vehicle status in vehicles table
-            String response = DatabaseClient.updateRecord("vehicles", currentRental.getVehicleId(), patch);
-            
-            System.out.println("Vehicle status updated to: " + dbStatus);
-            System.out.println("Database response: " + response);
-            
-        } else {
-            throw new Exception("Could not find vehicle ID for current rental");
-        }
-    } catch (Exception e) {
-        System.err.println("Error updating vehicle status: " + e.getMessage());
-        throw new Exception("Failed to update vehicle status: " + e.getMessage());
-    }
-}
-
-private void updateRentalAndVehicleStatus(String rentalStatus, String vehicleStatus) throws Exception {
+private void updateRentalStatusInDatabase(String newStatus) throws Exception {
     try {
         if (currentRentalId == null || currentRentalId.isEmpty()) {
             throw new Exception("No rental ID available for status update");
         }
         
-        // Update rental status first
-        String rentalResponse = DatabaseClient.updateRentalStatus(currentRentalId, rentalStatus);
-        System.out.println("Rental status updated to: " + rentalStatus);
-        System.out.println("Rental update response: " + rentalResponse);
+        // Use DatabaseClient's dedicated method for status updates
+        String result = DatabaseClient.updateRentalStatus(currentRentalId, newStatus);
         
-        // Update vehicle status second
-        updateVehicleStatusEnhanced(vehicleStatus);
-        
-        System.out.println("Both rental and vehicle status updated successfully");
+        System.out.println("Rental status updated to: " + newStatus);
+        System.out.println("Database response: " + result);
         
     } catch (Exception e) {
-        System.err.println("Error updating rental and vehicle status: " + e.getMessage());
-        throw new Exception("Failed to update status: " + e.getMessage());
+        System.err.println("Error updating rental status: " + e.getMessage());
+        throw new Exception("Failed to update rental status: " + e.getMessage());
     }
 }
 
-/**
- * Enhanced vehicle status update using Map approach like CarDetailsPage
- */
-private void updateVehicleStatusEnhanced(String newStatus) throws Exception {
+private void updateVehicleStatus(String newStatus) throws Exception {
     try {
         // Get the current rental to find the vehicle ID
         Rental currentRental = DatabaseClient.getRecordById("rentals", currentRentalId, Rental.class);
         if (currentRental != null && currentRental.getVehicleId() != null) {
+            // Update vehicle status in vehicles table using JsonObject
+            JsonObject vehicleUpdate = new JsonObject();
+            vehicleUpdate.addProperty("status", newStatus.toLowerCase());
             
-            // Validate status input
-            String dbStatus;
-            switch(newStatus.toLowerCase()) {
-                case "available":
-                    dbStatus = "available";
-                    break;
-                case "rented":
-                    dbStatus = "rented";
-                    break;
-                case "maintenance":
-                    dbStatus = "maintenance";
-                    break;
-                default:
-                    throw new Exception("Invalid vehicle status: " + newStatus);
-            }
-            
-            // Create update patch using Map like in CarDetailsPage
-            java.util.Map<String, Object> patch = new java.util.HashMap<>();
-            patch.put("status", dbStatus);
-            
-            // Update vehicle status in vehicles table
-            String response = DatabaseClient.updateRecord("vehicles", currentRental.getVehicleId(), patch);
-            
-            System.out.println("Vehicle status updated to: " + dbStatus);
-            System.out.println("Database response: " + response);
-            
-        } else {
-            throw new Exception("Could not find vehicle ID for current rental");
+            DatabaseClient.updateRecord("vehicles", currentRental.getVehicleId(), vehicleUpdate);
+            System.out.println("Vehicle status updated to: " + newStatus);
         }
     } catch (Exception e) {
-        System.err.println("Error updating vehicle status: " + e.getMessage());
-        throw new Exception("Failed to update vehicle status: " + e.getMessage());
+        System.err.println("Warning: Could not update vehicle status: " + e.getMessage());
+        // Don't throw this error as it's secondary to the main rental status update
     }
 }
 
@@ -789,11 +717,17 @@ private void updateUIElements(String vehicleId, String startTime, String status)
             tooltipText = "Rental confirmed - Click to proceed with pickup";
             jPanel1.setToolTipText("View rental details and proceed with pickup");
             break;
-        case "PENDING":
+        case "AVAILABLE":
             statusButton1.setText("RETURN");
             statusButton1.setEnabled(true);
             tooltipText = "Vehicle in use - Click to return";
             jPanel1.setToolTipText("Vehicle is currently in use - Click to return");
+            break;
+        case "PENDING":
+            statusButton1.setText("PENDING");
+            statusButton1.setEnabled(false);
+            tooltipText = "Return process in progress";
+            jPanel1.setToolTipText("Return process is in progress");
             break;
         case "COMPLETED":
             statusButton1.setText("COMPLETED");
@@ -925,11 +859,6 @@ private void setDefaultUserDisplayValues() {
     emergencyContactNumDisplayText.setText("N/A");
 }
 
-private void hideVehicleButton() {
-    hideStatusButton1(); // Reuse the existing method
-}
-
-
 /**
  * Shows rental panels based on available rental data
  * This method can be used to selectively show panels when rental data is available
@@ -1022,6 +951,6 @@ private java.awt.Label usernameDisplayText;
 private javax.swing.JLabel vehicleIDLabel1;
 private javax.swing.JLabel vehicleIDLabel2;
 private javax.swing.JLabel vehicleIDLabel3;
-// End of variables declaration                   
+// End of variables declaration//GEN-END:variables
 }
 
