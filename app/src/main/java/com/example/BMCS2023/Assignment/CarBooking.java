@@ -13,6 +13,8 @@ import java.net.URISyntaxException;
 
 import javax.swing.JOptionPane;
 
+import com.google.gson.JsonObject;
+
 import static java.time.LocalDateTime.now;
 
 /**
@@ -264,7 +266,7 @@ public class CarBooking extends javax.swing.JFrame {
                 vehicleId,
                 startTime,
                 endTime,
-                "confirmed",
+                "pickup",
                 paymentMethod  // Add payment method parameter
             );
             
@@ -274,8 +276,11 @@ public class CarBooking extends javax.swing.JFrame {
             String rentalResponse = Rental.createRental(rental);
 
             if (rentalResponse != null && !rentalResponse.isEmpty()) {
-                String updateStatus = Rental.updateVehicleStatus(vehicleId, Vehicle.Status.rented);
-                
+                JsonObject vehicle = DatabaseClient.getRecordByIdAsJson("vehicles", vehicleId);
+                if (vehicle != null) {
+                    vehicle.addProperty("status", "rented");
+                    String updateStatus =  DatabaseClient.updateRecord("vehicles", vehicleId, vehicle);
+                    
                 if (updateStatus != null && !updateStatus.isEmpty()) {
                     System.out.println("Rental created successfully.");
                     System.out.println("Vehicle status updated. Response: " + updateStatus);
@@ -286,6 +291,7 @@ public class CarBooking extends javax.swing.JFrame {
                         "Error", 
                         javax.swing.JOptionPane.ERROR_MESSAGE);
                 }
+            }
             } else {
                 javax.swing.JOptionPane.showMessageDialog(this, 
                     "Failed to create rental.", 

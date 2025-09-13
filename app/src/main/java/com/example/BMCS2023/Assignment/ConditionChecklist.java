@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
  * @author Joel
  */
 public class ConditionChecklist extends javax.swing.JFrame {
-    final String rentalId;
+    String rentalId;
     private ConditionCompleteCallback conditionCompleteCallback;
     private java.util.function.BiConsumer<String, Boolean> functionalCallback;
     
@@ -32,21 +32,26 @@ public class ConditionChecklist extends javax.swing.JFrame {
     }
     
     private void notifyCallbacks(boolean success, String message) {
+        String safeRentalId = rentalId != null ? rentalId : "unknown";
         if (conditionCompleteCallback != null) {
-            conditionCompleteCallback.onConditionComplete(rentalId, success, message);
+            conditionCompleteCallback.onConditionComplete(safeRentalId, success, message);
         }
         if (functionalCallback != null) {
-            functionalCallback.accept(rentalId, success);
+            functionalCallback.accept(safeRentalId, success);
         }
     }
 
     /**
      * Creates new form ConditionChecklist
      */
+    public ConditionChecklist() {
+        initComponents();
+    }
     public ConditionChecklist(String rentalId) {
         this.rentalId = rentalId;
         initComponents();
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -164,19 +169,31 @@ public class ConditionChecklist extends javax.swing.JFrame {
         }
 
         try {
+            if (rentalId == null || rentalId.trim().isEmpty()) {
+                throw new Exception("Rental ID is missing");
+            }
             JsonObject updateData = new JsonObject();
-            updateData.addProperty("status", "active");
+            updateData.addProperty("status", "return");
             DatabaseClient.updateRecord("rentals", rentalId, updateData);
-            
+
+
+            // Set vehicle status to available when rental is completed
+            JsonObject rental = DatabaseClient.getRecordByIdAsJson("rentals", rentalId);
+            if (rental != null && rental.has("vehicleId") && !rental.get("vehicleId").isJsonNull()) {
+                String vehicleId = rental.get("vehicleId").getAsString();
+                JsonObject vehicle = DatabaseClient.getRecordByIdAsJson("vehicles", vehicleId);
+                if (vehicle != null) {
+                    vehicle.addProperty("status", "rented");
+                    DatabaseClient.updateRecord("vehicles", vehicleId, vehicle);
+                }
+            }
             JOptionPane.showMessageDialog(this, "Drive Safe!", "Happy Drive", JOptionPane.INFORMATION_MESSAGE);
             notifyCallbacks(true, "Checklist completed successfully");
-            
-            this.dispose();
-            new UserProfile().setVisible(true);
-            
+            GUIClient.switchPage(this, new UserProfile());
         } catch (Exception e) {
-            String errorMsg = "Error: " + e.getMessage();
-            JOptionPane.showMessageDialog(this, errorMsg);
+            String errorMsg = "Error: " + (e.getMessage() != null ? e.getMessage() : "Unknown error");
+            System.out.println(errorMsg);
+            JOptionPane.showMessageDialog(this, "Cannot update!");
             notifyCallbacks(false, errorMsg);
         }
     }

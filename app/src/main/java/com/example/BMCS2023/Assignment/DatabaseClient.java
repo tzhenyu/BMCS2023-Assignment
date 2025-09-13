@@ -99,6 +99,10 @@ public class DatabaseClient {
 
     
 public static int deleteById(String tableName, String columnName, String id) throws Exception {
+    if (id == null || id.trim().isEmpty()) {
+        throw new Exception("ID cannot be null or empty");
+    }
+    
     String encodedId = URLEncoder.encode(id, StandardCharsets.UTF_8);
     String url = SUPABASE_URL + "/rest/v1/" + tableName + "?" 
                + columnName + "=eq." + encodedId;
@@ -123,6 +127,10 @@ public static int deleteById(String tableName, String columnName, String id) thr
 
     
     public static <T> String updateRecord(String tableName, String id, T record) throws Exception {
+    if (id == null || id.trim().isEmpty()) {
+        throw new Exception("ID cannot be null or empty");
+    }
+    
     String json = gson.toJson(record);
 
     // ✅ encode the UUID to avoid errors
@@ -170,6 +178,10 @@ public static int deleteById(String tableName, String columnName, String id) thr
     
 // Gets a single record by id. Returns null if not found.
 public static <T> T getRecordById(String tableName, String id, Class<T> clazz) throws Exception {
+    if (id == null || id.trim().isEmpty()) {
+        throw new Exception("ID cannot be null or empty");
+    }
+    
     // encode ID (handles UUIDs or special chars)
     String encoded = URLEncoder.encode(id, StandardCharsets.UTF_8);
 
@@ -201,6 +213,10 @@ public static <T> T getRecordById(String tableName, String id, Class<T> clazz) t
     return array[0];
 }
     public static JsonObject getRecordByIdAsJson(String table, String id) throws Exception {
+    if (id == null || id.trim().isEmpty()) {
+        throw new Exception("ID cannot be null or empty");
+    }
+    
     String encoded = URLEncoder.encode(id, StandardCharsets.UTF_8);
     HttpRequest request = HttpRequest.newBuilder()
         .uri(URI.create(SUPABASE_URL + "/rest/v1/" + table + "?id=eq." + encoded + "&select=*"))
@@ -231,6 +247,10 @@ public static String updateRentalStatus(String rentalId, String newStatus) throw
     return updateRecord("rentals", rentalId, statusUpdate);
 }
 public static Feedback[] getFeedbackByVehicleId(String vehicleId) throws Exception {
+    if (vehicleId == null || vehicleId.trim().isEmpty()) {
+        throw new Exception("Vehicle ID cannot be null or empty");
+    }
+    
     String encoded = URLEncoder.encode(vehicleId, StandardCharsets.UTF_8);
 
     HttpRequest request = HttpRequest.newBuilder()
@@ -252,6 +272,10 @@ public static Feedback[] getFeedbackByVehicleId(String vehicleId) throws Excepti
 }
 
     public static int deleteById(String tableName, String id) throws Exception {
+    if (id == null || id.trim().isEmpty()) {
+        throw new Exception("ID cannot be null or empty");
+    }
+    
     String encoded = URLEncoder.encode(id, StandardCharsets.UTF_8);
     HttpRequest request = HttpRequest.newBuilder()
         .uri(URI.create(SUPABASE_URL + "/rest/v1/" + tableName + "?id=eq." + encoded))

@@ -33,22 +33,6 @@ public class ReturnVehicle extends javax.swing.JFrame {
         this.onReturnCompleteCallback = callback;
     }
     
-    /**
-     * Handles navigation back to menu
-     */
-    private void handleBackToMenu() {
-        try {
-            UserProfile userProfile = new UserProfile();
-            userProfile.setVisible(true);
-            this.dispose();
-        } catch (Exception e) {
-            System.err.println("Error returning to menu: " + e.getMessage());
-            JOptionPane.showMessageDialog(this,
-                "Error returning to menu: " + e.getMessage(),
-                "Navigation Error",
-                JOptionPane.ERROR_MESSAGE);
-        }
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -182,7 +166,7 @@ public class ReturnVehicle extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        handleBackToMenu();
+        GUIClient.switchPage(this, new UserProfile());
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void returnVehicleSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnVehicleSubmitButtonActionPerformed
@@ -199,20 +183,30 @@ public class ReturnVehicle extends javax.swing.JFrame {
                 JOptionPane.YES_NO_OPTION);
             
             if (result == JOptionPane.YES_OPTION) {
-                // Execute callback to update rental status
                 if (onReturnCompleteCallback != null) {
                     onReturnCompleteCallback.run();
                 }
-                
-                // Show success message
+                JsonObject rentalUpdate = new JsonObject();
+                rentalUpdate.addProperty("status", "completed");
+                DatabaseClient.updateRecord("rentals", rentalId, rentalUpdate);
+
+                JsonObject rental = DatabaseClient.getRecordByIdAsJson("rentals", rentalId);
+                if (rental != null && rental.has("vehicleId") && !rental.get("vehicleId").isJsonNull()) {
+                    String vehicleId = rental.get("vehicleId").getAsString();
+                    JsonObject vehicle = DatabaseClient.getRecordByIdAsJson("vehicles", vehicleId);
+                    if (vehicle != null) {
+                        vehicle.addProperty("status", "available");
+                        DatabaseClient.updateRecord("vehicles", vehicleId, vehicle);
+}
+                }
+
                 JOptionPane.showMessageDialog(this,
                     "Vehicle return completed successfully!\n" +
                     "Thank you for your feedback.",
                     "Return Complete",
                     JOptionPane.INFORMATION_MESSAGE);
-                
-                // Return to UserProfile
-                handleBackToMenu();
+
+                GUIClient.switchPage(this, new UserProfile());
             }
             
         } catch (Exception e) {

@@ -14,7 +14,9 @@ public class Rental {
     public enum Status {
         AVAILABLE,
         PENDING,
-        CONFIRMED
+        PICKUP,
+        RETURN,
+        COMPLETED
     }
     
     private String id;
