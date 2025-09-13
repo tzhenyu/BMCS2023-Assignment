@@ -8,15 +8,26 @@ package com.example.BMCS2023.Assignment;
  *
  * @author H 4 Z A R D
  */
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
+import com.google.gson.JsonObject;
+import javax.swing.JOptionPane;
+
 public class InvoicePage extends javax.swing.JFrame {
 
     /**
      * Creates new form InvoicePage
      */
-    public InvoicePage() {
+//    public InvoicePage() {
+//        initComponents();
+//        loadUserData();
+//    }
+    public InvoicePage(String rentalId) {
         initComponents();
         loadUserData();
+        loadInvoiceData(rentalId);
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -240,11 +251,11 @@ public class InvoicePage extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new InvoicePage().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new InvoicePage(String rentalId).setVisible(true);
+//            }
+//        });
     }
 
     private void loadUserData() {
@@ -258,6 +269,61 @@ public class InvoicePage extends javax.swing.JFrame {
         }
     }
     
+    private void loadInvoiceData(String rentalId) {
+        try {
+            JsonObject rental = DatabaseClient.getRecordByIdAsJson("rentals", rentalId);
+            System.out.println("DEBUG: Loading invoice for rental ID: " + rentalId);
+
+            DefaultTableModel model = (DefaultTableModel) invoiceTable.getModel();
+            model.setRowCount(0); // Clear rows
+
+            if (rental != null) {
+                String vehicleId = rental.has("vehicleId") ? rental.get("vehicleId").getAsString() : "N/A";
+                String method = rental.has("method") ? rental.get("method").getAsString() : "N/A";
+                double amount = rental.has("amount") ? rental.get("amount").getAsDouble() : 0.0;
+
+                JsonObject vehicle = DatabaseClient.getRecordByIdAsJson("vehicles", vehicleId);
+
+                if (vehicle != null) {
+                    model.addRow(new Object[]{
+                        vehicleId,
+                        vehicle.has("brand") ? vehicle.get("brand").getAsString() : "Unknown",
+                        vehicle.has("model") ? vehicle.get("model").getAsString() : "Unknown",
+                        method,
+                        amount
+                    });
+
+                    System.out.println("DEBUG: Added invoice row for vehicle: " + vehicleId);
+                }
+            } else {
+                model.addRow(new Object[]{
+                    "No rental data available", "", "", "", 0.0
+            });
+                System.out.println("DEBUG: No rental found for ID: " + rentalId);
+            }
+
+            invoiceTable.setModel(model);
+
+            // Center align all columns
+            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+            centerRenderer.setHorizontalAlignment(javax.swing.JLabel.CENTER);
+
+            for (int i = 0; i < invoiceTable.getColumnCount(); i++) {
+                invoiceTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+            }
+
+            invoiceTable.setRowHeight(25);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this,
+                "Error loading invoice data: " + ex.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Label IDDisplayText;
     private java.awt.Label contactNum;
