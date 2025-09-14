@@ -45,6 +45,7 @@ public class ConditionChecklist extends javax.swing.JFrame {
      * Creates new form ConditionChecklist
      */
     public ConditionChecklist() {
+        setTitle("Pick Up Cars");
         initComponents();
     }
     public ConditionChecklist(String rentalId) {

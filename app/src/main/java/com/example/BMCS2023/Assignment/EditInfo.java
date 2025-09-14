@@ -17,6 +17,7 @@ public class EditInfo extends javax.swing.JFrame {
      * Creates new form EditInfo
      */
     public EditInfo() {
+        setTitle("Edit User Info");
         initComponents();
         loadCurrentUserInfo(); 
     }

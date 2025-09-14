@@ -18,6 +18,7 @@ public class CarDetails extends javax.swing.JFrame {
      */
     public CarDetails(Vehicle vehicle) {
         this.selectedVehicle = vehicle;
+        setTitle("Car Details");
         initComponents();
         populateVehicleInfo();
         loadFeedbackData();

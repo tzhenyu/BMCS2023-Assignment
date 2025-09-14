@@ -14,6 +14,7 @@ public class CarRatingReviewPage extends javax.swing.JFrame {
      * Creates new form AdminDashboard
      */
     public CarRatingReviewPage() {
+        setTitle("Car Rating");
         initComponents();
     }
 

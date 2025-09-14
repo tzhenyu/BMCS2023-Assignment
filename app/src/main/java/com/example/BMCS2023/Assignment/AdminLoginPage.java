@@ -15,6 +15,7 @@ public class AdminLoginPage extends javax.swing.JFrame {
      * Creates new form AdminLoginPage
      */
     public AdminLoginPage() {
+        setTitle("Admin Login");
         initComponents();
     }
 

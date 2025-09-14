@@ -20,6 +20,7 @@ public class RegisterPage extends javax.swing.JFrame {
      * Creates new form RegisterPage
      */
     public RegisterPage() {
+        setTitle("Register");
         initComponents();
     }
 

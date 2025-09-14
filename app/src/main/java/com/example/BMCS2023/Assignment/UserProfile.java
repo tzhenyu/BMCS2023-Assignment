@@ -34,6 +34,7 @@ public class UserProfile extends javax.swing.JFrame {
      */
     public UserProfile() {
         this.currentUser = SessionManager.getCurrentUser();
+        setTitle("Invoice History");
         initComponents();
         initializeRentalButton();
         

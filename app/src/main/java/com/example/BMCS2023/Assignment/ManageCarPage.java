@@ -14,12 +14,13 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author yanzhe
  */
-public class ManageCarPageTest extends javax.swing.JFrame {
+public class ManageCarPage extends javax.swing.JFrame {
 
     /**
      * Creates new form AdminDashboard
      */
-    public ManageCarPageTest() {
+    public ManageCarPage() {
+        setTitle("Manage Car");
         initComponents();
         loadCarData();
         cartable.getTableHeader().setFont(new java.awt.Font("Times New Roman", java.awt.Font.BOLD, 14));
@@ -269,12 +270,12 @@ public class ManageCarPageTest extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
- new ManageCarPageTest() {{ setResizable(false); setLocation(ManageCarPageTest.this.getLocation()); setVisible(true); }};
-ManageCarPageTest.this.dispose();
+ new ManageCarPage() {{ setResizable(false); setLocation(ManageCarPage.this.getLocation()); setVisible(true); }};
+ManageCarPage.this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        GUIClient.switchPage(this, new ManageUserPageTest());
+        GUIClient.switchPage(this, new ManageUserPage());
        // close current frame         // TODO add your handling code here:        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -408,8 +409,8 @@ int row = cartable.getSelectedRow();
     }//GEN-LAST:event_btndeleteActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-      new CarMenu() {{ setResizable(false); setLocation(ManageCarPageTest.this.getLocation()); setVisible(true); }};
-ManageCarPageTest.this.dispose();
+      new CarMenu() {{ setResizable(false); setLocation(ManageCarPage.this.getLocation()); setVisible(true); }};
+ManageCarPage.this.dispose();
 
     }//GEN-LAST:event_jButton3ActionPerformed
 

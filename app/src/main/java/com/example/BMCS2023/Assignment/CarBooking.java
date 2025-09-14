@@ -29,6 +29,7 @@ public class CarBooking extends javax.swing.JFrame {
      */
     
     public CarBooking() {
+        setTitle("Car Booking");
         initComponents();
         loadTimeComponents();
 

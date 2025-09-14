@@ -16,6 +16,7 @@ public class UserLoginPage extends javax.swing.JFrame {
      * Creates new form UserLoginPage
      */
     public UserLoginPage() {
+        setTitle("Login");
         initComponents();
     }
 

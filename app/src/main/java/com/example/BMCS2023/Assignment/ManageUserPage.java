@@ -16,20 +16,21 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author yanzhe
  */
-public class ManageUserPageTest extends javax.swing.JFrame {
+public class ManageUserPage extends javax.swing.JFrame {
     private Map<String, User> userMap = new HashMap<>();
     /**
      * Creates new form AdminDashboard
      */
-   public ManageUserPageTest() {
-    initComponents();
-    loadUserData();
-    usertable.getTableHeader().setFont(new java.awt.Font("Times New Roman", java.awt.Font.BOLD, 14));
-    usertable.getTableHeader().setBackground(Color.BLACK);
-    usertable.getTableHeader().setForeground(Color.WHITE);
-    
-    // Make table non-editable
-    usertable.setDefaultEditor(Object.class, null);
+   public ManageUserPage() {
+        setTitle("Manage User");
+        initComponents();
+        loadUserData();
+        usertable.getTableHeader().setFont(new java.awt.Font("Times New Roman", java.awt.Font.BOLD, 14));
+        usertable.getTableHeader().setBackground(Color.BLACK);
+        usertable.getTableHeader().setForeground(Color.WHITE);
+
+        // Make table non-editable
+        usertable.setDefaultEditor(Object.class, null);
    }
     
     @SuppressWarnings("unchecked")
@@ -266,18 +267,18 @@ public class ManageUserPageTest extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-     new ManageCarPageTest() {{ setResizable(false); setLocation(ManageUserPageTest.this.getLocation()); setVisible(true); }};
-ManageUserPageTest.this.dispose();    // close current page          // close current frame         // TODO add your handling code here:        // TODO add your handling code here:                                        
+     new ManageCarPage() {{ setResizable(false); setLocation(ManageUserPage.this.getLocation()); setVisible(true); }};
+ManageUserPage.this.dispose();    // close current page          // close current frame         // TODO add your handling code here:        // TODO add your handling code here:                                        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-         new ManageUserPageTest() {{ setResizable(false); setLocation(ManageUserPageTest.this.getLocation()); setVisible(true); }};
-ManageUserPageTest.this.dispose();
+         new ManageUserPage() {{ setResizable(false); setLocation(ManageUserPage.this.getLocation()); setVisible(true); }};
+ManageUserPage.this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-         new AdminDashboard() {{ setResizable(false); setLocation(ManageUserPageTest.this.getLocation()); setVisible(true); }};
-ManageUserPageTest.this.dispose();
+         new AdminDashboard() {{ setResizable(false); setLocation(ManageUserPage.this.getLocation()); setVisible(true); }};
+ManageUserPage.this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void usertableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usertableMouseClicked
@@ -383,8 +384,8 @@ int selectedRow = usertable.getSelectedRow();
     }//GEN-LAST:event_btndeleteActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-new CarMenu() {{ setResizable(false); setLocation(ManageUserPageTest.this.getLocation()); setVisible(true); }};
-ManageUserPageTest.this.dispose();        // TODO add your handling code here:
+new CarMenu() {{ setResizable(false); setLocation(ManageUserPage.this.getLocation()); setVisible(true); }};
+ManageUserPage.this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
 

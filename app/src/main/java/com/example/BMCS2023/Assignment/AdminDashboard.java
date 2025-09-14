@@ -14,6 +14,7 @@ public class AdminDashboard extends javax.swing.JFrame {
      * Creates new form AdminDashboard
      */
     public AdminDashboard() {
+        setTitle("Car Rental App");
         initComponents();
     }
 
@@ -168,13 +169,13 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        GUIClient.switchPage(this, new ManageUserPageTest());
+        GUIClient.switchPage(this, new ManageUserPage());
                // close current frame         // TODO add your handling code here:// TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        GUIClient.switchPage(this, new ManageCarPageTest());
+        GUIClient.switchPage(this, new ManageCarPage());
                 // close current frame         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 

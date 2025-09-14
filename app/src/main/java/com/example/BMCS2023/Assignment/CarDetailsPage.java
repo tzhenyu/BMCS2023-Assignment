@@ -4,7 +4,7 @@
  */
 package com.example.BMCS2023.Assignment;
 
-import com.example.BMCS2023.Assignment.ManageCarPageTest;
+import com.example.BMCS2023.Assignment.ManageCarPage;
 import com.example.BMCS2023.Assignment.DatabaseClient;
 import com.example.BMCS2023.Assignment.Vehicle;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -27,6 +27,7 @@ public class CarDetailsPage extends javax.swing.JFrame {
 
 
     public CarDetailsPage() {
+        setTitle("Car Details");
         initComponents();
     }
     
@@ -578,7 +579,7 @@ private void loadFeedback(String vehicleId) {
     Point currentLocation = this.getLocation();
     
     // Create and show the ManageCarPageTest
-    ManageCarPageTest manageCarPage = new ManageCarPageTest();
+    ManageCarPage manageCarPage = new ManageCarPage();
     manageCarPage.setResizable(false);
     manageCarPage.setLocation(currentLocation);
     manageCarPage.setVisible(true);

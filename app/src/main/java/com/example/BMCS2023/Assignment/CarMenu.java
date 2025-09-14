@@ -30,6 +30,7 @@ public class CarMenu extends javax.swing.JFrame {
      * Creates new form CarMenu
      */
     public CarMenu() {
+        setTitle("Car Rental App");
         initComponents();
         initializeArrays();
         updateUIBasedOnLogin();

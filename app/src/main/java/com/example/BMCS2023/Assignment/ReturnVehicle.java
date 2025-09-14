@@ -22,8 +22,22 @@ public class ReturnVehicle extends javax.swing.JFrame {
      */
     public ReturnVehicle(String rentalId) {
         this.rentalId = rentalId;
+        setTitle("Return Vehicle");
         initComponents();
         returnDateText.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        try {
+            JsonObject rental = DatabaseClient.getRecordByIdAsJson("rentals", rentalId);
+            if (rental != null && rental.has("vehicleId") && !rental.get("vehicleId").isJsonNull()) {
+                String vehicleId = rental.get("vehicleId").getAsString();
+                JsonObject vehicle = DatabaseClient.getRecordByIdAsJson("vehicles", vehicleId);
+                if (vehicle != null && vehicle.has("location") && !vehicle.get("location").isJsonNull()) {
+                    addressText.setText(vehicle.get("location").getAsString());
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error loading vehicle data: " + e.getMessage());
+            addressText.setText("Location unavailable");
+        }
     }
     
     /**
@@ -67,8 +81,6 @@ public class ReturnVehicle extends javax.swing.JFrame {
 
         label3.setText("Rating:");
 
-        addressText.setText("30, JALAN ABC, TAMAN BUNGA RAYA, 40596 KUALA LUMPUR");
-
         label4.setText("Address:");
 
         ratingTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -77,7 +89,7 @@ public class ReturnVehicle extends javax.swing.JFrame {
             }
         });
 
-        label5.setText("/ 10");
+        label5.setText("/ 5");
 
         label6.setText("Feedback:");
 
@@ -150,7 +162,7 @@ public class ReturnVehicle extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ratingTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(label5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -161,6 +173,8 @@ public class ReturnVehicle extends javax.swing.JFrame {
                 .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
         );
+
+        label5.getAccessibleContext().setAccessibleName("/ 4");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -176,6 +190,10 @@ public class ReturnVehicle extends javax.swing.JFrame {
                 return;
             }
             
+            String feedback = feedbackTextField.getText();
+            String rating = ratingTextField.getText();
+
+
             // Show confirmation dialog
             int result = JOptionPane.showConfirmDialog(this,
                 "Confirm vehicle return? This action cannot be undone.",
@@ -197,7 +215,24 @@ public class ReturnVehicle extends javax.swing.JFrame {
                     if (vehicle != null) {
                         vehicle.addProperty("status", "available");
                         DatabaseClient.updateRecord("vehicles", vehicleId, vehicle);
-}
+                    }
+                    // Insert feedback record
+                    User currentUser = SessionManager.getCurrentUser();
+                    if (currentUser != null) {
+                        JsonObject feedbackRecord = new JsonObject();
+                        feedbackRecord.addProperty("id", java.util.UUID.randomUUID().toString());
+                        feedbackRecord.addProperty("user_id", currentUser.getUserId());
+                        feedbackRecord.addProperty("vehicle_id", vehicleId);
+                        int ratingValue = 0;
+                        try {
+                            ratingValue = Integer.parseInt(ratingTextField.getText().trim());
+                        } catch (Exception ex) {
+                            ratingValue = 5;
+                        }
+                        feedbackRecord.addProperty("rating", Math.max(1, Math.min(5, ratingValue)));
+                        feedbackRecord.addProperty("comment", feedbackTextField.getText());
+                        DatabaseClient.insertRecords("feedback", new JsonObject[]{feedbackRecord});
+                    }
                 }
 
                 JOptionPane.showMessageDialog(this,
