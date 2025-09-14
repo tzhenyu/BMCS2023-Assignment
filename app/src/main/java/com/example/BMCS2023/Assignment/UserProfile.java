@@ -18,14 +18,6 @@ import com.google.gson.JsonParser;
 public class UserProfile extends javax.swing.JFrame {
     private User currentUser;
     
-    // NEW: Constructor that accepts a User object
-    public UserProfile(User user) {
-        this.currentUser = user;
-        initComponents();
-        loadUserData();
-        setTitle("User Profile - " + user.getUsername());
-    }
-    
     // Keep existing constructor
     private String currentRentalId;
 
@@ -521,8 +513,6 @@ public class UserProfile extends javax.swing.JFrame {
     private void editInfoButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editInfoButton1ActionPerformed
         GUIClient.switchPage(this, new InvoiceHistory());
     }//GEN-LAST:event_editInfoButton1ActionPerformed
-
-    // ============ CUSTOM METHODS ============
 
 
     public void loadStatusButton1ForCurrentUser() {
