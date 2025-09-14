@@ -4,7 +4,6 @@
  */
 package com.example.BMCS2023.Assignment;
 
-import com.google.gson.JsonObject;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
@@ -26,13 +25,10 @@ public class ReturnVehicle extends javax.swing.JFrame {
         initComponents();
         returnDateText.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
         try {
-            JsonObject rental = DatabaseClient.getRecordByIdAsJson("rentals", rentalId);
-            if (rental != null && rental.has("vehicleId") && !rental.get("vehicleId").isJsonNull()) {
-                String vehicleId = rental.get("vehicleId").getAsString();
-                JsonObject vehicle = DatabaseClient.getRecordByIdAsJson("vehicles", vehicleId);
-                if (vehicle != null && vehicle.has("location") && !vehicle.get("location").isJsonNull()) {
-                    addressText.setText(vehicle.get("location").getAsString());
-                }
+            String vehicleId = Rental.getVehicleIdFromRental(rentalId);
+            if (vehicleId != null) {
+                String location = Rental.getVehicleLocation(vehicleId);
+                addressText.setText(location);
             }
         } catch (Exception e) {
             System.err.println("Error loading vehicle data: " + e.getMessage());
@@ -174,7 +170,7 @@ public class ReturnVehicle extends javax.swing.JFrame {
                 .addGap(29, 29, 29))
         );
 
-        label5.getAccessibleContext().setAccessibleName("/ 4");
+        label5.getAccessibleContext().setAccessibleName("/ 5");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -189,9 +185,6 @@ public class ReturnVehicle extends javax.swing.JFrame {
             if (!validateInputs()) {
                 return;
             }
-            
-            String feedback = feedbackTextField.getText();
-            String rating = ratingTextField.getText();
 
 
             // Show confirmation dialog
@@ -204,34 +197,34 @@ public class ReturnVehicle extends javax.swing.JFrame {
                 if (onReturnCompleteCallback != null) {
                     onReturnCompleteCallback.run();
                 }
-                JsonObject rentalUpdate = new JsonObject();
-                rentalUpdate.addProperty("status", "completed");
-                DatabaseClient.updateRecord("rentals", rentalId, rentalUpdate);
-
-                JsonObject rental = DatabaseClient.getRecordByIdAsJson("rentals", rentalId);
-                if (rental != null && rental.has("vehicleId") && !rental.get("vehicleId").isJsonNull()) {
-                    String vehicleId = rental.get("vehicleId").getAsString();
-                    JsonObject vehicle = DatabaseClient.getRecordByIdAsJson("vehicles", vehicleId);
-                    if (vehicle != null) {
-                        vehicle.addProperty("status", "available");
-                        DatabaseClient.updateRecord("vehicles", vehicleId, vehicle);
+                
+                // Complete the rental
+                boolean rentalCompleted = Rental.completeRental(rentalId);
+                if (!rentalCompleted) {
+                    throw new Exception("Failed to complete rental");
+                }
+                
+                // Get vehicle ID and return it to available status
+                String vehicleId = Rental.getVehicleIdFromRental(rentalId);
+                if (vehicleId != null) {
+                    boolean vehicleReturned = Rental.returnVehicleToAvailable(vehicleId);
+                    if (!vehicleReturned) {
+                        throw new Exception("Failed to return vehicle to available status");
                     }
-                    // Insert feedback record
+                    
+                    // Create feedback record
                     User currentUser = GUIClient.getCurrentUser();
                     if (currentUser != null) {
-                        JsonObject feedbackRecord = new JsonObject();
-                        feedbackRecord.addProperty("id", java.util.UUID.randomUUID().toString());
-                        feedbackRecord.addProperty("user_id", currentUser.getUserId());
-                        feedbackRecord.addProperty("vehicle_id", vehicleId);
-                        int ratingValue = 0;
-                        try {
-                            ratingValue = Integer.parseInt(ratingTextField.getText().trim());
-                        } catch (Exception ex) {
-                            ratingValue = 5;
+                        boolean feedbackCreated = Feedback.createFeedback(
+                            currentUser.getUserId(),
+                            vehicleId,
+                            ratingTextField.getText(),
+                            feedbackTextField.getText()
+                        );
+                        
+                        if (!feedbackCreated) {
+                            System.err.println("Warning: Failed to create feedback record");
                         }
-                        feedbackRecord.addProperty("rating", Math.max(1, Math.min(5, ratingValue)));
-                        feedbackRecord.addProperty("comment", feedbackTextField.getText());
-                        DatabaseClient.insertRecords("feedback", new JsonObject[]{feedbackRecord});
                     }
                 }
 
@@ -254,7 +247,6 @@ public class ReturnVehicle extends javax.swing.JFrame {
     }//GEN-LAST:event_returnVehicleSubmitButtonActionPerformed
 
     private void ratingTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ratingTextFieldActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_ratingTextFieldActionPerformed
 
     private boolean validateInputs() {

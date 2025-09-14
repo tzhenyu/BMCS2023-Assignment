@@ -420,7 +420,6 @@ public class CarDetails extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        // TODO add your handling code here:
         GUIClient.switchPage(this, new CarMenu());
     }//GEN-LAST:event_backButtonActionPerformed
 

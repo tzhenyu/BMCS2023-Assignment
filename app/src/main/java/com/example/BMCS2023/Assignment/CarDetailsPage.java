@@ -4,9 +4,6 @@
  */
 package com.example.BMCS2023.Assignment;
 
-import com.example.BMCS2023.Assignment.ManageCarPage;
-import com.example.BMCS2023.Assignment.DatabaseClient;
-import com.example.BMCS2023.Assignment.Vehicle;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.Color;
 import java.awt.Point;
@@ -32,40 +29,37 @@ public class CarDetailsPage extends javax.swing.JFrame {
     }
     
     public CarDetailsPage(String vehicleId) {
-    initComponents();
-    this.currentVehicleId = vehicleId;
-    loadVehicle(vehicleId);
-    loadFeedback(vehicleId);
-    tblFeedback.getTableHeader().setFont(new java.awt.Font("Times New Roman", java.awt.Font.BOLD, 14));
-    tblFeedback.getTableHeader().setBackground(Color.BLACK);
-    tblFeedback.getTableHeader().setForeground(Color.WHITE);
-    
-    cmbStatus.setRenderer(new javax.swing.DefaultListCellRenderer() {
-        @Override
-        public java.awt.Component getListCellRendererComponent(javax.swing.JList<?> list, Object value, 
-                int index, boolean isSelected, boolean cellHasFocus) {
-            javax.swing.JLabel label = (javax.swing.JLabel) super.getListCellRendererComponent(list, value, 
-                index, isSelected, cellHasFocus);
-            label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-            return label;
-        }
-    });
+        initComponents();
+        this.currentVehicleId = vehicleId;
+        loadVehicle(vehicleId);
+        loadFeedback(vehicleId);
+        tblFeedback.getTableHeader().setFont(new java.awt.Font("Times New Roman", java.awt.Font.BOLD, 14));
+        tblFeedback.getTableHeader().setBackground(Color.BLACK);
+        tblFeedback.getTableHeader().setForeground(Color.WHITE);
+        
+        cmbStatus.setRenderer(new javax.swing.DefaultListCellRenderer() {
+            @Override
+            public java.awt.Component getListCellRendererComponent(javax.swing.JList<?> list, Object value, 
+                    int index, boolean isSelected, boolean cellHasFocus) {
+                javax.swing.JLabel label = (javax.swing.JLabel) super.getListCellRendererComponent(list, value, 
+                    index, isSelected, cellHasFocus);
+                label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                return label;
+            }
+        });
 }
 
 
      
-      private void loadVehicle(String carId) {
+private void loadVehicle(String carId) {
           
     try {
-        
-        // Load vehicle object
+ 
         Vehicle v = DatabaseClient.getRecordById("vehicles", carId, Vehicle.class);
         this.vehicle = v;
 
-        // 🔥 Also fetch raw JSON for extra fields
         com.google.gson.JsonObject rawJson = DatabaseClient.getRecordByIdAsJson("vehicles", carId);
 
-        // Get fuel_type string from JSON
         String fuelTypeRaw = rawJson.has("fuel_type") && !rawJson.get("fuel_type").isJsonNull()
                 ? rawJson.get("fuel_type").getAsString()
                 : null;
@@ -85,7 +79,7 @@ public class CarDetailsPage extends javax.swing.JFrame {
         lblModel.setText(v.getModel());
         lblColor.setText(v.getColor());
         lblLocation.setText(v.getLocation());
-        lblFuel.setText(fuelDisplay);  // ✅ FIXED
+        lblFuel.setText(fuelDisplay);  
         lblPlate.setText(v.getCarPlate());
         lblPrice.setText("RM " + v.getPricePerDay());
         lblAddons.setText(v.getAddOnsAsString());

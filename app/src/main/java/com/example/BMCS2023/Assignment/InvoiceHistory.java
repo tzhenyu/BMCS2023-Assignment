@@ -4,11 +4,6 @@
  */
 package com.example.BMCS2023.Assignment;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -101,42 +96,18 @@ public class InvoiceHistory extends javax.swing.JFrame {
             }
 
             String userId = currentUser.getUserId();
-            String result = DatabaseClient.readRecords("rentals");
+            Rental[] userRentals = Rental.getRentalsByUserId(userId);
             
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            model.setRowCount(0); // Clear existing rows
+            model.setColumnIdentifiers(new Object[]{"Car", "Rental Time", "Payment Method", "Amount (RM)"});
+            model.setRowCount(0);
 
-            if (result != null && !result.trim().equals("[]")) {
-                JsonArray allRentalsArray = JsonParser.parseString(result).getAsJsonArray();
-                
-                // Filter rentals for current user
-                for (int i = 0; i < allRentalsArray.size(); i++) {
-                    JsonObject rental = allRentalsArray.get(i).getAsJsonObject();
-                    
-                    // Check if rental belongs to current user
-                    String rentalUserId = rental.has("userId") && !rental.get("userId").isJsonNull() ? 
-                                         rental.get("userId").getAsString() : "";
-                    
-                    if (!rentalUserId.equals(userId)) {
-                        continue; // Skip rentals that don't belong to current user
-                    }
-                    
-                    String vehicleId = rental.has("vehicleId") && !rental.get("vehicleId").isJsonNull() ? 
-                                     rental.get("vehicleId").getAsString() : "N/A";
-                    String carName = getVehicleDisplayName(vehicleId);
-                    
-                    String startTime = rental.has("startTime") && !rental.get("startTime").isJsonNull() ? 
-                                      rental.get("startTime").getAsString() : "N/A";
-                    String endTime = rental.has("endTime") && !rental.get("endTime").isJsonNull() ? 
-                                    rental.get("endTime").getAsString() : "N/A";
-                    String rentalTime = formatRentalTime(startTime, endTime);
-                    
-                    String paymentMethod = rental.has("method") && !rental.get("method").isJsonNull() ? 
-                                          rental.get("method").getAsString() : "N/A";
-                    
-                    double amount = rental.has("amount") && !rental.get("amount").isJsonNull() ? 
-                                   rental.get("amount").getAsDouble() : 0.0;
-                    String amountStr = String.format("%.2f", amount);
+            if (userRentals.length > 0) {
+                for (Rental rental : userRentals) {
+                    String carName = Rental.getVehicleDisplayName(rental.getVehicleId());
+                    String rentalTime = rental.formatRentalTime();
+                    String paymentMethod = rental.getMethod() != null ? rental.getMethod() : "N/A";
+                    String amountStr = String.format("%.2f", rental.getAmount());
                     
                     model.addRow(new Object[]{carName, rentalTime, paymentMethod, amountStr});
                 }
@@ -145,66 +116,6 @@ public class InvoiceHistory extends javax.swing.JFrame {
         } catch (Exception e) {
             System.err.println("Error loading rental data: " + e.getMessage());
             JOptionPane.showMessageDialog(this, "Error loading rental data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private String getVehicleDisplayName(String vehicleId) {
-        if (vehicleId == null || vehicleId.trim().isEmpty() || vehicleId.equals("N/A")) {
-            return "Unknown Vehicle";
-        }
-        
-        try {
-            JsonObject vehicle = DatabaseClient.getRecordByIdAsJson("vehicles", vehicleId);
-            if (vehicle != null) {
-                String brand = vehicle.has("brand") && !vehicle.get("brand").isJsonNull() ? 
-                              vehicle.get("brand").getAsString() : "";
-                String model = vehicle.has("model") && !vehicle.get("model").isJsonNull() ? 
-                              vehicle.get("model").getAsString() : "";
-                
-                if (!brand.isEmpty() && !model.isEmpty()) {
-                    return brand + " " + model;
-                } else if (!model.isEmpty()) {
-                    return model;
-                } else if (!brand.isEmpty()) {
-                    return brand;
-                }
-            }
-        } catch (Exception e) {
-            System.err.println("Error fetching vehicle details for ID: " + vehicleId + " - " + e.getMessage());
-        }
-        
-        return vehicleId; // Fallback to vehicle ID
-    }
-
-    private String formatRentalTime(String startTime, String endTime) {
-        if (startTime.equals("N/A") || endTime.equals("N/A")) {
-            return "Time not available";
-        }
-        
-        try {
-            // Parse ISO datetime strings
-            LocalDateTime start = LocalDateTime.parse(startTime);
-            LocalDateTime end = LocalDateTime.parse(endTime);
-            
-            // Format for display
-            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
-            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("h:mm a");
-            
-            String startDate = start.format(dateFormatter);
-            String startTimeFormatted = start.format(timeFormatter);
-            String endDate = end.format(dateFormatter);
-            String endTimeFormatted = end.format(timeFormatter);
-            
-            // Check if same day
-            if (start.toLocalDate().equals(end.toLocalDate())) {
-                return String.format("%s\n%s - %s", startDate, startTimeFormatted, endTimeFormatted);
-            } else {
-                return String.format("%s %s -\n%s %s", startDate, startTimeFormatted, endDate, endTimeFormatted);
-            }
-            
-        } catch (Exception e) {
-            System.err.println("Error parsing datetime: " + e.getMessage());
-            return startTime + " - " + endTime; // Fallback to original format
         }
     }
 

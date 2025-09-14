@@ -239,7 +239,6 @@ public class RegisterPage extends javax.swing.JFrame {
     }//GEN-LAST:event_signupPasswordActionPerformed
 
     private void bloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bloginActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_bloginActionPerformed
 
     private void signupConfirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupConfirmButtonActionPerformed
@@ -250,8 +249,12 @@ public class RegisterPage extends javax.swing.JFrame {
             }
             
             User newUser = buildUserFromForm();
-            User[] users = new User[]{newUser};
-            DatabaseClient.insertRecords("users", users);
+            boolean registrationSuccess = newUser.register();
+            
+            if (!registrationSuccess) {
+                throw new Exception("Failed to register user in database");
+            }
+            
             JOptionPane.showMessageDialog(this, "Registration successful!");
             
             Point pos = this.getLocation();
