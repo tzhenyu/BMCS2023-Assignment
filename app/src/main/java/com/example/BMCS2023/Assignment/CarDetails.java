@@ -18,6 +18,7 @@ public class CarDetails extends javax.swing.JFrame {
      */
     public CarDetails(Vehicle vehicle) {
         this.selectedVehicle = vehicle;
+        setTitle("Car Details");
         initComponents();
         populateVehicleInfo();
         loadFeedbackData();
@@ -103,6 +104,11 @@ public class CarDetails extends javax.swing.JFrame {
             jLabel3.setText("Type: " + type);
             jLabel4.setText("Location: " + selectedVehicle.getLocation());
             jLabel5.setText("Add on(s): " + selectedVehicle.getAddOnsAsString());
+            if (selectedVehicle.getImageFileName() != null && !selectedVehicle.getImageFileName().isEmpty()) {
+                image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/" + selectedVehicle.getImageFileName())));
+            } else {
+                image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/10628940.png")));
+            }
         }
     }
         
@@ -115,7 +121,7 @@ public class CarDetails extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        image = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -144,8 +150,8 @@ public class CarDetails extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Car Rental System");
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/10628940.png"))); // NOI18N
-        jLabel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/10628940.png"))); // NOI18N
+        image.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -383,7 +389,7 @@ public class CarDetails extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(image, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -400,7 +406,7 @@ public class CarDetails extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(image, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -477,7 +483,7 @@ public class CarDetails extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel image;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;

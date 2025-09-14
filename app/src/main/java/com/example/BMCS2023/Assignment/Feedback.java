@@ -12,6 +12,7 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Feedback {
     private String id; 
+    @SerializedName("user_id") 
     private String userId; 
     @SerializedName("vehicle_id")
     private String vehicleId;
@@ -23,7 +24,7 @@ public class Feedback {
     
     public Feedback(String id, User user, Vehicle vehicle, int rating, String comment) {
         this.id = id;
-        this.userId = user.getId();        
+        this.userId = user.getUserId();        
         this.vehicleId = vehicle.getId();  
         this.rating = rating;
         this.comment = comment;

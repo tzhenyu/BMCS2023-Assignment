@@ -4,18 +4,49 @@
  */
 package com.example.BMCS2023.Assignment;
 
+import com.google.gson.JsonObject;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Joel
  */
 public class ReturnVehicle extends javax.swing.JFrame {
+    private String rentalId;
+    private Runnable onReturnCompleteCallback;
 
     /**
      * Creates new form ReturnVehicle
      */
-    public ReturnVehicle() {
+    public ReturnVehicle(String rentalId) {
+        this.rentalId = rentalId;
+        setTitle("Return Vehicle");
         initComponents();
+        returnDateText.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        try {
+            JsonObject rental = DatabaseClient.getRecordByIdAsJson("rentals", rentalId);
+            if (rental != null && rental.has("vehicleId") && !rental.get("vehicleId").isJsonNull()) {
+                String vehicleId = rental.get("vehicleId").getAsString();
+                JsonObject vehicle = DatabaseClient.getRecordByIdAsJson("vehicles", vehicleId);
+                if (vehicle != null && vehicle.has("location") && !vehicle.get("location").isJsonNull()) {
+                    addressText.setText(vehicle.get("location").getAsString());
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error loading vehicle data: " + e.getMessage());
+            addressText.setText("Location unavailable");
+        }
     }
+    
+    /**
+     * Sets callback to be executed when return is completed
+     */
+    public void setOnReturnCompleteCallback(Runnable callback) {
+        this.onReturnCompleteCallback = callback;
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,11 +81,15 @@ public class ReturnVehicle extends javax.swing.JFrame {
 
         label3.setText("Rating:");
 
-        addressText.setText("30, JALAN ABC, TAMAN BUNGA RAYA, 40596 KUALA LUMPUR");
-
         label4.setText("Address:");
 
-        label5.setText("/ 10");
+        ratingTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ratingTextFieldActionPerformed(evt);
+            }
+        });
+
+        label5.setText("/ 5");
 
         label6.setText("Feedback:");
 
@@ -70,6 +105,11 @@ public class ReturnVehicle extends javax.swing.JFrame {
         });
 
         returnVehicleSubmitButton.setText("Submit");
+        returnVehicleSubmitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnVehicleSubmitButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -122,7 +162,7 @@ public class ReturnVehicle extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ratingTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(label5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -134,13 +174,93 @@ public class ReturnVehicle extends javax.swing.JFrame {
                 .addGap(29, 29, 29))
         );
 
+        label5.getAccessibleContext().setAccessibleName("/ 4");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        CarMenu frame = new CarMenu();    //create an instance
-        GUIClient.switchPage(this, frame);
+        GUIClient.switchPage(this, new UserProfile());
     }//GEN-LAST:event_backButtonActionPerformed
+
+    private void returnVehicleSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnVehicleSubmitButtonActionPerformed
+        try {
+            // Validate inputs
+            if (!validateInputs()) {
+                return;
+            }
+            
+            String feedback = feedbackTextField.getText();
+            String rating = ratingTextField.getText();
+
+
+            // Show confirmation dialog
+            int result = JOptionPane.showConfirmDialog(this,
+                "Confirm vehicle return? This action cannot be undone.",
+                "Confirm Return",
+                JOptionPane.YES_NO_OPTION);
+            
+            if (result == JOptionPane.YES_OPTION) {
+                if (onReturnCompleteCallback != null) {
+                    onReturnCompleteCallback.run();
+                }
+                JsonObject rentalUpdate = new JsonObject();
+                rentalUpdate.addProperty("status", "completed");
+                DatabaseClient.updateRecord("rentals", rentalId, rentalUpdate);
+
+                JsonObject rental = DatabaseClient.getRecordByIdAsJson("rentals", rentalId);
+                if (rental != null && rental.has("vehicleId") && !rental.get("vehicleId").isJsonNull()) {
+                    String vehicleId = rental.get("vehicleId").getAsString();
+                    JsonObject vehicle = DatabaseClient.getRecordByIdAsJson("vehicles", vehicleId);
+                    if (vehicle != null) {
+                        vehicle.addProperty("status", "available");
+                        DatabaseClient.updateRecord("vehicles", vehicleId, vehicle);
+                    }
+                    // Insert feedback record
+                    User currentUser = SessionManager.getCurrentUser();
+                    if (currentUser != null) {
+                        JsonObject feedbackRecord = new JsonObject();
+                        feedbackRecord.addProperty("id", java.util.UUID.randomUUID().toString());
+                        feedbackRecord.addProperty("user_id", currentUser.getUserId());
+                        feedbackRecord.addProperty("vehicle_id", vehicleId);
+                        int ratingValue = 0;
+                        try {
+                            ratingValue = Integer.parseInt(ratingTextField.getText().trim());
+                        } catch (Exception ex) {
+                            ratingValue = 5;
+                        }
+                        feedbackRecord.addProperty("rating", Math.max(1, Math.min(5, ratingValue)));
+                        feedbackRecord.addProperty("comment", feedbackTextField.getText());
+                        DatabaseClient.insertRecords("feedback", new JsonObject[]{feedbackRecord});
+                    }
+                }
+
+                JOptionPane.showMessageDialog(this,
+                    "Vehicle return completed successfully!\n" +
+                    "Thank you for your feedback.",
+                    "Return Complete",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+                GUIClient.switchPage(this, new UserProfile());
+            }
+            
+        } catch (Exception e) {
+            System.err.println("Error completing return: " + e.getMessage());
+            JOptionPane.showMessageDialog(this,
+                "Error completing return: " + e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_returnVehicleSubmitButtonActionPerformed
+
+    private void ratingTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ratingTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ratingTextFieldActionPerformed
+
+    private boolean validateInputs() {
+        // Add validation logic for rating and feedback if needed
+        return true;
+    }
 
     /**
      * @param args the command line arguments
@@ -172,7 +292,9 @@ public class ReturnVehicle extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ReturnVehicle().setVisible(true);
+                // For testing purposes only - use a test rental ID
+                String testRentalId = "test123"; 
+                new ReturnVehicle(testRentalId).setVisible(true);
             }
         });
     }

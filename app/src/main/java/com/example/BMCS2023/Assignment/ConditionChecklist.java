@@ -4,6 +4,7 @@
  */
 package com.example.BMCS2023.Assignment;
 
+import com.google.gson.JsonObject;
 import javax.swing.JOptionPane;
 
 /**
@@ -11,13 +12,47 @@ import javax.swing.JOptionPane;
  * @author Joel
  */
 public class ConditionChecklist extends javax.swing.JFrame {
+    String rentalId;
+    private ConditionCompleteCallback conditionCompleteCallback;
+    private java.util.function.BiConsumer<String, Boolean> functionalCallback;
+    
+    // Traditional callback interface
+    public interface ConditionCompleteCallback {
+        void onConditionComplete(String rentalId, boolean success, String message);
+    }
+    
+    // Functional interface (alternative)
+    public void setOnConditionComplete(java.util.function.BiConsumer<String, Boolean> callback) {
+        this.functionalCallback = callback;
+    }
+    
+    // Traditional setter
+    public void setConditionCompleteCallback(ConditionCompleteCallback callback) {
+        this.conditionCompleteCallback = callback;
+    }
+    
+    private void notifyCallbacks(boolean success, String message) {
+        String safeRentalId = rentalId != null ? rentalId : "unknown";
+        if (conditionCompleteCallback != null) {
+            conditionCompleteCallback.onConditionComplete(safeRentalId, success, message);
+        }
+        if (functionalCallback != null) {
+            functionalCallback.accept(safeRentalId, success);
+        }
+    }
 
     /**
      * Creates new form ConditionChecklist
      */
     public ConditionChecklist() {
+        setTitle("Pick Up Cars");
         initComponents();
     }
+    public ConditionChecklist(String rentalId) {
+        this.rentalId = rentalId;
+        initComponents();
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -39,18 +74,30 @@ public class ConditionChecklist extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Condition Checklist");
 
+        tyresCheckBox.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         tyresCheckBox.setText("Tyres");
+        tyresCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tyresCheckBoxActionPerformed(evt);
+            }
+        });
 
+        windowsCheckBox.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         windowsCheckBox.setText("Windows");
 
+        othersCheckbox.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         othersCheckbox.setText("Others");
 
+        lightCheckBox.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         lightCheckBox.setText("Headlight, Backlight");
 
+        seatsCheckBox.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         seatsCheckBox.setText("Seats");
 
+        mirrorCheckBox.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         mirrorCheckBox.setText("Mirror");
 
         nextButton.setText("Next");
@@ -67,45 +114,47 @@ public class ConditionChecklist extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(722, Short.MAX_VALUE)
                         .addComponent(nextButton))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(222, 222, 222)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lightCheckBox)
+                            .addComponent(tyresCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(windowsCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel1))
+                                .addGap(15, 15, 15)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(seatsCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(mirrorCheckBox)))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(47, 47, 47)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(windowsCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tyresCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lightCheckBox))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(othersCheckbox, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(mirrorCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(seatsCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 64, Short.MAX_VALUE)))
+                                .addGap(18, 18, 18)
+                                .addComponent(othersCheckbox)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(57, 57, 57)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(154, 154, 154)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(seatsCheckBox)
                     .addComponent(tyresCheckBox))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(mirrorCheckBox)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(mirrorCheckBox, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(windowsCheckBox))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(othersCheckbox)
                     .addComponent(lightCheckBox))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 257, Short.MAX_VALUE)
                 .addComponent(nextButton)
                 .addContainerGap())
         );
@@ -113,10 +162,55 @@ public class ConditionChecklist extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
-        JOptionPane.showMessageDialog(null, "Drive Safe!", "Happy Drive", JOptionPane.OK_OPTION);
-        
-    }//GEN-LAST:event_nextButtonActionPerformed
+    private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        if (!allItemsChecked()) {
+            JOptionPane.showMessageDialog(this, "Please check all items before proceeding");
+            notifyCallbacks(false, "Checklist incomplete");
+            return;
+        }
+
+        try {
+            if (rentalId == null || rentalId.trim().isEmpty()) {
+                throw new Exception("Rental ID is missing");
+            }
+            JsonObject updateData = new JsonObject();
+            updateData.addProperty("status", "return");
+            DatabaseClient.updateRecord("rentals", rentalId, updateData);
+
+
+            // Set vehicle status to available when rental is completed
+            JsonObject rental = DatabaseClient.getRecordByIdAsJson("rentals", rentalId);
+            if (rental != null && rental.has("vehicleId") && !rental.get("vehicleId").isJsonNull()) {
+                String vehicleId = rental.get("vehicleId").getAsString();
+                JsonObject vehicle = DatabaseClient.getRecordByIdAsJson("vehicles", vehicleId);
+                if (vehicle != null) {
+                    vehicle.addProperty("status", "rented");
+                    DatabaseClient.updateRecord("vehicles", vehicleId, vehicle);
+                }
+            }
+            JOptionPane.showMessageDialog(this, "Drive Safe!", "Happy Drive", JOptionPane.INFORMATION_MESSAGE);
+            notifyCallbacks(true, "Checklist completed successfully");
+            GUIClient.switchPage(this, new UserProfile());
+        } catch (Exception e) {
+            String errorMsg = "Error: " + (e.getMessage() != null ? e.getMessage() : "Unknown error");
+            System.out.println(errorMsg);
+            JOptionPane.showMessageDialog(this, "Cannot update!");
+            notifyCallbacks(false, errorMsg);
+        }
+    }
+
+    private boolean allItemsChecked() {
+        return tyresCheckBox.isSelected() && 
+               windowsCheckBox.isSelected() && 
+               othersCheckbox.isSelected() && 
+               lightCheckBox.isSelected() && 
+               seatsCheckBox.isSelected() && 
+               mirrorCheckBox.isSelected();
+    }
+
+    private void tyresCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tyresCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tyresCheckBoxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -148,7 +242,7 @@ public class ConditionChecklist extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ConditionChecklist().setVisible(true);
+                new ConditionChecklist("rentalIdPlaceholder").setVisible(true);
             }
         });
     }
