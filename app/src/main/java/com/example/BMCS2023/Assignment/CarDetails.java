@@ -426,7 +426,7 @@ public class CarDetails extends javax.swing.JFrame {
 
     private void rentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rentButtonActionPerformed
         // Check if user is logged in before proceeding to booking
-        if (!SessionManager.isLoggedIn()) {
+        if (!GUIClient.isLoggedIn()) {
             javax.swing.JOptionPane.showMessageDialog(this, 
                 "Please log in to rent a vehicle.", 
                 "Login Required", 

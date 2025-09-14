@@ -137,8 +137,8 @@ public class CarMenu extends javax.swing.JFrame {
     }
     
     private void updateUIBasedOnLogin() {
-    if (SessionManager.isLoggedIn()) {
-        User u = SessionManager.getCurrentUser();
+    if (GUIClient.isLoggedIn()) {
+        User u = GUIClient.getCurrentUser();
         loginButton.setVisible(false);
         profileButton.setVisible(true);
         loggedInLabel.setVisible(true);

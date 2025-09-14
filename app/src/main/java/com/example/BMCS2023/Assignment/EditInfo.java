@@ -188,7 +188,7 @@ public class EditInfo extends javax.swing.JFrame {
     }//GEN-LAST:event_confirmButtonActionPerformed
     
     private void loadCurrentUserInfo() {
-        currentUser = SessionManager.getCurrentUser();
+        currentUser = GUIClient.getCurrentUser();
         if (currentUser != null) {
             editInfoUsername.setText(currentUser.getUsername());
             editInfoEmail.setText(currentUser.getEmail());
@@ -266,8 +266,7 @@ public class EditInfo extends javax.swing.JFrame {
         
             // Update in database using the UserID
             System.out.println(userId);
-            String result = DatabaseClient.updateUserRecord("users", userId, updatedUser);            // Update the session with new user info
-            SessionManager.setCurrentUser(updatedUser);
+            GUIClient.setCurrentUser(updatedUser);
         
             JOptionPane.showMessageDialog(this, 
             "User information updated successfully!", 

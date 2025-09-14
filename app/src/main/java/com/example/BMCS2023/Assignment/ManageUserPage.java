@@ -302,7 +302,7 @@ ManageUserPage.this.dispose();
             System.out.println("DEBUG: Opening profile for: " + selectedUser.getUsername());
             
             // Set the selected user as current user in session
-            SessionManager.setCurrentUser(selectedUser);
+            GUIClient.setCurrentUser(selectedUser);
             
             // Open the UserProfile without parameters
             UserProfile profileFrame = new UserProfile();

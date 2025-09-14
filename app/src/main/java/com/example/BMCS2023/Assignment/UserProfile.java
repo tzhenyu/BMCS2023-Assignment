@@ -25,7 +25,7 @@ public class UserProfile extends javax.swing.JFrame {
      * Creates new form UserProfile
      */
     public UserProfile() {
-        this.currentUser = SessionManager.getCurrentUser();
+        this.currentUser = GUIClient.getCurrentUser();
         setTitle("Invoice History");
         initComponents();
         initializeRentalButton();
@@ -428,7 +428,7 @@ public class UserProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
-        SessionManager.logout();
+        GUIClient.logout();
         GUIClient.switchPage(this, new CarMenu());
         
     }//GEN-LAST:event_logoutButtonActionPerformed

@@ -94,7 +94,7 @@ public class InvoiceHistory extends javax.swing.JFrame {
 
     private void loadRentalData() {
         try {
-            User currentUser = SessionManager.getCurrentUser();
+            User currentUser = GUIClient.getCurrentUser();
             if (currentUser == null) {
                 JOptionPane.showMessageDialog(this, "Please log in to view invoice history.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;

@@ -217,7 +217,7 @@ public class ReturnVehicle extends javax.swing.JFrame {
                         DatabaseClient.updateRecord("vehicles", vehicleId, vehicle);
                     }
                     // Insert feedback record
-                    User currentUser = SessionManager.getCurrentUser();
+                    User currentUser = GUIClient.getCurrentUser();
                     if (currentUser != null) {
                         JsonObject feedbackRecord = new JsonObject();
                         feedbackRecord.addProperty("id", java.util.UUID.randomUUID().toString());
