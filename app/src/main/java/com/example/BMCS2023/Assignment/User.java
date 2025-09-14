@@ -10,21 +10,34 @@ import java.util.Arrays;
  * @author zhenyu
  */
 public class User extends Person {
-    
+    private String userId;
+    private String emergencyContactNum;
+
     public boolean verifyPin(String inputPin) {
         return false;
     }
 
-    public void register(){
-        
+    public boolean register() {
+        try {
+            User[] users = new User[]{this};
+            String response = DatabaseClient.insertRecords("users", users);
+            return response != null && !response.isEmpty();
+        } catch (Exception ex) {
+            System.err.println("Error registering user: " + ex.getMessage());
+            return false;
+        }
     }
     
-    public void updateProfile() {
-    
+    public boolean updateProfile() {
+        try {
+            String response = DatabaseClient.updateRecord("users", this.userId, this);
+            return response != null && !response.isEmpty();
+        } catch (Exception ex) {
+            System.err.println("Error updating user profile: " + ex.getMessage());
+            return false;
+        }
     }
     
-    private String userId;
-    private String emergencyContactNum;
 
     public String getUserId() {
         return userId;

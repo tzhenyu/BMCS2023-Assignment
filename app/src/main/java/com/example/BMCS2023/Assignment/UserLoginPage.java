@@ -185,7 +185,7 @@ public class UserLoginPage extends javax.swing.JFrame {
 
         if (loggedInUser != null) {
             // Login successful
-            SessionManager.setCurrentUser(loggedInUser);
+            GUIClient.setCurrentUser(loggedInUser);
             GUIClient.switchPage(this, new CarMenu());      
         } 
         else {

@@ -301,8 +301,11 @@ ManageUserPage.this.dispose();
         if (selectedUser != null) {
             System.out.println("DEBUG: Opening profile for: " + selectedUser.getUsername());
             
-            // Open the UserProfile and close current frame
-            UserProfile profileFrame = new UserProfile(selectedUser);
+            // Set the selected user as current user in session
+            GUIClient.setCurrentUser(selectedUser);
+            
+            // Open the UserProfile without parameters
+            UserProfile profileFrame = new UserProfile();
             profileFrame.setResizable(false);
             
             // Get current location to maintain position

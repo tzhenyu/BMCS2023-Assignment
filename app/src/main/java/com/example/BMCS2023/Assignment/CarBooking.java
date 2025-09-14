@@ -198,7 +198,7 @@ public class CarBooking extends javax.swing.JFrame {
             String rentalId = java.util.UUID.randomUUID().toString();
             
             // Get the current logged-in user ID from session
-            User currentUser = SessionManager.getCurrentUser();
+            User currentUser = GUIClient.getCurrentUser();
             if (currentUser == null) {
                 javax.swing.JOptionPane.showMessageDialog(this, 
                     "You must be logged in to rent a vehicle.", 
