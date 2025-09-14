@@ -490,16 +490,32 @@ public class UserProfile extends javax.swing.JFrame {
     }
 
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
-
-        GUIClient.switchPage(this, new InvoicePage());
+        if (currentRentalId != null && !currentRentalId.trim().isEmpty()) {
+            GUIClient.switchPage(this, new InvoicePage(currentRentalId));
+        } else {
+            System.err.println("No rental ID available for panel 1");
+            JOptionPane.showMessageDialog(this, "No rental information available.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jPanel1MouseClicked
 
     private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
-        GUIClient.switchPage(this, new InvoicePage());
+        String rentalId = getRentalIdByPanelIndex(1);
+        if (rentalId != null && !rentalId.trim().isEmpty()) {
+            GUIClient.switchPage(this, new InvoicePage(rentalId));
+        } else {
+            System.err.println("No rental ID available for panel 2");
+            JOptionPane.showMessageDialog(this, "No rental information available.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jPanel2MouseClicked
 
     private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
-        GUIClient.switchPage(this, new InvoicePage());
+        String rentalId = getRentalIdByPanelIndex(2);
+        if (rentalId != null && !rentalId.trim().isEmpty()) {
+            GUIClient.switchPage(this, new InvoicePage(rentalId));
+        } else {
+            System.err.println("No rental ID available for panel 3");
+            JOptionPane.showMessageDialog(this, "No rental information available.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jPanel3MouseClicked
 
     private void editInfoButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editInfoButton1ActionPerformed

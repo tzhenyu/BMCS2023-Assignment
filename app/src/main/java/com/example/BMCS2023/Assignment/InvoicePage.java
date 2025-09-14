@@ -1,6 +1,21 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/J                // Debug output for start time
+                System.out.println("DEBUG: Raw startTime value: '" + startTime + "'");
+                String formattedStartTime = formatDateTime(startTime);
+                System.out.println("DEBUG: Formatted startTime: '" + formattedStartTime + "'");
+                
+                String startTimeDisplay = "Start Time: " + formattedStartTime;
+                System.out.println("DEBUG: Setting startTimeText to: '" + startTimeDisplay + "'");
+                startTimeText.setText(startTimeDisplay);
+                System.out.println("DEBUG: startTimeText.getText() after setting: '" + startTimeText.getText() + "'");
+                
+                endTimeText.setText("End Time: " + formatDateTime(endTime));
+                
+                // Force repaint
+                startTimeText.repaint();
+                this.repaint();
+                this.revalidate();ava to edit this template
  */
 package com.example.BMCS2023.Assignment;
 
@@ -8,24 +23,22 @@ package com.example.BMCS2023.Assignment;
  *
  * @author H 4 Z A R D
  */
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
 import com.google.gson.JsonObject;
-import javax.swing.JOptionPane;
 
 public class InvoicePage extends javax.swing.JFrame {
+    private String rentalId;
 
     /**
      * Creates new form InvoicePage
      */
 
     public InvoicePage(String rentalId) {
-        setTitle("Order detail");
+        this.rentalId = rentalId;
+        setTitle("Invoice Details");
         initComponents();
-    }
-
-    public InvoicePage() {
-        initComponents();
+        
+        // Load data after UI is fully initialized
+        javax.swing.SwingUtilities.invokeLater(() -> loadInvoiceData(rentalId));
     }
     
     /**
@@ -37,41 +50,32 @@ public class InvoicePage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        emergencyContactNum = new java.awt.Label();
-        id = new java.awt.Label();
-        email = new java.awt.Label();
-        invoice = new javax.swing.JLabel();
-        emergencyContactNumDisplayText = new java.awt.Label();
-        contactNum = new java.awt.Label();
-        username = new java.awt.Label();
+        paymentAmountText = new java.awt.Label();
+        paymentMethodText = new java.awt.Label();
+        title = new javax.swing.JLabel();
+        startTimeText = new java.awt.Label();
+        rentalText = new java.awt.Label();
         invoiceBackButton = new javax.swing.JButton();
+        catNameText = new java.awt.Label();
+        endTimeText = new java.awt.Label();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        emergencyContactNum.setFont(new java.awt.Font("BIZ UDPMincho Medium", 1, 14)); // NOI18N
-        emergencyContactNum.setMinimumSize(new java.awt.Dimension(115, 10));
-        emergencyContactNum.setPreferredSize(new java.awt.Dimension(157, 20));
-        emergencyContactNum.setText("End time: ");
-        emergencyContactNum.setVisible(false);
+        paymentAmountText.setFont(new java.awt.Font("BIZ UDPMincho Medium", 1, 24)); // NOI18N
+        paymentAmountText.setText("Amount (RM):");
 
-        id.setFont(new java.awt.Font("BIZ UDPMincho Medium", 1, 24)); // NOI18N
-        id.setText("Amount (RM):");
+        paymentMethodText.setFont(new java.awt.Font("BIZ UDPMincho Medium", 1, 24)); // NOI18N
+        paymentMethodText.setText("Payment Method:");
 
-        email.setFont(new java.awt.Font("BIZ UDPMincho Medium", 1, 24)); // NOI18N
-        email.setText("Payment Method:");
+        title.setBackground(new java.awt.Color(255, 255, 255));
+        title.setFont(new java.awt.Font("Book Antiqua", 1, 36)); // NOI18N
+        title.setText("INVOICE");
 
-        invoice.setBackground(new java.awt.Color(255, 255, 255));
-        invoice.setFont(new java.awt.Font("Book Antiqua", 1, 36)); // NOI18N
-        invoice.setText("INVOICE");
+        startTimeText.setFont(new java.awt.Font("BIZ UDPMincho Medium", 1, 24)); // NOI18N
+        startTimeText.setText("Start Time:");
 
-        emergencyContactNumDisplayText.setFont(new java.awt.Font("BIZ UDPMincho Medium", 1, 24)); // NOI18N
-        emergencyContactNumDisplayText.setText("End Time:");
-
-        contactNum.setFont(new java.awt.Font("BIZ UDPMincho Medium", 1, 24)); // NOI18N
-        contactNum.setText("Start Time:");
-
-        username.setFont(new java.awt.Font("BIZ UDPMincho Medium", 1, 24)); // NOI18N
-        username.setText("Rental :");
+        rentalText.setFont(new java.awt.Font("BIZ UDPMincho Medium", 1, 24)); // NOI18N
+        rentalText.setText("Rental ID :");
 
         invoiceBackButton.setFont(new java.awt.Font("BIZ UDPMincho Medium", 1, 18)); // NOI18N
         invoiceBackButton.setText("< BACK");
@@ -81,6 +85,12 @@ public class InvoicePage extends javax.swing.JFrame {
             }
         });
 
+        catNameText.setFont(new java.awt.Font("BIZ UDPMincho Medium", 1, 24)); // NOI18N
+        catNameText.setText("Rental Car:");
+
+        endTimeText.setFont(new java.awt.Font("BIZ UDPMincho Medium", 1, 24)); // NOI18N
+        endTimeText.setText("End Time:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -88,44 +98,34 @@ public class InvoicePage extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(contactNum, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(email, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(emergencyContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(emergencyContactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addContainerGap(620, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(invoice)
-                            .addComponent(invoiceBackButton))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                    .addComponent(rentalText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(title)
+                    .addComponent(invoiceBackButton)
+                    .addComponent(catNameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(paymentAmountText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(paymentMethodText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(startTimeText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(endTimeText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(572, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(invoice)
+                .addComponent(title)
                 .addGap(33, 33, 33)
-                .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(rentalText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(catNameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(contactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(emergencyContactNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(emergencyContactNumDisplayText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 229, Short.MAX_VALUE)
+                .addComponent(paymentAmountText, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(paymentMethodText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addComponent(startTimeText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addComponent(endTimeText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
                 .addComponent(invoiceBackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -137,6 +137,82 @@ public class InvoicePage extends javax.swing.JFrame {
         UserProfile frame = new UserProfile();
         GUIClient.switchPage(this, frame);
     }//GEN-LAST:event_invoiceBackButtonActionPerformed
+
+    private void loadInvoiceData(String rentalId) {
+        try {
+            JsonObject rental = DatabaseClient.getRecordByIdAsJson("rentals", rentalId);
+            System.out.println("DEBUG: Loading invoice for rental ID: " + rentalId);
+
+            if (rental != null) {
+                // Get rental data
+                String vehicleId = rental.has("vehicleId") && !rental.get("vehicleId").isJsonNull() ? 
+                                 rental.get("vehicleId").getAsString() : "N/A";
+                String method = rental.has("method") && !rental.get("method").isJsonNull() ? 
+                               rental.get("method").getAsString() : "N/A";
+                double amount = rental.has("amount") && !rental.get("amount").isJsonNull() ? 
+                               rental.get("amount").getAsDouble() : 0.0;
+                String startTime = rental.has("startTime") && !rental.get("startTime").isJsonNull() ? 
+                                  rental.get("startTime").getAsString() : "N/A";
+                String endTime = rental.has("endTime") && !rental.get("endTime").isJsonNull() ? 
+                                rental.get("endTime").getAsString() : "N/A";
+
+                // Get vehicle details
+                JsonObject vehicle = DatabaseClient.getRecordByIdAsJson("vehicles", vehicleId);
+                String carName = "Unknown Vehicle";
+                if (vehicle != null) {
+                    String brand = vehicle.has("brand") && !vehicle.get("brand").isJsonNull() ? 
+                                  vehicle.get("brand").getAsString() : "";
+                    String model = vehicle.has("model") && !vehicle.get("model").isJsonNull() ? 
+                                  vehicle.get("model").getAsString() : "";
+                    
+                    if (!brand.isEmpty() && !model.isEmpty()) {
+                        carName = brand + " " + model;
+                    } else if (!model.isEmpty()) {
+                        carName = model;
+                    } else if (!brand.isEmpty()) {
+                        carName = brand;
+                    }
+                }
+
+                // Update UI labels with the required information
+                rentalText.setText("Rental ID: " + rentalId);
+                catNameText.setText("Car: " + carName);
+                paymentAmountText.setText("Amount (RM): " + String.format("%.2f", amount));
+                paymentMethodText.setText("Payment Method: " + method);
+                
+                // Debug output for start time
+                System.out.println("DEBUG: Raw startTime value: '" + startTime + "'");
+                String formattedStartTime = formatDateTime(startTime);
+                System.out.println("DEBUG: Formatted startTime: '" + formattedStartTime + "'");
+                
+                startTimeText.setText("Start Time: " + formattedStartTime);
+                endTimeText.setText("End Time: " + formatDateTime(endTime));
+                
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Rental record not found.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+            
+        } catch (Exception e) {
+            System.err.println("Error loading invoice data: " + e.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(this, "Error loading invoice data: " + e.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private String formatDateTime(String dateTimeStr) {
+        if (dateTimeStr == null || dateTimeStr.trim().isEmpty() || dateTimeStr.equals("N/A")) {
+            return "Not available";
+        }
+        
+        try {
+            // Parse ISO datetime and format for display
+            java.time.LocalDateTime dateTime = java.time.LocalDateTime.parse(dateTimeStr.trim());
+            java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("MMM dd, yyyy h:mm a");
+            return dateTime.format(formatter);
+        } catch (Exception e) {
+            System.err.println("DEBUG: Error parsing datetime '" + dateTimeStr + "': " + e.getMessage());
+            return dateTimeStr.trim(); // Return original if parsing fails
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -175,13 +251,13 @@ public class InvoicePage extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.Label contactNum;
-    private java.awt.Label email;
-    private java.awt.Label emergencyContactNum;
-    private java.awt.Label emergencyContactNumDisplayText;
-    private java.awt.Label id;
-    private javax.swing.JLabel invoice;
+    private java.awt.Label catNameText;
+    private java.awt.Label endTimeText;
     private javax.swing.JButton invoiceBackButton;
-    private java.awt.Label username;
+    private java.awt.Label paymentAmountText;
+    private java.awt.Label paymentMethodText;
+    private java.awt.Label rentalText;
+    private java.awt.Label startTimeText;
+    private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
 }
