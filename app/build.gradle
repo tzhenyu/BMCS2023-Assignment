@@ -35,14 +35,15 @@ dependencies {
 // Apply a specific Java toolchain to ease working on different environments.
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(24)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
 jar {
     manifest {
         attributes(
-            'Main-Class': 'com.example.BMCS2023.Assignment.App'
+            'Main-Class': 'com.example.BMCS2023.Assignment.App',
+            'Add-Opens': 'java.base/java.time java.base/java.lang'
         )
     }
 }
@@ -52,7 +53,8 @@ task fatJar(type: Jar) {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest {
         attributes(
-            'Main-Class': 'com.example.BMCS2023.Assignment.App'
+            'Main-Class': 'com.example.BMCS2023.Assignment.App',
+            'Add-Opens': 'java.base/java.time java.base/java.lang'
         )
     }
     from {
@@ -64,6 +66,11 @@ task fatJar(type: Jar) {
 application {
     // Define the main class for the application.
     mainClass = 'com.example.BMCS2023.Assignment.App'
+    // Add JVM arguments to handle reflection access for Gson
+    applicationDefaultJvmArgs = [
+        '--add-opens=java.base/java.time=ALL-UNNAMED',
+        '--add-opens=java.base/java.lang=ALL-UNNAMED'
+    ]
 }
 
 tasks.named('test') {

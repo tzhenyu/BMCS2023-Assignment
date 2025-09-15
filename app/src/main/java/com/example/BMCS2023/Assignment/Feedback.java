@@ -76,6 +76,12 @@ public class Feedback {
     
     public static boolean createFeedback(String userId, String vehicleId, String ratingText, String comment) throws Exception {
         try {
+            // Check if feedback already exists for this user-vehicle combination
+            if (feedbackExists(userId, vehicleId)) {
+                System.out.println("Feedback already exists for user " + userId + " and vehicle " + vehicleId);
+                return true; // Return true since feedback exists (not an error)
+            }
+            
             int rating = 5; // Default rating
             try {
                 rating = Integer.parseInt(ratingText.trim());
@@ -91,6 +97,30 @@ public class Feedback {
         } catch (Exception e) {
             System.err.println("Error creating feedback: " + e.getMessage());
             throw e;
+        }
+    }
+    
+    /**
+     * Checks if feedback already exists for a user-vehicle combination
+     * @param userId The user ID
+     * @param vehicleId The vehicle ID
+     * @return true if feedback exists, false otherwise
+     */
+    public static boolean feedbackExists(String userId, String vehicleId) throws Exception {
+        try {
+            String encodedUserId = java.net.URLEncoder.encode(userId, "UTF-8");
+            String encodedVehicleId = java.net.URLEncoder.encode(vehicleId, "UTF-8");
+            
+            String query = "feedback?user_id=eq." + encodedUserId + "&vehicle_id=eq." + encodedVehicleId;
+            String result = DatabaseClient.readRecords(query);
+            
+            // Parse result to check if any records exist
+            com.google.gson.JsonArray jsonArray = com.google.gson.JsonParser.parseString(result).getAsJsonArray();
+            return jsonArray.size() > 0;
+        } catch (Exception e) {
+            System.err.println("Error checking if feedback exists: " + e.getMessage());
+            // Return false on error to allow feedback creation attempt
+            return false;
         }
     }
     
