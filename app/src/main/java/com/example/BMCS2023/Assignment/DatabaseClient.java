@@ -18,8 +18,11 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
@@ -34,12 +37,18 @@ public class DatabaseClient {
     private static final String SUPABASE_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF1ZHFsYXRneW5mZW1vZWNhbWpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQzNzg2OTIsImV4cCI6MjA2OTk1NDY5Mn0.MIFHs8mPf_SplH5qGI8aSua1EHuOtjP0QfQb1TTO0bs";
     private static final HttpClient client = HttpClient.newHttpClient();
     
-    // Custom Gson instance with LocalDateTime serializer
+    // Custom Gson instance with LocalDateTime serializer and deserializer
     private static final Gson gson = new GsonBuilder()
         .registerTypeAdapter(LocalDateTime.class, new JsonSerializer<LocalDateTime>() {
             @Override
             public JsonElement serialize(LocalDateTime src, Type typeOfSrc, JsonSerializationContext context) {
                 return new JsonPrimitive(src.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+            }
+        })
+        .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
+            @Override
+            public LocalDateTime deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                return LocalDateTime.parse(json.getAsString(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
             }
         })
         .create();

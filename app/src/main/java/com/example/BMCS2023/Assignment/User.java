@@ -30,7 +30,7 @@ public class User extends Person {
     
     public boolean updateProfile() {
         try {
-            String response = DatabaseClient.updateRecord("users", this.userId, this);
+            String response = DatabaseClient.updateUserRecord("users", this.userId, this);
             return response != null && !response.isEmpty();
         } catch (Exception ex) {
             System.err.println("Error updating user profile: " + ex.getMessage());
