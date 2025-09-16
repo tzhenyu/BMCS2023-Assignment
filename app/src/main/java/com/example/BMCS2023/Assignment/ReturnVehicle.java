@@ -4,7 +4,6 @@
  */
 package com.example.BMCS2023.Assignment;
 
-import com.google.gson.JsonObject;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
@@ -15,15 +14,35 @@ import javax.swing.JOptionPane;
  */
 public class ReturnVehicle extends javax.swing.JFrame {
     private String rentalId;
+    private Runnable onReturnCompleteCallback;
 
     /**
      * Creates new form ReturnVehicle
      */
     public ReturnVehicle(String rentalId) {
         this.rentalId = rentalId;
+        setTitle("Return Vehicle");
         initComponents();
         returnDateText.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        try {
+            String vehicleId = Rental.getVehicleIdFromRental(rentalId);
+            if (vehicleId != null) {
+                String location = Rental.getVehicleLocation(vehicleId);
+                addressText.setText(location);
+            }
+        } catch (Exception e) {
+            System.err.println("Error loading vehicle data: " + e.getMessage());
+            addressText.setText("Location unavailable");
+        }
     }
+    
+    /**
+     * Sets callback to be executed when return is completed
+     */
+    public void setOnReturnCompleteCallback(Runnable callback) {
+        this.onReturnCompleteCallback = callback;
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -58,8 +77,6 @@ public class ReturnVehicle extends javax.swing.JFrame {
 
         label3.setText("Rating:");
 
-        addressText.setText("30, JALAN ABC, TAMAN BUNGA RAYA, 40596 KUALA LUMPUR");
-
         label4.setText("Address:");
 
         ratingTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -68,7 +85,7 @@ public class ReturnVehicle extends javax.swing.JFrame {
             }
         });
 
-        label5.setText("/ 10");
+        label5.setText("/ 5");
 
         label6.setText("Feedback:");
 
@@ -141,7 +158,7 @@ public class ReturnVehicle extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ratingTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(label5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(label6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -153,59 +170,87 @@ public class ReturnVehicle extends javax.swing.JFrame {
                 .addGap(29, 29, 29))
         );
 
+        label5.getAccessibleContext().setAccessibleName("/ 5");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        CarMenu frame = new CarMenu();    //create an instance
-        GUIClient.switchPage(this, frame);
+        GUIClient.switchPage(this, new UserProfile());
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void returnVehicleSubmitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnVehicleSubmitButtonActionPerformed
-        String rating = ratingTextField.getText();
-        String feedback = feedbackTextField.getText();
-
-        if (!validateInput(rating, feedback)) {
-            return;
-        }
-
         try {
-            JsonObject updateData = new JsonObject();
-            updateData.addProperty("status", "completed");
-            updateData.addProperty("rating", Integer.parseInt(rating));
-            updateData.addProperty("feedback", feedback);
+            // Validate inputs
+            if (!validateInputs()) {
+                return;
+            }
+
+
+            // Show confirmation dialog
+            int result = JOptionPane.showConfirmDialog(this,
+                "Confirm vehicle return? This action cannot be undone.",
+                "Confirm Return",
+                JOptionPane.YES_NO_OPTION);
             
-            DatabaseClient.updateRecord("rentals", rentalId, updateData);
+            if (result == JOptionPane.YES_OPTION) {
+                if (onReturnCompleteCallback != null) {
+                    onReturnCompleteCallback.run();
+                }
+                
+                // Complete the rental
+                boolean rentalCompleted = Rental.completeRental(rentalId);
+                if (!rentalCompleted) {
+                    throw new Exception("Failed to complete rental");
+                }
+                
+                // Get vehicle ID and return it to available status
+                String vehicleId = Rental.getVehicleIdFromRental(rentalId);
+                if (vehicleId != null) {
+                    boolean vehicleReturned = Rental.returnVehicleToAvailable(vehicleId);
+                    if (!vehicleReturned) {
+                        throw new Exception("Failed to return vehicle to available status");
+                    }
+                    
+                    // Create feedback record
+                    User currentUser = GUIClient.getCurrentUser();
+                    if (currentUser != null) {
+                        boolean feedbackCreated = Feedback.createFeedback(
+                            currentUser.getUserId(),
+                            vehicleId,
+                            ratingTextField.getText(),
+                            feedbackTextField.getText()
+                        );
+                        
+                        if (!feedbackCreated) {
+                            System.err.println("Warning: Failed to create feedback record");
+                        }
+                    }
+                }
+
+                JOptionPane.showMessageDialog(this,
+                    "Vehicle return completed successfully!\n" +
+                    "Thank you for your feedback.",
+                    "Return Complete",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+                GUIClient.switchPage(this, new UserProfile());
+            }
             
-            JOptionPane.showMessageDialog(this, "Thank you for your feedback!");
-            this.dispose();
-            new UserProfile().setVisible(true);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            System.err.println("Error completing return: " + e.getMessage());
+            JOptionPane.showMessageDialog(this,
+                "Error completing return: " + e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_returnVehicleSubmitButtonActionPerformed
 
     private void ratingTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ratingTextFieldActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_ratingTextFieldActionPerformed
 
-    private boolean validateInput(String rating, String feedback) {
-        if (rating.isEmpty() || feedback.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please provide both rating and feedback");
-            return false;
-        }
-
-        try {
-            int ratingValue = Integer.parseInt(rating);
-            if (ratingValue < 1 || ratingValue > 10) {
-                JOptionPane.showMessageDialog(this, "Rating must be between 1 and 10");
-                return false;
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Rating must be a number");
-            return false;
-        }
-
+    private boolean validateInputs() {
+        // Add validation logic for rating and feedback if needed
         return true;
     }
 

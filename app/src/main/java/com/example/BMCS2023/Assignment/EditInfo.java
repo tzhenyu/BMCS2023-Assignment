@@ -17,6 +17,7 @@ public class EditInfo extends javax.swing.JFrame {
      * Creates new form EditInfo
      */
     public EditInfo() {
+        setTitle("Edit User Info");
         initComponents();
         loadCurrentUserInfo(); 
     }
@@ -178,8 +179,7 @@ public class EditInfo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        UserProfile frame = new UserProfile();    //create an instance
-        GUIClient.switchPage(this, frame);
+        GUIClient.switchPage(this, new UserProfile());
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
@@ -187,7 +187,7 @@ public class EditInfo extends javax.swing.JFrame {
     }//GEN-LAST:event_confirmButtonActionPerformed
     
     private void loadCurrentUserInfo() {
-        currentUser = SessionManager.getCurrentUser();
+        currentUser = GUIClient.getCurrentUser();
         if (currentUser != null) {
             editInfoUsername.setText(currentUser.getUsername());
             editInfoEmail.setText(currentUser.getEmail());
@@ -238,9 +238,6 @@ public class EditInfo extends javax.swing.JFrame {
         }
 
         try {
-            // Get the current user's ID
-            String userId = currentUser.getUserId();
-    
             // Get updated values from text fields
             String newUsername = editInfoUsername.getText().trim();
             String newEmail = editInfoEmail.getText().trim();
@@ -248,25 +245,25 @@ public class EditInfo extends javax.swing.JFrame {
             String newEmergencyContact = editInfoEmergencyContactNum.getText().trim();
             String newPassword = new String(editInfoPassword.getPassword());
     
-            // Create updated user object with same ID
-            User updatedUser = new User();
-            //updatedUser.setUserId(userId); // Keep the same UserID
-            updatedUser.setUsername(newUsername);
-            updatedUser.setEmail(newEmail);
-            updatedUser.setPhone(newContactNum);
-            updatedUser.setEmergencyContactNum(newEmergencyContact);
+            // Update current user object with new values
+            currentUser.setUsername(newUsername);
+            currentUser.setEmail(newEmail);
+            currentUser.setPhone(newContactNum);
+            currentUser.setEmergencyContactNum(newEmergencyContact);
         
             // Only update password if new one is provided
             if (!newPassword.isEmpty()) {
-                updatedUser.setPassword(newPassword);
-            } else {
-                updatedUser.setPassword(currentUser.getPassword()); // Keep existing password
+                currentUser.setPassword(newPassword);
             }
         
-            // Update in database using the UserID
-            System.out.println(userId);
-            String result = DatabaseClient.updateUserRecord("users", userId, updatedUser);            // Update the session with new user info
-            SessionManager.setCurrentUser(updatedUser);
+            // Update in database using User's updateProfile method
+            boolean updateSuccess = currentUser.updateProfile();
+            if (!updateSuccess) {
+                throw new Exception("Failed to update user profile in database");
+            }
+            
+            // Update the current user in GUIClient
+            GUIClient.setCurrentUser(currentUser);
         
             JOptionPane.showMessageDialog(this, 
             "User information updated successfully!", 
@@ -292,7 +289,7 @@ public class EditInfo extends javax.swing.JFrame {
     
     
     private void editInfoEmergencyContactNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editInfoEmergencyContactNumActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_editInfoEmergencyContactNumActionPerformed
 
     private void editInfoShowPassCheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editInfoShowPassCheckboxActionPerformed

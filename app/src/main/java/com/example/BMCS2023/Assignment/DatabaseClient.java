@@ -18,8 +18,11 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
@@ -34,12 +37,18 @@ public class DatabaseClient {
     private static final String SUPABASE_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF1ZHFsYXRneW5mZW1vZWNhbWpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQzNzg2OTIsImV4cCI6MjA2OTk1NDY5Mn0.MIFHs8mPf_SplH5qGI8aSua1EHuOtjP0QfQb1TTO0bs";
     private static final HttpClient client = HttpClient.newHttpClient();
     
-    // Custom Gson instance with LocalDateTime serializer
+    // Custom Gson instance with LocalDateTime serializer and deserializer
     private static final Gson gson = new GsonBuilder()
         .registerTypeAdapter(LocalDateTime.class, new JsonSerializer<LocalDateTime>() {
             @Override
             public JsonElement serialize(LocalDateTime src, Type typeOfSrc, JsonSerializationContext context) {
                 return new JsonPrimitive(src.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+            }
+        })
+        .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
+            @Override
+            public LocalDateTime deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                return LocalDateTime.parse(json.getAsString(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
             }
         })
         .create();
@@ -99,6 +108,10 @@ public class DatabaseClient {
 
     
 public static int deleteById(String tableName, String columnName, String id) throws Exception {
+    if (id == null || id.trim().isEmpty()) {
+        throw new Exception("ID cannot be null or empty");
+    }
+    
     String encodedId = URLEncoder.encode(id, StandardCharsets.UTF_8);
     String url = SUPABASE_URL + "/rest/v1/" + tableName + "?" 
                + columnName + "=eq." + encodedId;
@@ -123,6 +136,10 @@ public static int deleteById(String tableName, String columnName, String id) thr
 
     
     public static <T> String updateRecord(String tableName, String id, T record) throws Exception {
+    if (id == null || id.trim().isEmpty()) {
+        throw new Exception("ID cannot be null or empty");
+    }
+    
     String json = gson.toJson(record);
 
     // ✅ encode the UUID to avoid errors
@@ -170,6 +187,10 @@ public static int deleteById(String tableName, String columnName, String id) thr
     
 // Gets a single record by id. Returns null if not found.
 public static <T> T getRecordById(String tableName, String id, Class<T> clazz) throws Exception {
+    if (id == null || id.trim().isEmpty()) {
+        throw new Exception("ID cannot be null or empty");
+    }
+    
     // encode ID (handles UUIDs or special chars)
     String encoded = URLEncoder.encode(id, StandardCharsets.UTF_8);
 
@@ -201,6 +222,10 @@ public static <T> T getRecordById(String tableName, String id, Class<T> clazz) t
     return array[0];
 }
     public static JsonObject getRecordByIdAsJson(String table, String id) throws Exception {
+    if (id == null || id.trim().isEmpty()) {
+        throw new Exception("ID cannot be null or empty");
+    }
+    
     String encoded = URLEncoder.encode(id, StandardCharsets.UTF_8);
     HttpRequest request = HttpRequest.newBuilder()
         .uri(URI.create(SUPABASE_URL + "/rest/v1/" + table + "?id=eq." + encoded + "&select=*"))
@@ -214,7 +239,27 @@ public static <T> T getRecordById(String tableName, String id, Class<T> clazz) t
     return arr.size() > 0 ? arr.get(0).getAsJsonObject() : null;
 }
     
+    // In DatabaseClient.java - Replace the existing updateRentalStatus method
+/**
+ * Updates the status of a rental record in the database by ID
+ * @param rentalId The ID of the rental to update
+ * @param newStatus The new status to set (e.g., "AVAILABLE", "PENDING", "CONFIRMED", "COMPLETED")
+ * @return The response body from the update operation
+ * @throws Exception If the update fails
+ */
+public static String updateRentalStatus(String rentalId, String newStatus) throws Exception {
+    // Create a JSON object with just the status field
+    JsonObject statusUpdate = new JsonObject();
+    statusUpdate.addProperty("status", newStatus);
+    
+    // Use the existing updateRecord method to perform the update
+    return updateRecord("rentals", rentalId, statusUpdate);
+}
 public static Feedback[] getFeedbackByVehicleId(String vehicleId) throws Exception {
+    if (vehicleId == null || vehicleId.trim().isEmpty()) {
+        throw new Exception("Vehicle ID cannot be null or empty");
+    }
+    
     String encoded = URLEncoder.encode(vehicleId, StandardCharsets.UTF_8);
 
     HttpRequest request = HttpRequest.newBuilder()
@@ -236,6 +281,10 @@ public static Feedback[] getFeedbackByVehicleId(String vehicleId) throws Excepti
 }
 
     public static int deleteById(String tableName, String id) throws Exception {
+    if (id == null || id.trim().isEmpty()) {
+        throw new Exception("ID cannot be null or empty");
+    }
+    
     String encoded = URLEncoder.encode(id, StandardCharsets.UTF_8);
     HttpRequest request = HttpRequest.newBuilder()
         .uri(URI.create(SUPABASE_URL + "/rest/v1/" + tableName + "?id=eq." + encoded))

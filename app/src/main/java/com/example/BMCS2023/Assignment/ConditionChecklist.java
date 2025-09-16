@@ -12,15 +12,47 @@ import javax.swing.JOptionPane;
  * @author Joel
  */
 public class ConditionChecklist extends javax.swing.JFrame {
-    final String rentalId;
+    String rentalId;
+    private ConditionCompleteCallback conditionCompleteCallback;
+    private java.util.function.BiConsumer<String, Boolean> functionalCallback;
+    
+    // Traditional callback interface
+    public interface ConditionCompleteCallback {
+        void onConditionComplete(String rentalId, boolean success, String message);
+    }
+    
+    // Functional interface (alternative)
+    public void setOnConditionComplete(java.util.function.BiConsumer<String, Boolean> callback) {
+        this.functionalCallback = callback;
+    }
+    
+    // Traditional setter
+    public void setConditionCompleteCallback(ConditionCompleteCallback callback) {
+        this.conditionCompleteCallback = callback;
+    }
+    
+    private void notifyCallbacks(boolean success, String message) {
+        String safeRentalId = rentalId != null ? rentalId : "unknown";
+        if (conditionCompleteCallback != null) {
+            conditionCompleteCallback.onConditionComplete(safeRentalId, success, message);
+        }
+        if (functionalCallback != null) {
+            functionalCallback.accept(safeRentalId, success);
+        }
+    }
 
     /**
      * Creates new form ConditionChecklist
      */
+    public ConditionChecklist() {
+        setTitle("Pick Up Cars");
+        initComponents();
+    }
     public ConditionChecklist(String rentalId) {
         this.rentalId = rentalId;
         initComponents();
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -130,26 +162,42 @@ public class ConditionChecklist extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
+    private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {
         if (!allItemsChecked()) {
             JOptionPane.showMessageDialog(this, "Please check all items before proceeding");
+            notifyCallbacks(false, "Checklist incomplete");
             return;
         }
 
-        JOptionPane.showMessageDialog(this, "Drive Safe!", "Happy Drive", JOptionPane.INFORMATION_MESSAGE);
-        
         try {
-            // Update rental status to active
+            if (rentalId == null || rentalId.trim().isEmpty()) {
+                throw new Exception("Rental ID is missing");
+            }
             JsonObject updateData = new JsonObject();
-            updateData.addProperty("status", "active");
+            updateData.addProperty("status", "return");
             DatabaseClient.updateRecord("rentals", rentalId, updateData);
-            
-            this.dispose();
-            new UserProfile().setVisible(true);
+
+
+            // Set vehicle status to available when rental is completed
+            JsonObject rental = DatabaseClient.getRecordByIdAsJson("rentals", rentalId);
+            if (rental != null && rental.has("vehicleId") && !rental.get("vehicleId").isJsonNull()) {
+                String vehicleId = rental.get("vehicleId").getAsString();
+                JsonObject vehicle = DatabaseClient.getRecordByIdAsJson("vehicles", vehicleId);
+                if (vehicle != null) {
+                    vehicle.addProperty("status", "rented");
+                    DatabaseClient.updateRecord("vehicles", vehicleId, vehicle);
+                }
+            }
+            JOptionPane.showMessageDialog(this, "Drive Safe!", "Happy Drive", JOptionPane.INFORMATION_MESSAGE);
+            notifyCallbacks(true, "Checklist completed successfully");
+            GUIClient.switchPage(this, new UserProfile());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            String errorMsg = "Error: " + (e.getMessage() != null ? e.getMessage() : "Unknown error");
+            System.out.println(errorMsg);
+            JOptionPane.showMessageDialog(this, "Cannot update!");
+            notifyCallbacks(false, errorMsg);
         }
-    }//GEN-LAST:event_nextButtonActionPerformed
+    }
 
     private boolean allItemsChecked() {
         return tyresCheckBox.isSelected() && 
